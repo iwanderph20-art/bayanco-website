@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Original Filipino-inspired Color Palette */
+            /* Filipino-inspired Color Palette */
             --sunset-orange: #FF6B35;
             --mango-yellow: #FFB627;
             --ocean-blue: #004E89;
@@ -28,6 +28,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
@@ -100,6 +104,74 @@
             text-decoration: none;
             font-weight: 700;
             box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--charcoal);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 248, 240, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem 3rem;
+            z-index: 999;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--sunset-orange);
+        }
+        
+        .mobile-menu.active {
+            display: flex;
         }
         
         /* Hero Section */
@@ -130,6 +202,7 @@
             font-size: 4.5rem;
             margin-bottom: 1.5rem;
             line-height: 1.1;
+            animation: fadeInUp 0.8s ease;
         }
         
         .hero p {
@@ -139,6 +212,7 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
         
         .hero-buttons {
@@ -146,6 +220,18 @@
             gap: 2rem;
             justify-content: center;
             flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .btn-primary {
@@ -199,6 +285,8 @@
             color: var(--ocean-blue);
             text-align: center;
             margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
         }
         
         .section-subtitle {
@@ -206,6 +294,8 @@
             font-size: 1.2rem;
             color: rgba(45, 45, 42, 0.7);
             margin-bottom: 4rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
         }
         
         .features-grid {
@@ -221,7 +311,16 @@
             box-shadow: 0 5px 30px rgba(0, 78, 137, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-top: 4px solid var(--sunset-orange);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
         }
+        
+        .feature-card:nth-child(1) { animation-delay: 0.3s; }
+        .feature-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-card:nth-child(3) { animation-delay: 0.5s; }
+        .feature-card:nth-child(4) { animation-delay: 0.6s; }
+        .feature-card:nth-child(5) { animation-delay: 0.7s; }
+        .feature-card:nth-child(6) { animation-delay: 0.8s; }
         
         .feature-card:hover {
             transform: translateY(-10px);
@@ -229,7 +328,8 @@
         }
         
         .feature-icon {
-            font-size: 3rem;
+            width: 70px;
+            height: 70px;
             margin-bottom: 1.5rem;
         }
         
@@ -266,7 +366,14 @@
         .step {
             text-align: center;
             position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
         }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.3s; }
+        .step:nth-child(3) { animation-delay: 0.4s; }
+        .step:nth-child(4) { animation-delay: 0.5s; }
         
         .step-number {
             width: 80px;
@@ -310,6 +417,16 @@
             text-align: center;
         }
         
+        .stat {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .stat:nth-child(1) { animation-delay: 0.2s; }
+        .stat:nth-child(2) { animation-delay: 0.3s; }
+        .stat:nth-child(3) { animation-delay: 0.4s; }
+        .stat:nth-child(4) { animation-delay: 0.5s; }
+        
         .stat h3 {
             font-family: var(--font-display);
             font-size: 3.5rem;
@@ -339,12 +456,21 @@
             font-size: 3.5rem;
             color: var(--ocean-blue);
             margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
         }
         
         .cta-section p {
             font-size: 1.3rem;
             color: rgba(45, 45, 42, 0.8);
             margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+        
+        .cta-section .btn-primary {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
         }
         
         /* Footer */
@@ -403,8 +529,29 @@
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 1.5rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
             .nav-links {
                 display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .cta-button {
+                display: none;
+            }
+            
+            .hero {
+                margin-top: 60px;
+                padding: 4rem 1.5rem 3rem;
             }
             
             .hero h1 {
@@ -415,20 +562,58 @@
                 font-size: 1.2rem;
             }
             
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 1rem 2rem;
+                width: 100%;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .features {
+                padding: 4rem 1.5rem;
+            }
+            
             .features-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .how-it-works {
+                padding: 4rem 1.5rem;
             }
             
             .steps-grid {
                 grid-template-columns: 1fr;
             }
             
+            .stats {
+                padding: 3rem 1.5rem;
+            }
+            
             .stats-container {
                 grid-template-columns: repeat(2, 1fr);
             }
             
+            .cta-section {
+                padding: 4rem 1.5rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+            
+            footer {
+                padding: 3rem 1.5rem 2rem;
             }
         }
     </style>
@@ -442,13 +627,31 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
+            <li><a href="campaigns.html">Campaigns</a></li>
             <li><a href="safety.html">Safety & Trust</a></li>
             <li><a href="faq.html">FAQs</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="press.html">Press</a></li>
         </ul>
+        <button class="hamburger" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <a href="create-campaign.html" class="cta-button">Start Campaign</a>
     </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="campaigns.html">Campaigns</a>
+        <a href="safety.html">Safety & Trust</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="press.html">Press</a>
+        <a href="create-campaign.html" style="background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; text-align: center; margin-top: 1rem;">Start Campaign</a>
+    </div>
     
     <!-- Hero Section -->
     <section class="hero">
@@ -456,7 +659,7 @@
         <p>The Filipino crowdfunding platform built on the spirit of bayanihan—where communities come together to support dreams, overcome challenges, and create lasting impact.</p>
         <div class="hero-buttons">
             <a href="create-campaign.html" class="btn-primary">Start a Campaign</a>
-            <a href="#campaigns" class="btn-secondary">Browse Campaigns</a>
+            <a href="campaigns.html" class="btn-secondary">Browse Campaigns</a>
         </div>
     </section>
     
@@ -468,37 +671,60 @@
             
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🇵🇭</div>
+                    <svg class="feature-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M35 40 L50 25 L65 40 M35 40 L65 40 M45 50 Q50 60 55 50" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="50" cy="75" r="3" fill="#FF6B35"/>
+                    </svg>
                     <h3>Filipino-First</h3>
                     <p>Designed specifically for Filipino communities with GCash, PayMaya, and remittance integration.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">✨</div>
+                    <svg class="feature-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M50 20 L55 35 L70 35 L58 45 L63 60 L50 50 L37 60 L42 45 L30 35 L45 35 Z" fill="#FF6B35"/>
+                    </svg>
                     <h3>Full Transparency</h3>
                     <p>Every campaign shows receipts, photos, and regular updates. See exactly where your money goes.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
+                    <svg class="feature-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M35 40 L50 25 L65 40 L65 70 L35 70 Z" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M45 50 L50 55 L55 50" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                     <h3>Verified Trust</h3>
                     <p>Three-tier verification system with optional community endorsements from barangay leaders.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">💰</div>
+                    <svg class="feature-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <circle cx="40" cy="45" r="12" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <circle cx="60" cy="55" r="12" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M50 35 L50 65" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                     <h3>Lower Fees</h3>
                     <p>Only 3-6% platform fees—keeping more money in Filipino communities where it belongs.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
+                    <svg class="feature-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M50 25 L60 45 L80 45 L65 57 L72 77 L50 65 L28 77 L35 57 L20 45 L40 45 Z" fill="#FF6B35"/>
+                    </svg>
                     <h3>Fast Disbursement</h3>
                     <p>Quick withdrawal options including GCash, bank transfer, and remittance partners.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">🌊</div>
+                    <svg class="feature-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M35 45 Q35 30 50 25 Q65 30 65 45 L65 70 L35 70 Z" fill="none" stroke="#FF6B35" stroke-width="2"/>
+                        <path d="M50 50 L50 65 M40 60 L60 60" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                     <h3>Disaster Ready</h3>
                     <p>Rapid response campaigns for typhoons, earthquakes, and calamities affecting our communities.</p>
                 </div>
@@ -581,7 +807,7 @@
             <div class="footer-column">
                 <h4>Platform</h4>
                 <ul>
-                    <li><a href="#campaigns">Browse Campaigns</a></li>
+                    <li><a href="campaigns.html">Browse Campaigns</a></li>
                     <li><a href="create-campaign.html">Start Campaign</a></li>
                     <li><a href="about.html">About Us</a></li>
                 </ul>
@@ -598,6 +824,7 @@
                 <h4>Legal</h4>
                 <ul>
                     <li><a href="legal.html">Legal Disclaimer</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
                     <li><a href="press.html">Press</a></li>
                 </ul>
             </div>
@@ -606,5 +833,43 @@
             <p>&copy; 2026 BayanCo. All rights reserved.</p>
         </div>
     </footer>
+    
+    <script>
+        // Hamburger Menu Toggle
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburgerBtn.addEventListener('click', function() {
+            hamburgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all animated elements
+        document.querySelectorAll('.feature-card, .step, .stat, .section-title, .cta-section h2, .cta-section p, .cta-section .btn-primary').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>

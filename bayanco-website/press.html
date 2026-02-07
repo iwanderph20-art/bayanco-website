@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Press & Media | BayanCo</title>
+    <title>Press & Media - BayanCo Crowdfunding</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,121 +15,537 @@
             --charcoal: #2D2D2A;
             --warm-sand: #F4E8D8;
             --deep-purple: #5B2A86;
-            --font-display: 'Archivo Black', sans-serif;
-            --font-body: 'DM Sans', sans-serif;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-body); background: var(--coconut-cream); color: var(--charcoal); line-height: 1.6; }
-        
-        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05); }
-        .logo { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); text-decoration: none; letter-spacing: -1px; }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--sunset-orange); }
-        .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
-        
-        .page-header { background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); padding: 10rem 3rem 6rem; text-align: center; color: white; }
-        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
-        .page-header p { font-size: 1.3rem; max-width: 900px; margin: 0 auto; opacity: 0.95; line-height: 1.7; }
-        
-        .content-section { max-width: 1000px; margin: 0 auto; padding: 6rem 3rem; }
-        .content-section h2 { font-family: var(--font-display); font-size: 2.5rem; color: var(--ocean-blue); margin-bottom: 2rem; }
-        .content-section p { font-size: 1.15rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); margin-bottom: 1.5rem; }
-        
-        .story-angles { background: var(--warm-sand); padding: 3rem; border-radius: 16px; margin: 3rem 0; border-left: 5px solid var(--sunset-orange); }
-        .story-angles ul { list-style: none; margin-top: 1.5rem; }
-        .story-angles ul li { font-size: 1.1rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); margin-bottom: 1.5rem; padding-left: 2rem; position: relative; }
-        .story-angles ul li::before { content: '📰'; position: absolute; left: 0; }
-        
-        .contact-box { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 3rem; border-radius: 16px; text-align: center; margin-top: 4rem; }
-        .contact-box h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem; }
-        .contact-box p { font-size: 1.3rem; margin-bottom: 1.5rem; }
-        .contact-box a { color: var(--mango-yellow); text-decoration: none; font-weight: 700; font-size: 1.3rem; }
-        .contact-box a:hover { text-decoration: underline; }
-        
-        footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
-        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-        .footer-brand h3 { font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem; }
-        .footer-column h4 { color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem; }
-        .footer-column ul { list-style: none; }
-        .footer-column ul li { margin-bottom: 0.8rem; }
-        .footer-column ul li a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
-        .footer-column ul li a:hover { color: var(--mango-yellow); }
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background-color: var(--coconut-cream);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--ocean-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .cta-button {
+            background-color: var(--sunset-orange);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #E55A25;
+        }
+
+        .cta-button.nav-cta {
+            display: inline-block;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--charcoal);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Main Content */
+        .page-header {
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Story Angles Section */
+        .story-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+        }
+
+        .story-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .story-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .story-section li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--warm-sand);
+            border-left: 4px solid var(--sunset-orange);
+            border-radius: 4px;
+        }
+
+        .story-section li strong {
+            color: var(--ocean-blue);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Media Contact Box */
+        .media-contact {
+            background: linear-gradient(135deg, var(--island-teal), var(--ocean-blue));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .media-contact h2 {
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .media-contact p {
+            margin-bottom: 1rem;
+        }
+
+        .media-contact a {
+            display: inline-block;
+            background: var(--sunset-orange);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .media-contact a:hover {
+            background-color: #E55A25;
+        }
+
+        /* Press Kit Section */
+        .press-kit {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+        }
+
+        .press-kit h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .press-kit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .kit-item {
+            background: var(--warm-sand);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .kit-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--sunset-orange);
+        }
+
+        .kit-item h3 {
+            color: var(--ocean-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .kit-item p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .kit-item a {
+            display: inline-block;
+            color: var(--sunset-orange);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .kit-item a:hover {
+            color: #E55A25;
+        }
+
+        /* In the News Section */
+        .news-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+        }
+
+        .news-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .news-placeholder {
+            background: var(--warm-sand);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+            color: #999;
+        }
+
+        .news-placeholder p {
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 1rem;
+            color: var(--mango-yellow);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .page-header h1 { font-size: 2.5rem; }
-            .footer-content { grid-template-columns: 1fr; }
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .cta-button.nav-cta {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .press-kit-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="logo">BayanCo</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="safety.html">Safety & Trust</a></li>
-            <li><a href="faq.html">FAQs</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="press.html">Press</a></li>
-        </ul>
-        <a href="#start" class="cta-button">Start Campaign</a>
-    </nav>
-    
-    <div class="page-header">
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BayanCo</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="campaigns.html">Campaigns</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="press.html">Press</a></li>
+                    <li><a href="create-campaign.html" class="cta-button nav-cta">Start Campaign</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" onclick="this.classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="page-header">
         <h1>Press & Media</h1>
-        <p>BayanCo is building a Filipino-first crowdfunding platform that helps communities mobilize support for medical emergencies, education, community projects, and disaster relief.</p>
-    </div>
-    
-    <div class="content-section">
-        <h2>Story Angles</h2>
-        <div class="story-angles">
+        <p>Learn about BayanCo's impact on Filipino communities worldwide</p>
+    </section>
+
+    <div class="container">
+        <div class="story-section">
+            <h2>Story Angles</h2>
             <ul>
-                <li><strong>A modern bayanihan platform</strong> designed for Filipino donation behavior and trust.</li>
-                <li><strong>Local verification and community endorsements</strong> to strengthen legitimacy and reduce fraud.</li>
-                <li><strong>Disaster response campaigns</strong> with rapid mobilization for typhoons and calamities.</li>
-                <li><strong>Lower fees (3–6%)</strong> compared to international platforms, keeping more money in Filipino communities.</li>
-                <li><strong>OFW integration:</strong> Connecting overseas Filipinos with hometown needs through remittance partnerships.</li>
+                <li>
+                    <strong>Empowering Barangay Communities</strong>
+                    BayanCo brings grassroots crowdfunding directly to Filipino communities, enabling local projects and entrepreneurs to access capital without traditional gatekeepers.
+                </li>
+                <li>
+                    <strong>Trust at Scale</strong>
+                    Our multi-tiered verification system and community endorsements create transparency while protecting both campaign creators and donors from fraud.
+                </li>
+                <li>
+                    <strong>Financial Inclusion for OFWs</strong>
+                    Filipino overseas workers can support their hometowns and families directly through meaningful investment in community-driven initiatives.
+                </li>
+                <li>
+                    <strong>Real Social Impact Metrics</strong>
+                    Unlike traditional crowdfunding, BayanCo tracks and validates real-world outcomes of funded campaigns, demonstrating tangible community benefits.
+                </li>
+                <li>
+                    <strong>Digital Transformation in Rural Philippines</strong>
+                    BayanCo bridges the digital divide, bringing modern financial technology to barangays and municipalities previously underserved by fintech solutions.
+                </li>
             </ul>
         </div>
-        
-        <div class="contact-box">
-            <h3>Media Inquiries</h3>
-            <p>For press releases, interviews, or partnership opportunities:</p>
-            <p><a href="/cdn-cgi/l/email-protection#4737352234340725263e2629242869283520"><span class="__cf_email__" data-cfemail="7b0b091e08083b191a021a1518145514091c">[email&#160;protected]</span></a></p>
+
+        <div class="media-contact">
+            <h2>Media Contact</h2>
+            <p>For press inquiries, interview requests, and media kit requests:</p>
+            <a href="mailto:press@bayanco.org">press@bayanco.org</a>
+        </div>
+
+        <div class="press-kit">
+            <h2>Press Kit</h2>
+            <div class="press-kit-grid">
+                <div class="kit-item">
+                    <h3>Logo & Branding</h3>
+                    <p>High-resolution BayanCo logos, color palette, and typography guidelines for media use.</p>
+                    <a href="#download">Download Assets</a>
+                </div>
+
+                <div class="kit-item">
+                    <h3>Company Overview</h3>
+                    <p>Comprehensive company profile, mission statement, and founding story in multiple formats.</p>
+                    <a href="#download">Download Fact Sheet</a>
+                </div>
+
+                <div class="kit-item">
+                    <h3>Executive Bios</h3>
+                    <p>Detailed biographies and professional photos of BayanCo leadership team members.</p>
+                    <a href="#download">Download Bios</a>
+                </div>
+
+                <div class="kit-item">
+                    <h3>Product Screenshots</h3>
+                    <p>High-quality screenshots and video footage of the BayanCo platform in action.</p>
+                    <a href="#download">Download Media</a>
+                </div>
+
+                <div class="kit-item">
+                    <h3>Impact Statistics</h3>
+                    <p>Current data on campaigns, fundraising volume, and community impact metrics.</p>
+                    <a href="#download">Download Stats</a>
+                </div>
+
+                <div class="kit-item">
+                    <h3>Campaign Case Studies</h3>
+                    <p>Detailed stories of successful campaigns and their real-world impact on communities.</p>
+                    <a href="#download">Download Cases</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="news-section">
+            <h2>In the News</h2>
+            <div class="news-placeholder">
+                <p>Check back soon for BayanCo coverage in major publications and media outlets.</p>
+            </div>
         </div>
     </div>
-    
+
     <footer>
         <div class="footer-content">
-            <div class="footer-brand">
-                <h3>BayanCo</h3>
-                <p>The Filipino crowdfunding platform built on the spirit of bayanihan. </p>
-            </div>
-            <div class="footer-column">
-                <h4>Platform</h4>
+            <div class="footer-section">
+                <h3>Campaigns</h3>
                 <ul>
-                    <li><a href="#campaigns">Browse Campaigns</a></li>
-                    <li><a href="#create">Start Campaign</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="campaigns.html">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start a Campaign</a></li>
+                    <li><a href="faq.html">Campaign FAQ</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>Support</h4>
+
+            <div class="footer-section">
+                <h3>Learn</h3>
                 <ul>
-                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="about.html">About BayanCo</a></li>
                     <li><a href="safety.html">Safety & Trust</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>Legal</h4>
+
+            <div class="footer-section">
+                <h3>Support</h3>
                 <ul>
-                    <li><a href="legal.html">Legal Disclaimer</a></li>
-                    <li><a href="press.html">Press</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="press.html">Press & Media</a></li>
+                    <li><a href="legal.html">Legal Information</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal.html">Terms of Service</a></li>
+                    <li><a href="press.html">Press Kit</a></li>
                 </ul>
             </div>
         </div>
-        <di
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

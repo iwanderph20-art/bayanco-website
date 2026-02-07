@@ -1,0 +1,10 @@
+{
+  "name": "bayanco-website",
+  "version": "1.0.0",
+  "description": "BayanCo - Filipino Crowdfunding Platform",
+  "scripts": {
+    "dev": "npx wrangler pages dev bayanco-website --port 8788",
+    "deploy": "npx wrangler pages deploy bayanco-website --project-name=bayanco-website"
+  },
+  "private": true
+}

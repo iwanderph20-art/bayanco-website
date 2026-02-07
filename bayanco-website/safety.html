@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safety & Trust | BayanCo</title>
+    <title>Safety & Trust - BayanCo Crowdfunding</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,149 +15,767 @@
             --charcoal: #2D2D2A;
             --warm-sand: #F4E8D8;
             --deep-purple: #5B2A86;
-            --font-display: 'Archivo Black', sans-serif;
-            --font-body: 'DM Sans', sans-serif;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-body); background: var(--coconut-cream); color: var(--charcoal); line-height: 1.6; }
-        
-        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05); }
-        .logo { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); text-decoration: none; letter-spacing: -1px; }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--sunset-orange); }
-        .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
-        
-        .page-header { background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); padding: 10rem 3rem 6rem; text-align: center; color: white; }
-        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
-        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
-        
-        .content-section { max-width: 1200px; margin: 0 auto; padding: 6rem 3rem; }
-        .content-section h2 { font-family: var(--font-display); font-size: 2.5rem; color: var(--ocean-blue); margin-bottom: 2rem; }
-        .content-section h3 { font-family: var(--font-display); font-size: 1.8rem; color: var(--sunset-orange); margin: 2rem 0 1rem; }
-        .content-section p, .content-section ul li { font-size: 1.15rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); margin-bottom: 1.5rem; }
-        .content-section ul { list-style: none; margin: 2rem 0; }
-        .content-section ul li { padding-left: 2rem; position: relative; }
-        .content-section ul li::before { content: '✓'; position: absolute; left: 0; color: var(--island-teal); font-weight: bold; font-size: 1.2rem; }
-        
-        .bg-white { background: var(--coconut-cream); }
-        .bg-gray { background: var(--warm-sand); }
-        
-        .badge { display: inline-block; background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); color: white; padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; margin-bottom: 1rem; font-size: 0.95rem; }
-        
-        footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
-        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-        .footer-brand h3 { font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem; }
-        .footer-column h4 { color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem; }
-        .footer-column ul { list-style: none; }
-        .footer-column ul li { margin-bottom: 0.8rem; }
-        .footer-column ul li a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
-        .footer-column ul li a:hover { color: var(--mango-yellow); }
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background-color: var(--coconut-cream);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--ocean-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .cta-button {
+            background-color: var(--sunset-orange);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #E55A25;
+        }
+
+        .cta-button.nav-cta {
+            display: inline-block;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--charcoal);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Main Content */
+        .page-header {
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ocean-blue);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--sunset-orange);
+        }
+
+        /* Verification Levels */
+        .verification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .verification-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--ocean-blue);
+        }
+
+        .verification-card:nth-child(2) {
+            border-top-color: var(--island-teal);
+        }
+
+        .verification-card:nth-child(3) {
+            border-top-color: var(--sunset-orange);
+        }
+
+        .verification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .verification-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .verification-card h3 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--warm-sand);
+            color: var(--ocean-blue);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .verification-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .verification-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .verification-card li {
+            padding-left: 1.5rem;
+            position: relative;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .verification-card li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--island-teal);
+            font-weight: bold;
+        }
+
+        /* Community Endorsements Section */
+        .endorsements-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 4rem;
+        }
+
+        .endorsements-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .endorsements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .endorsement-item {
+            background: var(--warm-sand);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #ddd;
+        }
+
+        .endorsement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .endorsement-item h4 {
+            color: var(--ocean-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .endorsement-item p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Fraud Prevention Section */
+        .fraud-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 4rem;
+        }
+
+        .fraud-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .fraud-intro {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .fraud-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .fraud-item {
+            background: linear-gradient(135deg, #FFF8F0, #F4E8D8);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--sunset-orange);
+        }
+
+        .fraud-item h4 {
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .fraud-item p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Reporting Section */
+        .reporting-section {
+            background: linear-gradient(135deg, var(--island-teal), var(--ocean-blue));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .reporting-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .reporting-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reporting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .reporting-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .reporting-item h4 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .reporting-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* Commitment Section */
+        .commitment-section {
+            background: var(--warm-sand);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .commitment-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .commitment-section p {
+            color: #666;
+            max-width: 600px;
+            margin: 1.5rem auto;
+            font-size: 1.05rem;
+        }
+
+        .commitment-cta {
+            display: inline-block;
+            background-color: var(--sunset-orange);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .commitment-cta:hover {
+            background-color: #E55A25;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 1rem;
+            color: var(--mango-yellow);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .page-header h1 { font-size: 2.5rem; }
-            .footer-content { grid-template-columns: 1fr; }
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .cta-button.nav-cta {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .verification-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .verification-icon {
+                font-size: 2.5rem;
+            }
+
+            .fraud-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reporting-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="logo">BayanCo</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="safety.html">Safety & Trust</a></li>
-            <li><a href="faq.html">FAQs</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="press.html">Press</a></li>
-        </ul>
-        <a href="#start" class="cta-button">Start Campaign</a>
-    </nav>
-    
-    <div class="page-header">
-        <h1>Safety & Trust</h1>
-        <p>We take trust seriously. BayanCo combines verification, automated risk checks, community reporting, and human review to protect donors and campaigners.</p>
-    </div>
-    
-    <div class="content-section bg-white">
-        <h2>Verification Levels</h2>
-        
-        <h3><span class="badge">✓ Basic</span> Phone + Email</h3>
-        <p><strong>Instant verification</strong> - Quick and easy to get started. Suitable for smaller campaigns from trusted community members.</p>
-        
-        <h3><span class="badge">✓✓ Enhanced</span> Government ID</h3>
-        <p><strong>24-hour review</strong> - We verify your identity with government-issued ID. Builds stronger trust for medium-sized campaigns.</p>
-        
-        <h3><span class="badge">✓✓✓ Verified</span> Barangay Clearance</h3>
-        <p><strong>3-5 day review</strong> - The highest level of verification includes barangay clearance. Recommended for large campaigns and maximum donor confidence.</p>
-    </div>
-    
-    <div class="content-section bg-gray">
-        <h2>Community Endorsements</h2>
-        <p><em>(Optional but recommended)</em></p>
-        <p>Campaigners can request endorsements from:</p>
-        <ul>
-            <li>Barangay captain</li>
-            <li>Church/religious leader</li>
-            <li>3+ neighbors</li>
-        </ul>
-        <p>Endorsers receive a link via SMS/email to vouch for the campaign, adding an extra layer of community trust.</p>
-    </div>
-    
-    <div class="content-section bg-white">
-        <h2>Fraud Prevention</h2>
-        <p>We automatically flag risk signals such as:</p>
-        <ul>
-            <li>High goals without ID verification</li>
-            <li>Copied campaign descriptions</li>
-            <li>Suspicious image sources</li>
-            <li>Unusual campaign creation patterns</li>
-            <li>Suspicious donation spikes</li>
-        </ul>
-        <p><strong>Manual review triggers</strong> include flagged campaigns, multiple user reports, and very large requested amounts.</p>
-    </div>
-    
-    <div class="content-section bg-gray">
-        <h2>Community Reporting</h2>
-        <p>Every campaign can be reported for fraud, inappropriate content, scams, or fake identity. Multiple reports can auto-pause a campaign until reviewed.</p>
-        <p>Our trust and safety team investigates all reports within 24 hours to protect our community.</p>
-    </div>
-    
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3>BayanCo</h3>
-                <p>The Filipino crowdfunding platform built on the spirit of bayanihan. </p>
-            </div>
-            <div class="footer-column">
-                <h4>Platform</h4>
-                <ul>
-                    <li><a href="#campaigns">Browse Campaigns</a></li>
-                    <li><a href="#create">Start Campaign</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="faq.html">FAQs</a></li>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BayanCo</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="campaigns.html">Campaigns</a></li>
                     <li><a href="safety.html">Safety & Trust</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="press.html">Press</a></li>
+                    <li><a href="create-campaign.html" class="cta-button nav-cta">Start Campaign</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" onclick="this.classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Safety & Trust</h1>
+        <p>We're committed to creating a secure, transparent crowdfunding platform</p>
+    </section>
+
+    <div class="container">
+        <!-- Verification Levels -->
+        <h2 class="section-title">Verification Levels</h2>
+        <div class="verification-grid">
+            <div class="verification-card">
+                <div class="verification-icon">📱</div>
+                <h3>Basic</h3>
+                <span class="badge">Instant</span>
+                <p>Get started immediately with email and phone verification.</p>
+                <ul>
+                    <li>Phone verification</li>
+                    <li>Email confirmation</li>
+                    <li>Basic profile setup</li>
+                    <li>Create campaigns up to PHP 50,000</li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>Legal</h4>
+
+            <div class="verification-card">
+                <div class="verification-icon">🆔</div>
+                <h3>Enhanced</h3>
+                <span class="badge">24 Hours</span>
+                <p>Verified identity for higher credibility and campaign limits.</p>
                 <ul>
-                    <li><a href="legal.html">Legal Disclaimer</a></li>
-                    <li><a href="press.html">Press</a></li>
+                    <li>Government-issued ID verification</li>
+                    <li>Manual review (24 hours)</li>
+                    <li>Increased campaign funding limits</li>
+                    <li>Higher donor confidence level</li>
+                </ul>
+            </div>
+
+            <div class="verification-card">
+                <div class="verification-icon">✅</div>
+                <h3>Verified</h3>
+                <span class="badge">3-5 Days</span>
+                <p>Highest trust level with community endorsement.</p>
+                <ul>
+                    <li>Barangay clearance</li>
+                    <li>Community endorsement</li>
+                    <li>Background verification</li>
+                    <li>Unlimited campaign limits</li>
                 </ul>
             </div>
         </div>
+
+        <!-- Community Endorsements -->
+        <div class="endorsements-section">
+            <h2>Community Endorsements</h2>
+            <p style="color: #666; margin-bottom: 2rem;">BayanCo partners with barangay officials, community organizations, and local leaders to validate and endorse campaigns in their communities.</p>
+            
+            <div class="endorsements-grid">
+                <div class="endorsement-item">
+                    <div class="endorsement-icon">🏘️</div>
+                    <h4>Barangay Officials</h4>
+                    <p>Local officials verify creator identity and project feasibility</p>
+                </div>
+
+                <div class="endorsement-item">
+                    <div class="endorsement-icon">👥</div>
+                    <h4>Community Groups</h4>
+                    <p>NGOs and community organizations endorse legitimate projects</p>
+                </div>
+
+                <div class="endorsement-item">
+                    <div class="endorsement-icon">🤝</div>
+                    <h4>Local Leaders</h4>
+                    <p>Community leaders provide social validation and trust signals</p>
+                </div>
+
+                <div class="endorsement-item">
+                    <div class="endorsement-icon">📋</div>
+                    <h4>Public Records</h4>
+                    <p>Cross-reference with public databases and government records</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fraud Prevention -->
+        <div class="fraud-section">
+            <h2>Fraud Prevention</h2>
+            <p class="fraud-intro">We actively detect and prevent fraud using advanced monitoring systems and manual review. Here's what we watch for:</p>
+            
+            <div class="fraud-grid">
+                <div class="fraud-item">
+                    <h4>💰 Suspiciously Large Goals</h4>
+                    <p>We review campaigns with goals significantly higher than comparable projects in the same category.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>🔄 Duplicate Accounts</h4>
+                    <p>Our system detects multiple accounts from the same person attempting to create artificial campaigns or pledges.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>⚠️ Vague Project Descriptions</h4>
+                    <p>Campaigns lacking detail, realistic timelines, or clear funding allocation are flagged for additional review.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>📸 Low-Quality Media</h4>
+                    <p>Campaigns with no photos, AI-generated images, or heavily edited content receive extra scrutiny.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>🚩 Rapid Account Activity</h4>
+                    <p>New accounts attempting to launch campaigns immediately or making large pledges in short time periods are monitored.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>🗺️ Location Inconsistencies</h4>
+                    <p>We verify creator location matches project location and check for suspicious geographic patterns.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>📞 Contact Verification Failure</h4>
+                    <p>Creators unable to verify phone or email, or with false contact information, are blocked from fundraising.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>💳 Payment Pattern Anomalies</h4>
+                    <p>Unusual payment patterns or funding sources are flagged by our fraud detection algorithms.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>🔗 Similar Campaign Patterns</h4>
+                    <p>We detect and investigate campaigns with suspiciously similar descriptions, goals, or content.</p>
+                </div>
+
+                <div class="fraud-item">
+                    <h4>⭐ Fake Review Detection</h4>
+                    <p>We monitor for artificially inflated ratings, reviews, and endorsements using linguistic analysis.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Reporting -->
+        <div class="reporting-section">
+            <h2>Community Reporting System</h2>
+            <p>Our strongest defense against fraud is our community. Every donor and visitor can report suspicious campaigns.</p>
+            
+            <div class="reporting-grid">
+                <div class="reporting-item">
+                    <h4>Easy Reporting</h4>
+                    <p>One-click report button on every campaign for quick fraud alerts.</p>
+                </div>
+
+                <div class="reporting-item">
+                    <h4>Anonymous Reports</h4>
+                    <p>Report fraudulent activity safely without revealing your identity.</p>
+                </div>
+
+                <div class="reporting-item">
+                    <h4>Fast Investigation</h4>
+                    <p>All reports are reviewed within 24 hours by our safety team.</p>
+                </div>
+
+                <div class="reporting-item">
+                    <h4>Rapid Action</h4>
+                    <p>Verified fraud results in immediate campaign suspension and creator account termination.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Commitment -->
+        <div class="commitment-section">
+            <h2>Our Commitment to You</h2>
+            <p>BayanCo is dedicated to maintaining the highest standards of safety, transparency, and trust. Every campaign is reviewed by real people, every transaction is secure, and every report is taken seriously.</p>
+            <p>We believe that crowdfunding should be safe, accessible, and authentic—enabling real people to achieve real goals while protecting our community from fraud and abuse.</p>
+            <a href="contact.html" class="commitment-cta">Report a Security Issue</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Campaigns</h3>
+                <ul>
+                    <li><a href="campaigns.html">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start a Campaign</a></li>
+                    <li><a href="faq.html">Campaign FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Learn</h3>
+                <ul>
+                    <li><a href="about.html">About BayanCo</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="press.html">Press & Media</a></li>
+                    <li><a href="legal.html">Legal Information</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal.html">Terms of Service</a></li>
+                    <li><a href="press.html">Press Kit</a></li>
+                </ul>
+            </div>
+        </div>
+
         <div class="footer-bottom">
             <p>&copy; 2026 BayanCo. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Hamburger menu functionality
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.hamburger').classList.remove('active');
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>

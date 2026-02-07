@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Campaigns - BayanCo | Filipino Crowdfunding Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Filipino-inspired Color Palette */
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --warm-sand: #F4E8D8;
+            --deep-purple: #5B2A86;
+            
+            /* Typography */
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--coconut-cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Animated Background Pattern */
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--ocean-blue) 35px, var(--ocean-blue) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--sunset-orange) 35px, var(--sunset-orange) 70px);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05);
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--ocean-blue);
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--charcoal);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 248, 240, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem 3rem;
+            z-index: 999;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--sunset-orange);
+        }
+        
+        .mobile-menu.active {
+            display: flex;
+        }
+        
+        /* Page Header */
+        .page-header {
+            margin-top: 80px;
+            padding: 5rem 3rem;
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            color: white;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Main Content */
+        .campaigns-content {
+            padding: 4rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .filter-label {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filter-pill {
+            padding: 0.8rem 1.8rem;
+            border: 2px solid var(--ocean-blue);
+            background: white;
+            color: var(--ocean-blue);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+        
+        .filter-pill:hover {
+            background: var(--warm-sand);
+        }
+        
+        .filter-pill.active {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            border-color: var(--sunset-orange);
+        }
+        
+        /* Campaigns Grid */
+        .campaigns-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .campaign-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 78, 137, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .campaign-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 35px rgba(0, 78, 137, 0.15);
+        }
+        
+        .campaign-card.hidden {
+            display: none;
+        }
+        
+        .campaign-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #FF6B35, #FFB627);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .campaign-image.medical {
+            background: linear-gradient(135deg, #FF6B35, #FF8555);
+        }
+        
+        .campaign-image.education {
+            background: linear-gradient(135deg, #1A936F, #24C697);
+        }
+        
+        .campaign-image.business {
+            background: linear-gradient(135deg, #004E89, #0078D9);
+        }
+        
+        .campaign-image.emergency {
+            background: linear-gradient(135deg, #5B2A86, #8B4EC7);
+        }
+        
+        .campaign-image.community {
+            background: linear-gradient(135deg, #FFB627, #FFC855);
+        }
+        
+        .campaign-image.personal {
+            background: linear-gradient(135deg, #F4E8D8, #E8D4B8);
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .campaign-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .campaign-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--ocean-blue);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .campaign-description {
+            color: rgba(45, 45, 42, 0.7);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+        
+        .progress-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E8E8E8;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 0.8rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sunset-orange), var(--deep-purple));
+            border-radius: 50px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: rgba(45, 45, 42, 0.8);
+        }
+        
+        .progress-text .amount {
+            font-weight: 600;
+        }
+        
+        .campaign-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #EEE;
+            font-size: 0.9rem;
+            color: rgba(45, 45, 42, 0.7);
+        }
+        
+        .campaign-stats strong {
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+        
+        .donate-btn {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            padding: 0.9rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+        
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        /* CTA Section */
+        .start-campaign-cta {
+            padding: 5rem 3rem;
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            text-align: center;
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 4rem;
+        }
+        
+        .start-campaign-cta h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .start-campaign-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 4rem 3rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-column h4 {
+            color: var(--mango-yellow);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--mango-yellow);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 1.5rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .cta-button {
+                display: none;
+            }
+            
+            .page-header {
+                margin-top: 60px;
+                padding: 3rem 1.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .campaigns-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .filter-pills {
+                gap: 0.8rem;
+            }
+            
+            .filter-pill {
+                padding: 0.6rem 1.4rem;
+                font-size: 0.9rem;
+            }
+            
+            .campaigns-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .campaign-image {
+                height: 250px;
+            }
+            
+            .start-campaign-cta {
+                padding: 3rem 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .start-campaign-cta h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            footer {
+                padding: 3rem 1.5rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">BayanCo</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="campaigns.html">Campaigns</a></li>
+            <li><a href="safety.html">Safety & Trust</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="press.html">Press</a></li>
+        </ul>
+        <button class="hamburger" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <a href="create-campaign.html" class="cta-button">Start Campaign</a>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="campaigns.html">Campaigns</a>
+        <a href="safety.html">Safety & Trust</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contact.html">Contact</a>
+        <a href="press.html">Press</a>
+        <a href="create-campaign.html" style="background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; text-align: center; margin-top: 1rem;">Start Campaign</a>
+    </div>
+    
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Browse Campaigns</h1>
+        <p>Discover meaningful campaigns from Filipino communities. Support causes that matter and make a real difference.</p>
+    </section>
+    
+    <!-- Main Content -->
+    <section class="campaigns-content">
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <label class="filter-label">Filter by Category:</label>
+            <div class="filter-pills">
+                <button class="filter-pill active" data-category="all">All Campaigns</button>
+                <button class="filter-pill" data-category="medical">Medical</button>
+                <button class="filter-pill" data-category="education">Education</button>
+                <button class="filter-pill" data-category="business">Business</button>
+                <button class="filter-pill" data-category="emergency">Emergency</button>
+                <button class="filter-pill" data-category="community">Community</button>
+                <button class="filter-pill" data-category="personal">Personal</button>
+            </div>
+        </div>
+        
+        <!-- Campaigns Grid -->
+        <div class="campaigns-grid" id="campaignsGrid">
+            <!-- Campaign 1: Medical Emergency -->
+            <div class="campaign-card" data-category="medical">
+                <div class="campaign-image medical">
+                    <div class="category-badge">Medical</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Emergency Surgery Fund - Maria</h3>
+                    <p class="campaign-description">Help Maria get the life-saving surgery she urgently needs. Your donation will cover medical costs and post-operative care.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱65,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>1,245</strong> donors</span>
+                        <span><strong>18</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+            
+            <!-- Campaign 2: Education -->
+            <div class="campaign-card" data-category="education">
+                <div class="campaign-image education">
+                    <div class="category-badge">Education</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Scholarship Fund for Rural Students</h3>
+                    <p class="campaign-description">Support bright students from rural areas to pursue higher education and achieve their dreams of a better future.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱80,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>892</strong> donors</span>
+                        <span><strong>12</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+            
+            <!-- Campaign 3: Business -->
+            <div class="campaign-card" data-category="business">
+                <div class="campaign-image business">
+                    <div class="category-badge">Business</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Women's Sewing Cooperative Start-up</h3>
+                    <p class="campaign-description">Help start a sewing cooperative employing 20 women from the community, creating sustainable livelihoods and economic independence.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱45,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>678</strong> donors</span>
+                        <span><strong>25</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+            
+            <!-- Campaign 4: Disaster Relief -->
+            <div class="campaign-card" data-category="emergency">
+                <div class="campaign-image emergency">
+                    <div class="category-badge">Emergency</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Typhoon Relief - Barangay Recovery</h3>
+                    <p class="campaign-description">Urgent aid for families affected by recent typhoon. Your donation provides food, shelter, and rebuilding materials for survivors.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 92%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱92,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>3,456</strong> donors</span>
+                        <span><strong>5</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+            
+            <!-- Campaign 5: Community Project -->
+            <div class="campaign-card" data-category="community">
+                <div class="campaign-image community">
+                    <div class="category-badge">Community</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Community Water System Installation</h3>
+                    <p class="campaign-description">Build clean water access for 500 families in our remote barangay. A fundamental step toward better health and development.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 55%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱55,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>534</strong> donors</span>
+                        <span><strong>30</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+            
+            <!-- Campaign 6: Medical -->
+            <div class="campaign-card" data-category="medical">
+                <div class="campaign-image medical">
+                    <div class="category-badge">Medical</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Cancer Treatment Fund - Juan</h3>
+                    <p class="campaign-description">Support Juan's cancer treatment journey. Help cover chemotherapy sessions, medication, and travel costs for medical appointments.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 38%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱38,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>445</strong> donors</span>
+                        <span><strong>20</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+            
+            <!-- Campaign 7: Personal -->
+            <div class="campaign-card" data-category="personal">
+                <div class="campaign-image personal">
+                    <div class="category-badge">Personal</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Dream Scholarship - College Tuition</h3>
+                    <p class="campaign-description">Help me achieve my dream of completing college and becoming an engineer. Your support means everything to my family and future.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 72%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱72,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>612</strong> donors</span>
+                        <span><strong>14</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+            
+            <!-- Campaign 8: Community -->
+            <div class="campaign-card" data-category="community">
+                <div class="campaign-image community">
+                    <div class="category-badge">Community</div>
+                </div>
+                <div class="campaign-body">
+                    <h3 class="campaign-title">Community Sports Center Construction</h3>
+                    <p class="campaign-description">Build a safe space for youth to engage in sports and community programs. Keeping young people active, healthy, and united.</p>
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 28%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span><strong class="amount">₱28,000</strong> raised</span>
+                            <span>of ₱100,000</span>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <span><strong>289</strong> donors</span>
+                        <span><strong>45</strong> days left</span>
+                    </div>
+                    <button class="donate-btn">Donate Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Start Campaign CTA -->
+    <div class="campaigns-content">
+        <div class="start-campaign-cta">
+            <h2>Have a Campaign of Your Own?</h2>
+            <p>Join thousands of Filipinos who have raised funds through BayanCo. Your story matters, and the community is ready to support you.</p>
+            <a href="create-campaign.html" class="btn-primary">Start Your Campaign</a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>BayanCo</h3>
+                <p>The Filipino crowdfunding platform built on the spirit of bayanihan.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="campaigns.html">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start Campaign</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="legal.html">Legal Disclaimer</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="press.html">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Hamburger Menu Toggle
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburgerBtn.addEventListener('click', function() {
+            hamburgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+        
+        // Campaign Filter Functionality
+        const filterPills = document.querySelectorAll('.filter-pill');
+        const campaignCards = document.querySelectorAll('.campaign-card');
+        
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active state
+                filterPills.forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter campaigns
+                campaignCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.classList.remove('hidden');
+                        card.style.animation = 'fadeInUp 0.6s ease forwards';
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        
+        // Add animation stagger
+        let delay = 0;
+        campaignCards.forEach(card => {
+            card.style.animationDelay = (delay * 0.1) + 's';
+            delay++;
+        });
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe animated elements
+        document.querySelectorAll('.page-header h1, .page-header p, .filter-bar').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

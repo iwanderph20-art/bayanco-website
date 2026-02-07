@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQs | BayanCo</title>
+    <title>Frequently Asked Questions - BayanCo Crowdfunding</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,153 +15,609 @@
             --charcoal: #2D2D2A;
             --warm-sand: #F4E8D8;
             --deep-purple: #5B2A86;
-            --font-display: 'Archivo Black', sans-serif;
-            --font-body: 'DM Sans', sans-serif;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-body); background: var(--coconut-cream); color: var(--charcoal); line-height: 1.6; }
-        
-        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05); }
-        .logo { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); text-decoration: none; letter-spacing: -1px; }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--sunset-orange); }
-        .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
-        
-        .page-header { background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); padding: 10rem 3rem 6rem; text-align: center; color: white; }
-        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
-        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
-        
-        .faq-section { max-width: 1000px; margin: 0 auto; padding: 6rem 3rem; }
-        .faq-category { margin-bottom: 4rem; }
-        .faq-category h2 { font-family: var(--font-display); font-size: 2.2rem; color: var(--ocean-blue); margin-bottom: 2rem; border-left: 5px solid var(--sunset-orange); padding-left: 1.5rem; }
-        .faq-item { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 15px rgba(0, 78, 137, 0.08); border-left: 3px solid var(--mango-yellow); }
-        .faq-item h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--ocean-blue); margin-bottom: 1rem; }
-        .faq-item p { font-size: 1.1rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); }
-        
-        footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
-        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-        .footer-brand h3 { font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem; }
-        .footer-column h4 { color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem; }
-        .footer-column ul { list-style: none; }
-        .footer-column ul li { margin-bottom: 0.8rem; }
-        .footer-column ul li a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
-        .footer-column ul li a:hover { color: var(--mango-yellow); }
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background-color: var(--coconut-cream);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--ocean-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .cta-button {
+            background-color: var(--sunset-orange);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #E55A25;
+        }
+
+        .cta-button.nav-cta {
+            display: inline-block;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--charcoal);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Main Content */
+        .page-header {
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* FAQ Section */
+        .faq-category {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .faq-category-title {
+            font-family: 'Archivo Black', sans-serif;
+            background: linear-gradient(135deg, var(--island-teal), var(--ocean-blue));
+            color: white;
+            padding: 1.5rem 2rem;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .accordion {
+            padding: 0;
+            list-style: none;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #eee;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-button {
+            background: none;
+            border: none;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            text-align: left;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .accordion-button:hover {
+            background-color: var(--warm-sand);
+        }
+
+        .accordion-button::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--sunset-orange);
+            font-weight: 700;
+            transition: transform 0.3s;
+        }
+
+        .accordion-button.active::after {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 0 2rem 1.5rem;
+            color: #666;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CTA Section */
+        .faq-cta {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--mango-yellow));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .faq-cta h2 {
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .faq-cta p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .faq-cta a {
+            display: inline-block;
+            background: var(--ocean-blue);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .faq-cta a:hover {
+            background-color: #003360;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Archivo Black', sans-serif;
+            margin-bottom: 1rem;
+            color: var(--mango-yellow);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .page-header h1 { font-size: 2.5rem; }
-            .footer-content { grid-template-columns: 1fr; }
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .cta-button.nav-cta {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .accordion-button {
+                padding: 1.25rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .accordion-content {
+                padding: 0 1.5rem 1.25rem;
+            }
+
+            .faq-cta h2 {
+                font-size: 1.4rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="logo">BayanCo</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="safety.html">Safety & Trust</a></li>
-            <li><a href="faq.html">FAQs</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="press.html">Press</a></li>
-        </ul>
-        <a href="#start" class="cta-button">Start Campaign</a>
-    </nav>
-    
-    <div class="page-header">
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BayanCo</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="campaigns.html">Campaigns</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="press.html">Press</a></li>
+                    <li><a href="create-campaign.html" class="cta-button nav-cta">Start Campaign</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" onclick="this.classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="page-header">
         <h1>Frequently Asked Questions</h1>
-        <p>Everything you need to know about creating campaigns, donating, and staying safe on BayanCo</p>
+        <p>Find answers to common questions about BayanCo</p>
+    </section>
+
+    <div class="container">
+        <!-- For Campaign Creators -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">For Campaign Creators</h2>
+            <ul class="accordion">
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        What are the fees and costs for creating a campaign?
+                    </button>
+                    <div class="accordion-content">
+                        BayanCo charges a 5% platform fee on successfully funded campaigns. There are no upfront costs to create a campaign. If your campaign doesn't reach its goal, you pay nothing. We also charge a payment processing fee (2.9% + PHP 5) when funds are transferred.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        How long can my campaign run?
+                    </button>
+                    <div class="accordion-content">
+                        Campaign duration can range from 7 to 90 days. You choose the timeline when creating your campaign. Most campaigns run for 30-45 days to maintain momentum and donor engagement.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        How do I build trust with potential donors?
+                    </button>
+                    <div class="accordion-content">
+                        Share detailed project descriptions, high-quality photos and videos, your personal story, and realistic timelines. Complete verification steps (phone, email, or government ID) to increase credibility. Regular updates and transparent communication also build strong donor relationships.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        When and how can I withdraw my funds?
+                    </button>
+                    <div class="accordion-content">
+                        Once your campaign reaches its goal, funds become available for withdrawal within 7-10 business days. You can withdraw to your registered bank account or preferred payment method. We ensure secure processing and provide detailed transaction records.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        What happens if I don't reach my funding goal?
+                    </button>
+                    <div class="accordion-content">
+                        If you don't reach your goal by the campaign end date, all pledges are refunded automatically to donors. You keep nothing, and there are no charges to you. You can create a new campaign and try again.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        Am I required to provide updates on my campaign?
+                    </button>
+                    <div class="accordion-content">
+                        Yes, regular updates are strongly encouraged and expected. We recommend posting updates at least monthly during your campaign and after it ends. Updates help maintain donor trust, show project progress, and increase likelihood of campaign success. Lack of updates may result in campaign removal.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- For Donors -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">For Donors</h2>
+            <ul class="accordion">
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        What payment methods are accepted?
+                    </button>
+                    <div class="accordion-content">
+                        We accept major credit cards (Visa, Mastercard), debit cards, bank transfers, e-wallets (GCash, PayMaya), and other local Philippine payment methods. All transactions are encrypted and processed securely.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        Can I donate anonymously?
+                    </button>
+                    <div class="accordion-content">
+                        Yes, you can choose to donate anonymously when making your pledge. Your name will not be displayed on the campaign page, but you'll still receive updates and receipts. Campaign creators will not see your personal information if you choose this option.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        Will I receive a receipt for my donation?
+                    </button>
+                    <div class="accordion-content">
+                        Yes, you'll automatically receive an email receipt for your donation. You can also download receipts from your donor dashboard anytime. If you're a verified donor, you may receive a tax-deductible receipt for eligible campaigns.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        What's the refund policy if the campaign fails?
+                    </button>
+                    <div class="accordion-content">
+                        If a campaign doesn't reach its funding goal, your donation is automatically refunded to your original payment method within 7-10 business days. No action is needed on your part. You'll receive a notification when the refund is processed.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        How do I report suspected fraud or scams?
+                    </button>
+                    <div class="accordion-content">
+                        Use the "Report" button on any campaign page or contact our support team at support@bayanco.org. Provide details about your concern, and our team will investigate. We take all fraud reports seriously and may suspend campaigns or remove creators found to be fraudulent.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Safety & Trust -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">Safety & Trust</h2>
+            <ul class="accordion">
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        How does BayanCo prevent scams and fraud?
+                    </button>
+                    <div class="accordion-content">
+                        We use AI-powered fraud detection, manual review of campaigns, and multi-tier verification systems. We monitor for suspicious patterns, verify creator identity and location, check for duplicate accounts, and maintain a community reporting system. We also work with authorities to investigate serious fraud.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        What are the verification levels on BayanCo?
+                    </button>
+                    <div class="accordion-content">
+                        Basic verification requires phone and email confirmation (instant). Enhanced verification requires government-issued ID verification (24 hours). Verified status requires a barangay clearance or community endorsement (3-5 days). Higher verification levels increase campaign credibility and donor confidence.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        What is community endorsement and how does it help?
+                    </button>
+                    <div class="accordion-content">
+                        Community endorsements are recommendations from local leaders (barangay officials, community organizations) confirming a creator's legitimacy and project value. This provides third-party validation and significantly boosts campaign credibility, especially in rural communities where trust networks are strong.
+                    </div>
+                </li>
+
+                <li class="accordion-item">
+                    <button class="accordion-button" onclick="toggleAccordion(this)">
+                        How does BayanCo protect my personal data?
+                    </button>
+                    <div class="accordion-content">
+                        We use bank-level encryption for all data transmission, comply with Philippine data protection laws, and never share personal information with third parties without consent. We regularly conduct security audits and employ professional security teams. Read our full Privacy Policy for details.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="faq-cta">
+            <h2>Still have questions?</h2>
+            <p>Our support team is here to help. Reach out anytime for personalized assistance.</p>
+            <a href="contact.html">Contact Us</a>
+        </div>
     </div>
-    
-    <div class="faq-section">
-        <div class="faq-category">
-            <h2>For Campaign Creators</h2>
-            
-            <div class="faq-item">
-                <h3>How much does it cost to start a campaign?</h3>
-                <p>Creating a campaign is free. Fees apply only when you successfully raise funds (3–6% tiered platform fee) plus payment processing depending on the payment method.</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>How long can my campaign run?</h3>
-                <p>Campaign duration can be set between 7–90 days (default 30 days).</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>How do I build trust for my campaign?</h3>
-                <p>Use verification (Basic/Enhanced/Verified) and request community endorsements from your barangay captain, religious leader, or neighbors.</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>How do I withdraw funds?</h3>
-                <p>Withdraw when the campaign ends (or request early withdrawal). Disbursement options include GCash, bank transfer, check pickup, and select remittance partners.</p>
-            </div>
-        </div>
-        
-        <div class="faq-category">
-            <h2>For Donors</h2>
-            
-            <div class="faq-item">
-                <h3>What payment methods can I use?</h3>
-                <p>GCash, PayMaya, credit/debit card, bank transfer, over-the-counter (7-Eleven, M Lhuillier), and international card options are supported.</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>Can I donate anonymously?</h3>
-                <p>Yes—donors can choose to show their name or donate anonymously when making a contribution.</p>
-            </div>
-            
-            <div class="faq-item">
-                <h3>Will I get a receipt?</h3>
-                <p>Yes—receipts are emailed automatically after successful payment for your records.</p>
-            </div>
-        </div>
-        
-        <div class="faq-category">
-            <h2>Safety</h2>
-            
-            <div class="faq-item">
-                <h3>How do you prevent scams?</h3>
-                <p>We use automated red flags, community reporting, and human review. Our system detects suspicious patterns, copied content, and fraudulent behavior. All flagged campaigns undergo manual review within 24 hours.</p>
-            </div>
-        </div>
-    </div>
-    
+
     <footer>
         <div class="footer-content">
-            <div class="footer-brand">
-                <h3>BayanCo</h3>
-                <p>The Filipino crowdfunding platform built on the spirit of bayanihan. </p>
-            </div>
-            <div class="footer-column">
-                <h4>Platform</h4>
+            <div class="footer-section">
+                <h3>Campaigns</h3>
                 <ul>
-                    <li><a href="#campaigns">Browse Campaigns</a></li>
-                    <li><a href="#create">Start Campaign</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="campaigns.html">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start a Campaign</a></li>
+                    <li><a href="faq.html">Campaign FAQ</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>Support</h4>
+
+            <div class="footer-section">
+                <h3>Learn</h3>
                 <ul>
-                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="about.html">About BayanCo</a></li>
                     <li><a href="safety.html">Safety & Trust</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>Legal</h4>
+
+            <div class="footer-section">
+                <h3>Support</h3>
                 <ul>
-                    <li><a href="legal.html">Legal Disclaimer</a></li>
-                    <li><a href="press.html">Press</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="press.html">Press & Media</a></li>
+                    <li><a href="legal.html">Legal Information</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal.html">Terms of Service</a></li>
+                    <li><a href="press.html">Press Kit</a></li>
                 </ul>
             </div>
         </div>
+
         <div class="footer-bottom">
             <p>&copy; 2026 BayanCo. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        function toggleAccordion(button) {
+            const isActive = button.classList.contains('active');
+            const content = button.nextElementSibling;
+            
+            // Close all other items
+            document.querySelectorAll('.accordion-button').forEach(btn => {
+                btn.classList.remove('active');
+                btn.nextElementSibling.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+                button.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
