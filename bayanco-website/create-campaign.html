@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Your Campaign - BayanCo</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --deep-purple: #5B2A86;
+            --coconut-cream: #FFF8F0;
+            --warm-sand: #F4E8D8;
+            --charcoal: #2D2D2A;
+            
+            --font-display: 'Archivo Black', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--warm-cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 56, 168, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--ocean-blue), var(--island-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--ocean-blue);
+        }
+        
+        /* Page Header */
+        .page-header {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--ocean-blue), var(--island-teal));
+            color: white;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Form Container */
+        .form-container {
+            max-width: 800px;
+            margin: -50px auto 4rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .form-section h2 {
+            color: var(--ocean-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--mango-yellow);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+        }
+        
+        label .required {
+            color: #DC3545;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--island-teal);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .file-upload {
+            border: 2px dashed #E0E0E0;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--island-teal);
+            background: rgba(45, 125, 210, 0.05);
+        }
+        
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        
+        .fee-calculator {
+            background: var(--warm-cream);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--island-teal);
+            margin: 1.5rem 0;
+        }
+        
+        .fee-breakdown {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .fee-row {
+            display: contents;
+        }
+        
+        .fee-row.total {
+            font-weight: 700;
+            color: var(--ocean-blue);
+            font-size: 1.1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, var(--ocean-blue), var(--island-teal));
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 56, 168, 0.3);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 56, 168, 0.4);
+        }
+        
+        .help-text {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .alert-info {
+            background: #D1ECF1;
+            border-left: 4px solid #0C5460;
+            color: #0C5460;
+        }
+        
+        .alert-warning {
+            background: #FFF3CD;
+            border-left: 4px solid #856404;
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .form-container {
+                margin: -30px 1rem 2rem;
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BayanCo</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="safety.html">Safety & Trust</a></li>
+                <li><a href="faq.html">FAQs</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="press.html">Press</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Start Your Campaign</h1>
+        <p>Share your story and get the support you need</p>
+    </div>
+
+    <div class="form-container">
+        <div class="alert alert-info">
+            <strong>📋 Before you start:</strong> Please have ready: Your story, goal amount, photos, and a valid GCash number or Philippine bank account to receive funds.
+        </div>
+
+        <form id="campaignForm">
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h2>1. Basic Information</h2>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="help-text">We'll send campaign updates and notifications here</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Mobile Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="09XX XXX XXXX" required>
+                </div>
+            </div>
+
+            <!-- Campaign Details -->
+            <div class="form-section">
+                <h2>2. Campaign Details</h2>
+                
+                <div class="form-group">
+                    <label for="campaignTitle">Campaign Title <span class="required">*</span></label>
+                    <input type="text" id="campaignTitle" name="campaignTitle" placeholder="e.g., Help Save My Mom's Life" required maxlength="80">
+                    <span class="help-text">Make it clear and compelling (max 80 characters)</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category <span class="required">*</span></label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category...</option>
+                        <option value="medical">Medical & Healthcare</option>
+                        <option value="education">Education</option>
+                        <option value="business">Small Business</option>
+                        <option value="emergency">Emergency & Disaster Relief</option>
+                        <option value="community">Community Project</option>
+                        <option value="personal">Personal Need</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="goalAmount">Goal Amount (₱) <span class="required">*</span></label>
+                    <input type="number" id="goalAmount" name="goalAmount" min="1000" step="100" required>
+                    <span class="help-text">Minimum: ₱1,000</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="story">Your Story <span class="required">*</span></label>
+                    <textarea id="story" name="story" required placeholder="Tell donors why you need their help. Be specific and heartfelt. Include details about your situation, what the funds will be used for, and how it will make a difference."></textarea>
+                    <span class="help-text">Tip: Be honest and specific. Stories with details receive more donations.</span>
+                </div>
+            </div>
+
+            <!-- Payment Information -->
+            <div class="form-section">
+                <h2>3. Payment Information</h2>
+                
+                <div class="alert alert-warning">
+                    <strong>⚠️ Important:</strong> This is where you'll receive your funds. Please double-check your information.
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method <span class="required">*</span></label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="">Select payment method...</option>
+                        <option value="gcash">GCash</option>
+                        <option value="bank">Philippine Bank Account</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="gcashGroup" style="display: none;">
+                    <label for="gcashNumber">GCash Number <span class="required">*</span></label>
+                    <input type="tel" id="gcashNumber" name="gcashNumber" placeholder="09XX XXX XXXX">
+                    <span class="help-text">Must match your registered GCash account name</span>
+                </div>
+
+                <div id="bankGroup" style="display: none;">
+                    <div class="form-group">
+                        <label for="bankName">Bank Name <span class="required">*</span></label>
+                        <select id="bankName" name="bankName">
+                            <option value="">Select bank...</option>
+                            <option value="bdo">BDO</option>
+                            <option value="bpi">BPI</option>
+                            <option value="metrobank">Metrobank</option>
+                            <option value="unionbank">UnionBank</option>
+                            <option value="landbank">Landbank</option>
+                            <option value="pnb">PNB</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number <span class="required">*</span></label>
+                        <input type="text" id="accountNumber" name="accountNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="accountName">Account Name <span class="required">*</span></label>
+                        <input type="text" id="accountName" name="accountName">
+                        <span class="help-text">Must match exactly as shown on your bank account</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photos -->
+            <div class="form-section">
+                <h2>4. Photos & Documents</h2>
+                
+                <div class="form-group">
+                    <label>Campaign Photos <span class="required">*</span></label>
+                    <div class="file-upload" onclick="document.getElementById('photos').click()">
+                        <input type="file" id="photos" name="photos" accept="image/*" multiple>
+                        <p>📸 Click to upload photos</p>
+                        <span class="help-text">Upload 1-5 photos. Campaigns with photos receive 3x more donations.</span>
+                    </div>
+                    <div id="photoPreview" style="margin-top: 1rem;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Supporting Documents (Optional)</label>
+                    <div class="file-upload" onclick="document.getElementById('documents').click()">
+                        <input type="file" id="documents" name="documents" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                        <p>📄 Click to upload documents</p>
+                        <span class="help-text">Medical bills, receipts, etc. (optional but recommended)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fee Calculator -->
+            <div class="form-section">
+                <h2>5. Fee Breakdown</h2>
+                
+                <div class="fee-calculator">
+                    <strong>Estimated fees for your campaign:</strong>
+                    <div class="fee-breakdown" id="feeBreakdown">
+                        <span>Goal Amount:</span>
+                        <span id="displayGoal">₱0.00</span>
+                        
+                        <span>PayMongo Fee (2.5% + ₱10):</span>
+                        <span id="displayProcessingFee">-₱0.00</span>
+                        
+                        <span>BayanCo Platform Fee (4%):</span>
+                        <span id="displayPlatformFee">-₱0.00</span>
+                        
+                        <span class="fee-row total">You'll Receive:</span>
+                        <span class="fee-row total" id="displayYouReceive">₱0.00</span>
+                    </div>
+                    <p class="help-text" style="margin-top: 1rem;">
+                        <strong>Why fees?</strong> Our 4% fee maintains the platform. PayMongo's fee covers secure payment processing. Both are automatically deducted.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Terms & Submit -->
+            <div class="form-section">
+                <h2>6. Agreement & Submit</h2>
+                
+                <div class="alert alert-warning">
+                    <strong>📸 Transparency Requirement:</strong> You must provide a campaign completion report with photos and receipts within 30 days of your campaign ending. This builds trust with donors.
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label for="agreeTerms">
+                        I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and understand that:
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li>I must provide regular updates with photos</li>
+                            <li>Donations are NOT tax-deductible</li>
+                            <li>I'm responsible for how funds are used</li>
+                            <li>BayanCo charges a 4% platform fee</li>
+                        </ul>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit Campaign for Review</button>
+                
+                <p class="help-text" style="text-align: center; margin-top: 1rem;">
+                    ⏱️ We'll review your campaign within 24 hours and notify you via email.
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Payment method toggle
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            const gcashGroup = document.getElementById('gcashGroup');
+            const bankGroup = document.getElementById('bankGroup');
+            
+            if (this.value === 'gcash') {
+                gcashGroup.style.display = 'block';
+                bankGroup.style.display = 'none';
+                document.getElementById('gcashNumber').required = true;
+                document.getElementById('bankName').required = false;
+                document.getElementById('accountNumber').required = false;
+                document.getElementById('accountName').required = false;
+            } else if (this.value === 'bank') {
+                gcashGroup.style.display = 'none';
+                bankGroup.style.display = 'block';
+                document.getElementById('gcashNumber').required = false;
+                document.getElementById('bankName').required = true;
+                document.getElementById('accountNumber').required = true;
+                document.getElementById('accountName').required = true;
+            } else {
+                gcashGroup.style.display = 'none';
+                bankGroup.style.display = 'none';
+            }
+        });
+
+        // Fee calculator
+        document.getElementById('goalAmount').addEventListener('input', function() {
+            const goal = parseFloat(this.value) || 0;
+            const processingFee = (goal * 0.025) + 10;
+            const platformFee = goal * 0.04;
+            const youReceive = goal - processingFee - platformFee;
+
+            document.getElementById('displayGoal').textContent = '₱' + goal.toLocaleString('en-PH', {minimumFractionDigits: 2});
+            document.getElementById('displayProcessingFee').textContent = '-₱' + processingFee.toLocaleString('en-PH', {minimumFractionDigits: 2});
+            document.getElementById('displayPlatformFee').textContent = '-₱' + platformFee.toLocaleString('en-PH', {minimumFractionDigits: 2});
+            document.getElementById('displayYouReceive').textContent = '₱' + youReceive.toLocaleString('en-PH', {minimumFractionDigits: 2});
+        });
+
+        // Photo preview
+        document.getElementById('photos').addEventListener('change', function() {
+            const preview = document.getElementById('photoPreview');
+            preview.innerHTML = '';
+            
+            for (let i = 0; i < this.files.length; i++) {
+                const file = this.files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '8px';
+                    img.style.marginRight = '10px';
+                    img.style.marginBottom = '10px';
+                    preview.appendChild(img);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form submission
+        document.getElementById('campaignForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, this would send data to your backend
+            alert('✅ Campaign Submitted!\n\nThank you for creating your campaign. We\'ll review it within 24 hours and send you an email confirmation.\n\nWhat happens next:\n1. Our team reviews your campaign\n2. You receive approval email\n3. Your campaign goes live\n4. Start sharing and receiving donations!');
+            
+            // Redirect to campaigns page (in production)
+            // window.location.href = 'campaigns.html';
+        });
+    </script>
+
+    <footer style="background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; margin-top: 4rem;">
+        <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
+            <div>
+                <h3 style="font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem;">BayanCo</h3>
+                <p>The Filipino crowdfunding platform built on the spirit of bayanihan.</p>
+            </div>
+            <div>
+                <h4 style="color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem;">Platform</h4>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.8rem;"><a href="index.html#campaigns" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Browse Campaigns</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="create-campaign.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Start Campaign</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="about.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">About Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem;">Support</h4>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.8rem;"><a href="faq.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">FAQs</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="safety.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Safety & Trust</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem;">Legal</h4>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.8rem;"><a href="legal.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Legal Disclaimer</a></li>
+                    <li style="margin-bottom: 0.8rem;"><a href="press.html" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6);">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

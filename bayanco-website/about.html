@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | BayanCo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --warm-sand: #F4E8D8;
+            --deep-purple: #5B2A86;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background: var(--coconut-cream); color: var(--charcoal); line-height: 1.6; }
+        
+        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05); }
+        .logo { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); text-decoration: none; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--sunset-orange); }
+        .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
+        
+        .page-header { margin-top: 80px; padding: 6rem 3rem 4rem; background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); color: white; text-align: center; }
+        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
+        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+        
+        .mission { padding: 6rem 3rem; background: white; }
+        .mission-container { max-width: 1000px; margin: 0 auto; text-align: center; }
+        .mission h2 { font-family: var(--font-display); font-size: 3rem; color: var(--ocean-blue); margin-bottom: 2rem; }
+        .mission-text { font-size: 1.2rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); margin-bottom: 2rem; }
+        
+        .mission-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
+        .value-card { padding: 2.5rem; border-radius: 15px; background: var(--coconut-cream); border-top: 4px solid var(--sunset-orange); box-shadow: 0 5px 20px rgba(0, 78, 137, 0.08); }
+        .value-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .value-card h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--ocean-blue); margin-bottom: 1rem; }
+        .value-card p { color: rgba(45, 45, 42, 0.8); line-height: 1.8; }
+        
+        .founders { padding: 6rem 3rem; background: linear-gradient(135deg, var(--warm-sand), var(--coconut-cream)); }
+        .founders-container { max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-family: var(--font-display); font-size: 3rem; color: var(--ocean-blue); margin-bottom: 1rem; }
+        .section-subtitle { text-align: center; font-size: 1.2rem; color: rgba(45, 45, 42, 0.7); margin-bottom: 4rem; }
+        
+        .founders-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+        .founder-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 78, 137, 0.1); }
+        .founder-image { width: 100%; height: 300px; background: linear-gradient(135deg, var(--ocean-blue), var(--island-teal)); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; }
+        .founder-info { padding: 2.5rem; }
+        .founder-name { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); margin-bottom: 0.5rem; }
+        .founder-title { color: var(--sunset-orange); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; }
+        .founder-bio { color: rgba(45, 45, 42, 0.8); line-height: 1.8; margin-bottom: 1.5rem; }
+        
+        .story { padding: 6rem 3rem; background: white; }
+        .story-container { max-width: 1000px; margin: 0 auto; }
+        .story h2 { font-family: var(--font-display); font-size: 3rem; color: var(--ocean-blue); margin-bottom: 3rem; text-align: center; }
+        .story-content p { font-size: 1.15rem; line-height: 1.9; color: rgba(45, 45, 42, 0.8); margin-bottom: 2rem; }
+        .story-highlight { background: linear-gradient(135deg, var(--warm-sand), var(--coconut-cream)); padding: 2.5rem; border-radius: 15px; border-left: 5px solid var(--sunset-orange); font-size: 1.3rem; font-style: italic; color: var(--ocean-blue); margin: 3rem 0; text-align: center; }
+        
+        .cta { padding: 6rem 3rem; background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); color: white; text-align: center; }
+        .cta h2 { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1.5rem; }
+        .cta p { font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.95; }
+        .btn-large { background: white; color: var(--ocean-blue); padding: 1.2rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; margin: 0 1rem; display: inline-block; transition: transform 0.3s ease; }
+        .btn-large:hover { transform: translateY(-3px); }
+        
+        footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-brand h3 { font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem; }
+        .footer-column h4 { color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 0.8rem; }
+        .footer-column ul li a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
+        .footer-column ul li a:hover { color: var(--mango-yellow); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 2.5rem; }
+            .mission-values, .founders-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">BayanCo</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="safety.html">Safety & Trust</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="press.html">Press</a></li>
+        </ul>
+        <a href="create-campaign.html" class="cta-button">Start Campaign</a>
+    </nav>
+    
+    <div class="page-header">
+        <h1>About BayanCo</h1>
+        <p>A crowdfunding platform founded by Filipinos, for Filipinos—built on transparency, trust, and the spirit of bayanihan.</p>
+    </div>
+    
+    <section class="mission">
+        <div class="mission-container">
+            <h2>Our Mission</h2>
+            <p class="mission-text">
+                At BayanCo, we believe in the power of community and the Filipino spirit of <strong>bayanihan</strong>—helping one another to achieve common goals. Our mission is to provide a transparent, trustworthy platform where Filipinos worldwide can support each other's dreams, overcome challenges, and create lasting positive impact.
+            </p>
+            <p class="mission-text">
+                We're not just a crowdfunding platform; we're a movement to strengthen Filipino communities through collective generosity and mutual support.
+            </p>
+            
+            <div class="mission-values">
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Bayanihan</h3>
+                    <p>The Filipino spirit of communal unity and cooperation drives everything we do.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">✨</div>
+                    <h3>Transparency</h3>
+                    <p>Every campaign must show receipts, photos, and updates. No hidden agendas.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💚</div>
+                    <h3>Trust</h3>
+                    <p>We verify campaigns and protect donors with industry-leading security measures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="founders">
+        <div class="founders-container">
+            <h2 class="section-title">Meet Our Founders</h2>
+            <p class="section-subtitle">Two Filipino women with a shared vision of empowering our kababayans through technology and community.</p>
+            
+            <div class="founders-grid">
+                <div class="founder-card">
+                    <div class="founder-image">👩‍💼</div>
+                    <div class="founder-info">
+                        <h3 class="founder-name">Elle Borja</h3>
+                        <p class="founder-title">Co-founder & Chief Executive Officer</p>
+                        <p class="founder-bio">
+                            Elle leads BayanCo's day-to-day operations from the Philippines, bringing years of experience in technology and community development. Her passion for social impact and deep understanding of Filipino communities drives the platform's mission to make crowdfunding accessible, transparent, and trustworthy for all Filipinos.
+                        </p>
+                        <p class="founder-bio">
+                            As CEO, Elle oversees all operational aspects of BayanCo, from campaign verification to customer support, ensuring every user has a positive, secure experience on the platform.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="founder-card">
+                    <div class="founder-image">👩‍💻</div>
+                    <div class="founder-info">
+                        <h3 class="founder-name">Eunice Borja</h3>
+                        <p class="founder-title">Founder</p>
+                        <p class="founder-bio">
+                            Eunice founded BayanCo with a vision to create a crowdfunding platform that truly serves Filipino communities worldwide. With experience in both technology and social entrepreneurship, she saw the need for a transparent, accessible platform where Filipinos could support each other's dreams.
+                        </p>
+                        <p class="founder-bio">
+                            Eunice provides strategic direction and decision-making for BayanCo while staying deeply connected to Filipino values and community needs. Her commitment to transparency and trust shapes every aspect of the platform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="story">
+        <div class="story-container">
+            <h2>Our Story</h2>
+            <div class="story-content">
+                <p>
+                    BayanCo was born from a simple observation: Filipinos are among the most generous people in the world, always ready to help family, friends, and even strangers in need. Yet existing crowdfunding platforms often didn't serve our community well—with high fees, lack of GCash integration, and limited transparency requirements that left donors uncertain about how their money was used.
+                </p>
+                
+                <p>
+                    Eunice and Elle Borja, Filipino women who experienced the power of community support firsthand, decided to create something better. They envisioned a platform that would combine modern technology with traditional Filipino values of <em>bayanihan</em>.
+                </p>
+                
+                <div class="story-highlight">
+                    "We wanted to build more than just a platform—we wanted to create a movement where every Filipino, wherever they are in the world, could participate in helping our kababayans achieve their dreams."
+                </div>
+                
+                <p>
+                    What makes BayanCo different is our unwavering commitment to transparency. Every campaign creator must provide regular updates with photos and receipts. Donors can see exactly how their money is being used. It's accountability built into the platform, not just promised in fine print.
+                </p>
+                
+                <p>
+                    We're proud to be a Filipino-owned and operated platform, based in the Philippines, serving Filipino communities worldwide. We integrate with local payment methods like GCash and PayMaya, charge only 3-6% in platform fees (lower than most competitors), and require genuine transparency from every campaign creator.
+                </p>
+                
+                <p>
+                    Today, BayanCo is growing as more and more Filipinos discover a crowdfunding platform that truly understands and serves our community. Every successful campaign, every peso raised, every life changed—it's all a testament to the enduring power of the Filipino spirit of helping one another.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <h2>Join the BayanCo Community</h2>
+        <p>Whether you need support or want to help others, you belong here.</p>
+        <div>
+            <a href="create-campaign.html" class="btn-large">Start a Campaign</a>
+            <a href="index.html#campaigns" class="btn-large">Browse Campaigns</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>BayanCo</h3>
+                <p>The Filipino crowdfunding platform built on the spirit of bayanihan.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#campaigns">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start Campaign</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="legal.html">Legal Disclaimer</a></li>
+                    <li><a href="press.html">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs | BayanCo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --warm-sand: #F4E8D8;
+            --deep-purple: #5B2A86;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background: var(--coconut-cream); color: var(--charcoal); line-height: 1.6; }
+        
+        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05); }
+        .logo { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); text-decoration: none; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--sunset-orange); }
+        .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
+        
+        .page-header { background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); padding: 10rem 3rem 6rem; text-align: center; color: white; }
+        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
+        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+        
+        .faq-section { max-width: 1000px; margin: 0 auto; padding: 6rem 3rem; }
+        .faq-category { margin-bottom: 4rem; }
+        .faq-category h2 { font-family: var(--font-display); font-size: 2.2rem; color: var(--ocean-blue); margin-bottom: 2rem; border-left: 5px solid var(--sunset-orange); padding-left: 1.5rem; }
+        .faq-item { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 15px rgba(0, 78, 137, 0.08); border-left: 3px solid var(--mango-yellow); }
+        .faq-item h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--ocean-blue); margin-bottom: 1rem; }
+        .faq-item p { font-size: 1.1rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); }
+        
+        footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-brand h3 { font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem; }
+        .footer-column h4 { color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 0.8rem; }
+        .footer-column ul li a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
+        .footer-column ul li a:hover { color: var(--mango-yellow); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 2.5rem; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">BayanCo</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="safety.html">Safety & Trust</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="press.html">Press</a></li>
+        </ul>
+        <a href="#start" class="cta-button">Start Campaign</a>
+    </nav>
+    
+    <div class="page-header">
+        <h1>Frequently Asked Questions</h1>
+        <p>Everything you need to know about creating campaigns, donating, and staying safe on BayanCo</p>
+    </div>
+    
+    <div class="faq-section">
+        <div class="faq-category">
+            <h2>For Campaign Creators</h2>
+            
+            <div class="faq-item">
+                <h3>How much does it cost to start a campaign?</h3>
+                <p>Creating a campaign is free. Fees apply only when you successfully raise funds (3–6% tiered platform fee) plus payment processing depending on the payment method.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>How long can my campaign run?</h3>
+                <p>Campaign duration can be set between 7–90 days (default 30 days).</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>How do I build trust for my campaign?</h3>
+                <p>Use verification (Basic/Enhanced/Verified) and request community endorsements from your barangay captain, religious leader, or neighbors.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>How do I withdraw funds?</h3>
+                <p>Withdraw when the campaign ends (or request early withdrawal). Disbursement options include GCash, bank transfer, check pickup, and select remittance partners.</p>
+            </div>
+        </div>
+        
+        <div class="faq-category">
+            <h2>For Donors</h2>
+            
+            <div class="faq-item">
+                <h3>What payment methods can I use?</h3>
+                <p>GCash, PayMaya, credit/debit card, bank transfer, over-the-counter (7-Eleven, M Lhuillier), and international card options are supported.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Can I donate anonymously?</h3>
+                <p>Yes—donors can choose to show their name or donate anonymously when making a contribution.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Will I get a receipt?</h3>
+                <p>Yes—receipts are emailed automatically after successful payment for your records.</p>
+            </div>
+        </div>
+        
+        <div class="faq-category">
+            <h2>Safety</h2>
+            
+            <div class="faq-item">
+                <h3>How do you prevent scams?</h3>
+                <p>We use automated red flags, community reporting, and human review. Our system detects suspicious patterns, copied content, and fraudulent behavior. All flagged campaigns undergo manual review within 24 hours.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>BayanCo</h3>
+                <p>The Filipino crowdfunding platform built on the spirit of bayanihan. </p>
+            </div>
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#campaigns">Browse Campaigns</a></li>
+                    <li><a href="#create">Start Campaign</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="legal.html">Legal Disclaimer</a></li>
+                    <li><a href="press.html">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

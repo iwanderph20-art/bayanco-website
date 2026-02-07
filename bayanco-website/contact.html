@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | BayanCo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --warm-sand: #F4E8D8;
+            --deep-purple: #5B2A86;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background: var(--coconut-cream); color: var(--charcoal); line-height: 1.6; }
+        
+        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05); }
+        .logo { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); text-decoration: none; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--sunset-orange); }
+        .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
+        
+        .page-header { background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); padding: 10rem 3rem 6rem; text-align: center; color: white; }
+        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
+        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+        
+        .content-section { max-width: 1000px; margin: 0 auto; padding: 6rem 3rem; }
+        .content-section h2 { font-family: var(--font-display); font-size: 2.5rem; color: var(--ocean-blue); margin-bottom: 2rem; }
+        
+        .contact-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-top: 3rem; }
+        .contact-card { background: white; padding: 3rem; border-radius: 16px; box-shadow: 0 5px 30px rgba(0, 78, 137, 0.08); border-top: 4px solid var(--sunset-orange); }
+        .contact-card h3 { font-family: var(--font-display); font-size: 1.8rem; color: var(--ocean-blue); margin-bottom: 1rem; }
+        .contact-card p { font-size: 1.1rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); margin-bottom: 1rem; }
+        .contact-card ul { list-style: none; margin-top: 1.5rem; }
+        .contact-card ul li { font-size: 1.1rem; padding: 0.8rem 0; color: rgba(45, 45, 42, 0.8); border-bottom: 1px solid var(--warm-sand); }
+        .contact-card ul li:last-child { border-bottom: none; }
+        .contact-card ul li strong { color: var(--ocean-blue); }
+        .contact-card ul li a { color: var(--sunset-orange); text-decoration: none; font-weight: 600; }
+        
+        .alert-box { background: linear-gradient(135deg, var(--mango-yellow), #FFE066); padding: 2rem; border-radius: 12px; margin-top: 3rem; border-left: 5px solid var(--sunset-orange); }
+        .alert-box p { font-size: 1.1rem; color: var(--charcoal); font-weight: 600; margin: 0; }
+        
+        footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-brand h3 { font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem; }
+        .footer-column h4 { color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 0.8rem; }
+        .footer-column ul li a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
+        .footer-column ul li a:hover { color: var(--mango-yellow); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 2.5rem; }
+            .contact-cards { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">BayanCo</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="safety.html">Safety & Trust</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="press.html">Press</a></li>
+        </ul>
+        <a href="#start" class="cta-button">Start Campaign</a>
+    </nav>
+    
+    <div class="page-header">
+        <h1>Contact BayanCo</h1>
+        <p>We're here to help—whether you're starting a campaign, donating, verifying, or withdrawing funds.</p>
+    </div>
+    
+    <div class="content-section">
+        <h2>Support Channels</h2>
+        
+        <div class="contact-cards">
+            <div class="contact-card">
+                <h3>📧 Email Support</h3>
+                <ul>
+                    <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#12616762627d60665270736b737c717d3c7d6075"><span class="__cf_email__" data-cfemail="a1d2d4d1d1ced3d5e1c3c0d8c0cfc2ce8fced3c6">[email&#160;protected]</span></a></li>
+                    <li><strong>Response time:</strong> 24 hours</li>
+                </ul>
+            </div>
+            
+            <div class="contact-card">
+                <h3>💬 Facebook Messenger</h3>
+                <ul>
+                    <li><strong>Hours:</strong> Business hours (9am-6pm PHT)</li>
+                    <li><strong>Features:</strong> Chatbot + human takeover</li>
+                </ul>
+            </div>
+            
+            <div class="contact-card">
+                <h3>📞 Phone Support</h3>
+                <ul>
+                    <li><strong>Hours:</strong> 9am–6pm PHT</li>
+                    <li><strong>Availability:</strong> For verified campaigns initially</li>
+                </ul>
+            </div>
+            
+            <div class="contact-card">
+                <h3>📚 Help Center</h3>
+                <ul>
+                    <li><strong>Self-service guides:</strong></li>
+                    <li>• Starting a campaign</li>
+                    <li>• Donating</li>
+                    <li>• Withdrawing funds</li>
+                    <li>• Verification process</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="alert-box">
+            <p>⚠️ <strong>Urgent Issue?</strong> If this is about payments or suspected fraud, please include your campaign link, transaction reference, and a short description so we can triage quickly.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>BayanCo</h3>
+                <p>The Filipino crowdfunding platform built on the spirit of bayanihan. </p>
+            </div>
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#campaigns">Browse Campaigns</a></li>
+                    <li><a href="#create">Start Campaign</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="legal.html">Legal Disclaimer</a></li>
+                    <li><a href="press.html">Press</a></li>
+                </ul>
+            </div>
+        </div>
+       
