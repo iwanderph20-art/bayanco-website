@@ -1,5 +1,0 @@
-name = "bayanco"
-compatibility_date = "2026-02-07"
-
-[site]
-bucket = "./"
