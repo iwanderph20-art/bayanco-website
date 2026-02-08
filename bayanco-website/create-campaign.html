@@ -707,21 +707,57 @@
         const campaignForm = document.getElementById('campaignForm');
         const successMessage = document.getElementById('successMessage');
 
-        campaignForm.addEventListener('submit', (e) => {
+        campaignForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const formData = new FormData(campaignForm);
-            console.log('Campaign created with data:', Object.fromEntries(formData));
-            
-            successMessage.style.display = 'block';
-            campaignForm.style.display = 'none';
-            
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-                campaignForm.style.display = 'block';
-                campaignForm.reset();
-                calculateFees();
-            }, 3000);
+
+            const submitBtn = campaignForm.querySelector('.submit-button');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData(campaignForm);
+                const data = {
+                    campaignTitle: formData.get('campaignTitle'),
+                    category: formData.get('category'),
+                    campaignDescription: formData.get('campaignDescription'),
+                    targetAmount: formData.get('targetAmount'),
+                    deadline: formData.get('deadline'),
+                    creatorName: formData.get('creatorName'),
+                    creatorEmail: formData.get('creatorEmail'),
+                    creatorPhone: formData.get('creatorPhone'),
+                    creatorLocation: formData.get('creatorLocation'),
+                    paymentMethod: formData.get('paymentMethod'),
+                    rewards: formData.get('rewards') || '',
+                    updates: formData.get('updates') === 'on',
+                    transparency: formData.get('transparency') === 'on',
+                    terms: formData.get('terms') === 'on',
+                    privacy: formData.get('privacy') === 'on'
+                };
+
+                const response = await fetch('/api/submit-campaign', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    successMessage.textContent = result.message || 'Campaign created successfully! You\'ll receive a confirmation email shortly.';
+                    successMessage.style.display = 'block';
+                    campaignForm.style.display = 'none';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    alert('Error: ' + (result.error || 'Something went wrong. Please try again.'));
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Network error. Please check your connection and try again.');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         });
     </script>
 </body>
