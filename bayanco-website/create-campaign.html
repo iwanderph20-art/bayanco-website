@@ -552,16 +552,12 @@
                     <label>Payment Processing Method *</label>
                     <div class="payment-options">
                         <div class="payment-option">
-                            <input type="radio" id="paypal" name="paymentMethod" value="paypal" required>
-                            <label for="paypal">PayPal</label>
+                            <input type="radio" id="paymongo" name="paymentMethod" value="paymongo" required>
+                            <label for="paymongo">PayMongo (GCash)</label>
                         </div>
                         <div class="payment-option">
-                            <input type="radio" id="bank" name="paymentMethod" value="bank" required>
-                            <label for="bank">Bank Transfer</label>
-                        </div>
-                        <div class="payment-option">
-                            <input type="radio" id="gcash" name="paymentMethod" value="gcash" required>
-                            <label for="gcash">GCash</label>
+                            <input type="radio" id="paymaya" name="paymentMethod" value="paymaya" required>
+                            <label for="paymaya">PayMaya (GCash)</label>
                         </div>
                     </div>
                 </div>
@@ -572,12 +568,16 @@
                         <span id="feeTargetAmount">₱0.00</span>
                     </div>
                     <div class="fee-row">
-                        <span>Platform Fee (5%):</span>
+                        <span>Platform Fee (4%):</span>
                         <span id="feePlatform">₱0.00</span>
                     </div>
                     <div class="fee-row">
-                        <span>Payment Processing (2%):</span>
+                        <span>Payment Processing (2.5% + ₱10):</span>
                         <span id="feePayment">₱0.00</span>
+                    </div>
+                    <div class="fee-row">
+                        <span>Optional Donor Tip (10% suggested):</span>
+                        <span style="color: var(--island-teal); font-style: italic;">Adjustable at checkout</span>
                     </div>
                     <div class="fee-row total">
                         <span>You'll Receive:</span>
@@ -646,7 +646,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 BayanCo. All rights reserved. Empowering communities through collaborative funding.</p>
+            <p>&copy; 2026 BayanCo. All rights reserved. Empowering communities through collaborative funding.</p>
         </div>
     </footer>
 
@@ -690,8 +690,8 @@
 
         function calculateFees() {
             const target = parseFloat(targetAmountInput.value) || 0;
-            const platformFee = target * 0.05;
-            const paymentFee = target * 0.02;
+            const platformFee = target * 0.04;
+            const paymentFee = (target * 0.025) + 10;
             const netAmount = target - platformFee - paymentFee;
 
             feeTargetAmount.textContent = '₱' + target.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');

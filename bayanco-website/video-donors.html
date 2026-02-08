@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How BayanCo Works - A Guide for Donors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --deep-purple: #5B2A86;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, var(--coconut-cream) 0%, #f5e6d3 100%);
+            min-height: 100vh;
+            color: var(--charcoal);
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--sunset-orange), var(--mango-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links a {
+            color: var(--charcoal);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            position: relative;
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sunset-orange), var(--mango-yellow), var(--island-teal));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            height: calc(100vh - 65px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Slides Container */
+        .slides-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Slide Backgrounds */
+        .slide-1 {
+            background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--island-teal) 50%, var(--deep-purple) 100%);
+            color: white;
+        }
+
+        .slide-2 {
+            background: linear-gradient(135deg, var(--coconut-cream) 0%, var(--mango-yellow) 30%, white 100%);
+        }
+
+        .slide-3 {
+            background: linear-gradient(135deg, white 0%, var(--sunset-orange) 50%, var(--mango-yellow) 100%);
+        }
+
+        .slide-4 {
+            background: linear-gradient(135deg, var(--island-teal) 0%, var(--ocean-blue) 100%);
+            color: white;
+        }
+
+        .slide-5 {
+            background: linear-gradient(135deg, var(--sunset-orange) 0%, var(--deep-purple) 100%);
+            color: white;
+        }
+
+        .slide-6 {
+            background: linear-gradient(135deg, var(--coconut-cream) 0%, #fff 100%);
+        }
+
+        .slide-7 {
+            background: linear-gradient(135deg, var(--mango-yellow) 0%, var(--sunset-orange) 100%);
+        }
+
+        .slide-8 {
+            background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--island-teal) 100%);
+            color: white;
+        }
+
+        .slide-9 {
+            background: linear-gradient(135deg, var(--island-teal) 0%, var(--deep-purple) 100%);
+            color: white;
+        }
+
+        /* Slide Content Styling */
+        .slide h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            animation: slideInDown 0.8s ease-out;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            animation: slideInDown 0.8s ease-out;
+            line-height: 1.2;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            max-width: 700px;
+            animation: slideInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .slide ul, .slide ol {
+            list-style: none;
+            animation: slideInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .slide li {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .slide li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Icon Container */
+        .icon-container {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 2rem;
+            animation: bounceIn 0.8s ease-out;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-2 .icon-container,
+        .slide-6 .icon-container,
+        .slide-7 .icon-container {
+            background: rgba(255, 107, 53, 0.2);
+        }
+
+        /* Category Grid */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        .category-box {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Payment Options */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        .payment-option {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .payment-option h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Archivo Black', sans-serif;
+        }
+
+        .payment-option p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        /* Breakdown Section */
+        .breakdown {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 2rem auto;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .breakdown-label {
+            text-align: left;
+            flex: 1;
+        }
+
+        .breakdown-amount {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        /* Control Bar */
+        .control-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--sunset-orange), var(--mango-yellow));
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .slide-counter {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            min-width: 100px;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .icon-container svg {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--ocean-blue);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            margin-top: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideInUp 0.8s ease-out 0.5s backwards;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide h1 {
+                font-size: 2.2rem;
+            }
+
+            .slide h2 {
+                font-size: 1.8rem;
+            }
+
+            .slide p, .slide li {
+                font-size: 1rem;
+            }
+
+            .slide {
+                padding: 3rem 1.5rem;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .control-bar {
+                gap: 1rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            nav {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Link Styling */
+        .cta-button, a {
+            color: inherit;
+        }
+
+        .slide-9 .cta-button {
+            background: var(--mango-yellow);
+            color: var(--charcoal);
+        }
+
+        .slide-9 .cta-button:hover {
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo">BayanCo</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Slides -->
+        <div class="slides-wrapper">
+            <div class="slides" id="slides">
+                <!-- Slide 1: Title -->
+                <div class="slide slide-1">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="35" stroke="white" stroke-width="2"/>
+                            <path d="M35 30L40 45L45 30M30 50L40 40L50 50" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </div>
+                    <h1>How BayanCo Works</h1>
+                    <p style="font-size: 1.5rem; font-weight: 300;">A Guide for Donors</p>
+                </div>
+
+                <!-- Slide 2: What is BayanCo -->
+                <div class="slide slide-2">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="25" cy="30" r="12" fill="currentColor"/>
+                            <circle cx="55" cy="30" r="12" fill="currentColor"/>
+                            <path d="M20 50C20 50 25 40 40 40C55 40 60 50 60 50" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M30 65L40 55L50 65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </div>
+                    <h2>What is BayanCo?</h2>
+                    <p>A Filipino crowdfunding platform built on the spirit of <strong>bayanihan</strong> — community helping community.</p>
+                    <p>Technology service connecting generous donors with individuals and causes in need.</p>
+                </div>
+
+                <!-- Slide 3: Browse Campaigns -->
+                <div class="slide slide-3">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="50" height="50" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="30" cy="30" r="4" fill="currentColor"/>
+                            <path d="M15 50L30 35L45 45L65 25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <line x1="20" y1="60" x2="60" y2="60" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <h2>Browse Campaigns</h2>
+                    <p>Explore verified campaigns across categories:</p>
+                    <div class="category-grid">
+                        <div class="category-box">
+                            <div class="category-icon">🏥</div>
+                            <div class="category-name">Medical</div>
+                        </div>
+                        <div class="category-box">
+                            <div class="category-icon">📚</div>
+                            <div class="category-name">Education</div>
+                        </div>
+                        <div class="category-box">
+                            <div class="category-icon">💼</div>
+                            <div class="category-name">Business</div>
+                        </div>
+                        <div class="category-box">
+                            <div class="category-icon">🚨</div>
+                            <div class="category-name">Emergency</div>
+                        </div>
+                        <div class="category-box">
+                            <div class="category-icon">🤝</div>
+                            <div class="category-name">Community</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 2rem;">Each campaign shows progress, donors, and verification status.</p>
+                </div>
+
+                <!-- Slide 4: Choose How to Give -->
+                <div class="slide slide-4">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="25" width="40" height="35" rx="2" stroke="white" stroke-width="2" fill="none"/>
+                            <circle cx="40" cy="42" r="8" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M40 38V46M36 42H44" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M20 22L30 15M60 22L50 15" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h2>Choose How to Give</h2>
+                    <div class="payment-grid">
+                        <div class="payment-option">
+                            <h3>💳 PayMongo</h3>
+                            <p>Secure card payments with GCash integration</p>
+                        </div>
+                        <div class="payment-option">
+                            <h3>📱 PayMaya</h3>
+                            <p>Digital wallet with GCash options</p>
+                        </div>
+                    </div>
+                    <p style="margin-top: 2rem; opacity: 0.9;">All transactions encrypted and processed by BSP-licensed providers.</p>
+                </div>
+
+                <!-- Slide 5: Money Goes Directly -->
+                <div class="slide slide-5">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M40 10L55 20V50C55 62 40 70 40 70C40 70 25 62 25 50V20L40 10Z" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M35 45L38 50L50 35" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </div>
+                    <h2>Your Money Goes Directly to the Creator</h2>
+                    <div class="breakdown">
+                        <div class="breakdown-item">
+                            <div class="breakdown-label">
+                                <strong>Platform Fee</strong>
+                                <p style="font-size: 0.85rem; margin-top: 0.2rem;">Keeps BayanCo running</p>
+                            </div>
+                            <div class="breakdown-amount">4%</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-label">
+                                <strong>Payment Processing</strong>
+                                <p style="font-size: 0.85rem; margin-top: 0.2rem;">Charged by PayMongo</p>
+                            </div>
+                            <div class="breakdown-amount">2.5% + ₱10</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-label">
+                                <strong>Optional Tip</strong>
+                                <p style="font-size: 0.85rem; margin-top: 0.2rem;">Support the platform (adjustable/removable)</p>
+                            </div>
+                            <div class="breakdown-amount">You Decide</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 6: Track Your Impact -->
+                <div class="slide slide-6">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 50L30 35L45 45L65 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <circle cx="30" cy="35" r="3" fill="currentColor"/>
+                            <circle cx="45" cy="45" r="3" fill="currentColor"/>
+                            <circle cx="65" cy="25" r="3" fill="currentColor"/>
+                            <rect x="15" y="50" width="50" height="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h2>Track Your Impact</h2>
+                    <ul>
+                        <li>Get regular updates from campaign creators with photos and receipts</li>
+                        <li>See exactly where your money goes</li>
+                        <li>Full transparency at every step</li>
+                    </ul>
+                </div>
+
+                <!-- Slide 7: Important Things to Know -->
+                <div class="slide slide-7">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="30" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M40 25V40M40 50H40.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h2>Important Things to Know</h2>
+                    <ul>
+                        <li><strong>Not Tax-Deductible:</strong> BayanCo is not a registered charity</li>
+                        <li><strong>Creator Responsibility:</strong> Campaign creators are responsible for their campaigns</li>
+                        <li><strong>Do Your Research:</strong> Read descriptions carefully and start small if unsure</li>
+                        <li><strong>Report Issues:</strong> Report suspicious campaigns to abuse@bayanco.org</li>
+                    </ul>
+                </div>
+
+                <!-- Slide 8: Your Safety Matters -->
+                <div class="slide slide-8">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M40 12L60 22V45C60 60 40 72 40 72C40 72 20 60 20 45V22L40 12Z" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M32 42L38 50L52 32" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </div>
+                    <h2>Your Safety Matters</h2>
+                    <ul>
+                        <li>Industry-standard security protocols</li>
+                        <li>Verified campaign creators</li>
+                        <li>Fraud detection and reporting tools</li>
+                        <li>Payments via regulated financial institutions</li>
+                    </ul>
+                </div>
+
+                <!-- Slide 9: Final CTA -->
+                <div class="slide slide-9">
+                    <div class="icon-container">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M40 15C55.7 15 68 27.3 68 43C68 58.7 55.7 71 40 71C24.3 71 12 58.7 12 43C12 27.3 24.3 15 40 15Z" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M40 35V50M50 45H30" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2>Ready to Make a Difference?</h2>
+                    <p>Browse campaigns at bayanco.org and join the bayanihan movement.</p>
+                    <a href="https://bayanco.org" class="cta-button" target="_blank" rel="noopener noreferrer">Start Donating</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Bar -->
+        <div class="control-bar">
+            <button class="control-btn" id="prevBtn" title="Previous slide">❮</button>
+            <div class="slide-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+            </div>
+            <button class="control-btn" id="playPauseBtn" title="Play/Pause">⏸</button>
+            <button class="control-btn" id="nextBtn" title="Next slide">❯</button>
+        </div>
+    </div>
+
+    <script>
+        class Slideshow {
+            constructor() {
+                this.currentSlide = 0;
+                this.totalSlides = document.querySelectorAll('.slide').length;
+                this.autoPlayInterval = null;
+                this.autoPlayDelay = 6000; // 6 seconds
+                this.isPlaying = true;
+
+                this.slides = document.getElementById('slides');
+                this.progressBar = document.getElementById('progressBar');
+                this.currentSlideSpan = document.getElementById('currentSlide');
+                this.totalSlidesSpan = document.getElementById('totalSlides');
+                this.playPauseBtn = document.getElementById('playPauseBtn');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+
+                this.init();
+            }
+
+            init() {
+                this.totalSlidesSpan.textContent = this.totalSlides;
+                this.attachEventListeners();
+                this.startAutoPlay();
+                this.updateDisplay();
+            }
+
+            attachEventListeners() {
+                this.playPauseBtn.addEventListener('click', () => this.togglePlayPause());
+                this.prevBtn.addEventListener('click', () => this.prevSlide());
+                this.nextBtn.addEventListener('click', () => this.nextSlide());
+                document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+            }
+
+            goToSlide(index) {
+                this.currentSlide = (index + this.totalSlides) % this.totalSlides;
+                this.updateDisplay();
+                this.resetAutoPlay();
+            }
+
+            nextSlide() {
+                this.goToSlide(this.currentSlide + 1);
+            }
+
+            prevSlide() {
+                this.goToSlide(this.currentSlide - 1);
+            }
+
+            togglePlayPause() {
+                this.isPlaying = !this.isPlaying;
+                if (this.isPlaying) {
+                    this.startAutoPlay();
+                    this.playPauseBtn.textContent = '⏸';
+                } else {
+                    this.stopAutoPlay();
+                    this.playPauseBtn.textContent = '▶';
+                }
+            }
+
+            startAutoPlay() {
+                this.stopAutoPlay();
+                this.autoPlayInterval = setInterval(() => {
+                    this.nextSlide();
+                }, this.autoPlayDelay);
+            }
+
+            stopAutoPlay() {
+                if (this.autoPlayInterval) {
+                    clearInterval(this.autoPlayInterval);
+                    this.autoPlayInterval = null;
+                }
+            }
+
+            resetAutoPlay() {
+                if (this.isPlaying) {
+                    this.startAutoPlay();
+                }
+            }
+
+            updateDisplay() {
+                const offset = -this.currentSlide * 100;
+                this.slides.style.transform = `translateX(${offset}%)`;
+
+                this.currentSlideSpan.textContent = this.currentSlide + 1;
+
+                const progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
+                this.progressBar.style.width = `${progress}%`;
+            }
+
+            handleKeyboard(e) {
+                if (e.key === 'ArrowLeft') this.prevSlide();
+                if (e.key === 'ArrowRight') this.nextSlide();
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    this.togglePlayPause();
+                }
+            }
+        }
+
+        // Initialize slideshow when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new Slideshow();
+        });
+    </script>
+</body>
+</html>
