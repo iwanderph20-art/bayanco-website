@@ -71,25 +71,35 @@ async function handleCampaignSubmission(request, env) {
       });
     }
 
-    // Send admin notification to both emails
-    const adminEmailResult = await sendEmail(RESEND_API_KEY, {
-      from: 'BayanCo Campaigns <campaigns@bayanco.org>',
-      to: ['iwanderph20@gmail.com', 'hello@bayanco.org'],
-      subject: `New Campaign: "${formData.campaignTitle}" by ${formData.creatorName}`,
-      html: adminEmailHtml
-    });
+    // Send emails (non-blocking — submission succeeds even if emails fail)
+    let emailsSent = false;
+    try {
+      // Send admin notification to both emails
+      await sendEmail(RESEND_API_KEY, {
+        from: 'BayanCo <noreply@bayanco.org>',
+        to: ['iwanderph20@gmail.com', 'hello@bayanco.org'],
+        subject: `New Campaign: "${formData.campaignTitle}" by ${formData.creatorName}`,
+        html: adminEmailHtml
+      });
 
-    // Send welcome email to the campaign creator
-    const welcomeEmailResult = await sendEmail(RESEND_API_KEY, {
-      from: 'BayanCo <hello@bayanco.org>',
-      to: [formData.creatorEmail],
-      subject: `Welcome to BayanCo! Your campaign "${formData.campaignTitle}" has been submitted`,
-      html: welcomeEmailHtml
-    });
+      // Send welcome email to the campaign creator
+      await sendEmail(RESEND_API_KEY, {
+        from: 'BayanCo <noreply@bayanco.org>',
+        to: [formData.creatorEmail],
+        subject: `Welcome to BayanCo! Your campaign "${formData.campaignTitle}" has been submitted`,
+        html: welcomeEmailHtml
+      });
+
+      emailsSent = true;
+    } catch (emailError) {
+      console.error('Email sending failed (submission still recorded):', emailError.message);
+    }
 
     return new Response(JSON.stringify({
       success: true,
-      message: 'Campaign submitted successfully! Check your email for confirmation.'
+      message: emailsSent
+        ? 'Campaign submitted successfully! Check your email for confirmation.'
+        : 'Campaign submitted successfully! (Email confirmation will be sent once our email system is fully set up.)'
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json', ...corsHeaders }
