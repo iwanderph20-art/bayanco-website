@@ -149,8 +149,6 @@ async function handleDonationSubmission(request, env) {
 
     const submittedAt = new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila' });
     const donationAmount = parseFloat(data.donationAmount);
-    const tipPercent = parseInt(data.platformTip) || 0;
-    const tipAmount = donationAmount * (tipPercent / 100);
 
     // Build admin notification email
     const adminEmailHtml = `
@@ -188,7 +186,6 @@ async function handleDonationSubmission(request, env) {
       <div class="amount-box">
         <div class="label">Donation Amount</div>
         <div class="amount">PHP ${donationAmount.toLocaleString('en-PH', { minimumFractionDigits: 2 })}</div>
-        ${tipAmount > 0 ? `<div class="label" style="margin-top: 8px;">Platform Tip: PHP ${tipAmount.toLocaleString('en-PH', { minimumFractionDigits: 2 })} (${tipPercent}%)</div>` : ''}
       </div>
 
       <div class="section" style="margin-top: 25px;">

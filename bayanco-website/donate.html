@@ -809,18 +809,6 @@
                 </div>
             </div>
 
-            <!-- Platform Tip (Optional) -->
-            <div class="form-group" style="margin-top: 1rem;">
-                <label for="platformTip">Support BayanCo (Optional Tip)</label>
-                <select id="platformTip" name="platformTip">
-                    <option value="0">No tip</option>
-                    <option value="5">5% - ₱0.00</option>
-                    <option value="10" selected>10% - ₱0.00 (Suggested)</option>
-                    <option value="15">15% - ₱0.00</option>
-                </select>
-                <p style="font-size: 0.8rem; color: #888; margin-top: 6px;">Tips help BayanCo continue serving Filipino communities. This is completely optional and separate from your donation.</p>
-            </div>
-
             <!-- Disclaimers & Agreements -->
             <div class="form-disclaimer">
                 <strong>By proceeding, you acknowledge that:</strong><br>
@@ -926,7 +914,6 @@
             } else {
                 customField.style.display = 'none';
                 donationAmountInput.value = amount;
-                updateTipAmounts(parseFloat(amount));
             }
         }
 
@@ -935,20 +922,7 @@
         if (customAmountInput) {
             customAmountInput.addEventListener('input', function() {
                 document.getElementById('donationAmount').value = this.value;
-                updateTipAmounts(parseFloat(this.value) || 0);
             });
-        }
-
-        // Update tip display amounts
-        function updateTipAmounts(amount) {
-            const tipSelect = document.getElementById('platformTip');
-            const options = tipSelect.options;
-            for (let i = 1; i < options.length; i++) {
-                const pct = parseInt(options[i].value);
-                const tipAmount = (amount * pct / 100).toFixed(0);
-                const label = pct === 10 ? ' (Suggested)' : '';
-                options[i].text = `${pct}% - ₱${Number(tipAmount).toLocaleString()}${label}`;
-            }
         }
 
         // Payment method selection
@@ -1027,7 +1001,6 @@
                     donorMessage: formData.get('donorMessage') || '',
                     anonymous: formData.get('anonymous') === 'on',
                     paymentMethod: formData.get('donorPaymentMethod'),
-                    platformTip: formData.get('platformTip'),
                 };
 
                 const response = await fetch('/api/submit-donation', {

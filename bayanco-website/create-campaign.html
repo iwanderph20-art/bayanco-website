@@ -526,26 +526,6 @@
             </div>
 
             <div class="form-section">
-                <h2>Rewards & Updates</h2>
-
-                <div class="form-group">
-                    <label for="rewards">Reward Tiers (optional)</label>
-                    <textarea id="rewards" name="rewards" placeholder="Describe reward tiers (e.g., 500 PHP: Name in credits, 5000 PHP: Product + mention)"></textarea>
-                </div>
-
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="updates" name="updates" checked>
-                        <label for="updates">I will provide regular updates</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="transparency" name="transparency" checked>
-                        <label for="transparency">I will share fund usage transparently</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-section">
                 <h2>Payment & Fees</h2>
                 <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Choose how you want to receive donations. BayanCo does not hold any funds — donations from supporters will go directly to you through the payment method you select below.</p>
 
@@ -597,6 +577,24 @@
                     </div>
                 </div>
 
+                <!-- Platform Tip Option -->
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="creatorTip">Support BayanCo (Platform Tip)</label>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 10px;">Help keep BayanCo running by adding an optional platform tip. This is separate from any fees and goes directly to supporting the platform.</p>
+                    <div class="payment-options" style="grid-template-columns: 1fr 1fr;">
+                        <div class="payment-option" onclick="selectTipOption(this, '10')" style="text-align: center;">
+                            <input type="radio" id="tip10" name="creatorTip" value="10" checked>
+                            <label for="tip10"><strong>10% Tip</strong></label>
+                            <small style="display: block; color: #888; font-size: 12px; margin-top: 4px;">Suggested — helps sustain the platform</small>
+                        </div>
+                        <div class="payment-option" onclick="selectTipOption(this, '0')">
+                            <input type="radio" id="tipNone" name="creatorTip" value="0">
+                            <label for="tipNone"><strong>No Tip</strong></label>
+                            <small style="display: block; color: #888; font-size: 12px; margin-top: 4px;">That's okay — you can always tip later</small>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="fee-calculator">
                     <h4 style="margin: 0 0 15px; color: var(--ocean-blue); font-size: 16px;">Fee Breakdown</h4>
                     <div class="fee-row">
@@ -612,8 +610,8 @@
                         <span id="feePayment">₱0.00</span>
                     </div>
                     <div class="fee-row">
-                        <span>Optional Donor Tip (10% suggested):</span>
-                        <span style="color: var(--island-teal); font-style: italic;">Adjustable at checkout</span>
+                        <span>Platform Tip (<span id="feeTipPercent">10</span>%):</span>
+                        <span id="feeTipAmount">₱0.00</span>
                     </div>
                     <div class="fee-row total">
                         <span>You'll Receive (estimated):</span>
@@ -624,21 +622,11 @@
             </div>
 
             <div class="form-section">
-                <h2>Terms & Agreements</h2>
+                <h2>Terms & Agreement</h2>
 
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="terms" name="terms" required>
-                        <label for="terms">I agree to the <a href="legal.html" target="_blank">Terms of Service</a></label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="privacy" name="privacy" required>
-                        <label for="privacy">I understand the <a href="privacy.html" target="_blank">Privacy Policy</a></label>
-                    </div>
-                </div>
-
-                <div class="terms-text">
-                    By creating a campaign, you agree to BayanCo's Terms of Service and Privacy Policy. We reserve the right to review and approve campaigns to maintain platform integrity.
+                <div class="checkbox-item" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px;">
+                    <input type="checkbox" id="termsAgreement" name="termsAgreement" required style="width: auto; margin-top: 4px;">
+                    <label for="termsAgreement" style="font-size: 14px; color: #555; line-height: 1.6;">I agree to BayanCo's <a href="legal.html" target="_blank" style="color: var(--ocean-blue); text-decoration: none;">Terms of Service</a> and <a href="privacy.html" target="_blank" style="color: var(--ocean-blue); text-decoration: none;">Privacy Policy</a>. I understand that BayanCo reserves the right to review and approve campaigns to maintain platform integrity. *</label>
                 </div>
 
                 <button type="submit" class="submit-button">Create Campaign</button>
@@ -741,22 +729,42 @@
             }
         }
 
+        // Tip option selection
+        function selectTipOption(el, value) {
+            document.querySelectorAll('.form-section .payment-option').forEach(opt => {
+                if (opt.querySelector('input[name="creatorTip"]')) {
+                    opt.style.borderColor = '#ddd';
+                    opt.style.background = 'white';
+                }
+            });
+            el.style.borderColor = 'var(--sunset-orange)';
+            el.style.background = 'rgba(255, 107, 53, 0.05)';
+            el.querySelector('input[type="radio"]').checked = true;
+            calculateFees();
+        }
+
         // Fee calculator functionality
         const targetAmountInput = document.getElementById('targetAmount');
         const feeTargetAmount = document.getElementById('feeTargetAmount');
         const feePlatform = document.getElementById('feePlatform');
         const feePayment = document.getElementById('feePayment');
         const feeNetAmount = document.getElementById('feeNetAmount');
+        const feeTipPercent = document.getElementById('feeTipPercent');
+        const feeTipAmount = document.getElementById('feeTipAmount');
 
         function calculateFees() {
             const target = parseFloat(targetAmountInput.value) || 0;
             const platformFee = target * 0.04;
             const paymentFee = (target * 0.025) + 10;
-            const netAmount = target - platformFee - paymentFee;
+            const tipPct = parseInt(document.querySelector('input[name="creatorTip"]:checked')?.value) || 0;
+            const tipFee = target * (tipPct / 100);
+            const netAmount = target - platformFee - paymentFee - tipFee;
 
             feeTargetAmount.textContent = '₱' + target.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             feePlatform.textContent = '₱' + platformFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             feePayment.textContent = '₱' + paymentFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            feeTipPercent.textContent = tipPct;
+            feeTipAmount.textContent = '₱' + tipFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             feeNetAmount.textContent = '₱' + netAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
@@ -791,11 +799,8 @@
                     paymentMethod: paymentMethod,
                     paymentAccountName: paymentMethod === 'paymongo' ? formData.get('paymongoName') : formData.get('paymayaName'),
                     paymentAccountNumber: paymentMethod === 'paymongo' ? formData.get('paymongoNumber') : formData.get('paymayaNumber'),
-                    rewards: formData.get('rewards') || '',
-                    updates: formData.get('updates') === 'on',
-                    transparency: formData.get('transparency') === 'on',
-                    terms: formData.get('terms') === 'on',
-                    privacy: formData.get('privacy') === 'on'
+                    creatorTip: formData.get('creatorTip') || '0',
+                    termsAgreement: formData.get('termsAgreement') === 'on'
                 };
 
                 const response = await fetch('/api/submit-campaign', {
