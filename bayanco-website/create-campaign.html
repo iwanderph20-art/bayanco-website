@@ -547,22 +547,58 @@
 
             <div class="form-section">
                 <h2>Payment & Fees</h2>
+                <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Choose how you want to receive donations. BayanCo does not hold any funds — donations from supporters will go directly to you through the payment method you select below.</p>
 
                 <div class="form-group">
-                    <label>Payment Processing Method *</label>
+                    <label>How do you want to receive donations? *</label>
                     <div class="payment-options">
-                        <div class="payment-option">
-                            <input type="radio" id="paymongo" name="paymentMethod" value="paymongo" required>
-                            <label for="paymongo">PayMongo (GCash)</label>
+                        <div class="payment-option" onclick="this.querySelector('input').checked=true; togglePaymentFields();">
+                            <input type="radio" id="paymongo" name="paymentMethod" value="paymongo" required onchange="togglePaymentFields()">
+                            <label for="paymongo"><strong>PayMongo</strong> (GCash)</label>
                         </div>
-                        <div class="payment-option">
-                            <input type="radio" id="paymaya" name="paymentMethod" value="paymaya" required>
-                            <label for="paymaya">PayMaya (GCash)</label>
+                        <div class="payment-option" onclick="this.querySelector('input').checked=true; togglePaymentFields();">
+                            <input type="radio" id="paymaya" name="paymentMethod" value="paymaya" required onchange="togglePaymentFields()">
+                            <label for="paymaya"><strong>PayMaya</strong> (GCash)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PayMongo Account Details -->
+                <div id="paymongoFields" style="display: none; margin-top: 10px;">
+                    <div style="background: #FFF3E0; border-left: 4px solid var(--sunset-orange); padding: 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px;">
+                        <p style="font-size: 13px; color: #555; margin: 0;">Enter your PayMongo account details. Donors will send payments directly to this account via GCash. Make sure the information is accurate.</p>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymongoName">Account Name (as registered in PayMongo) *</label>
+                            <input type="text" id="paymongoName" name="paymongoName" placeholder="Juan Dela Cruz">
+                        </div>
+                        <div class="form-group">
+                            <label for="paymongoNumber">GCash Number (linked to PayMongo) *</label>
+                            <input type="tel" id="paymongoNumber" name="paymongoNumber" placeholder="09XX XXX XXXX">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PayMaya Account Details -->
+                <div id="paymayaFields" style="display: none; margin-top: 10px;">
+                    <div style="background: #E8F5E9; border-left: 4px solid var(--island-teal); padding: 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px;">
+                        <p style="font-size: 13px; color: #555; margin: 0;">Enter your PayMaya account details. Donors will send payments directly to this account via GCash. Make sure the information is accurate.</p>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymayaName">Account Name (as registered in PayMaya) *</label>
+                            <input type="text" id="paymayaName" name="paymayaName" placeholder="Juan Dela Cruz">
+                        </div>
+                        <div class="form-group">
+                            <label for="paymayaNumber">GCash/PayMaya Number *</label>
+                            <input type="tel" id="paymayaNumber" name="paymayaNumber" placeholder="09XX XXX XXXX">
                         </div>
                     </div>
                 </div>
 
                 <div class="fee-calculator">
+                    <h4 style="margin: 0 0 15px; color: var(--ocean-blue); font-size: 16px;">Fee Breakdown</h4>
                     <div class="fee-row">
                         <span>Target Amount:</span>
                         <span id="feeTargetAmount">₱0.00</span>
@@ -580,9 +616,10 @@
                         <span style="color: var(--island-teal); font-style: italic;">Adjustable at checkout</span>
                     </div>
                     <div class="fee-row total">
-                        <span>You'll Receive:</span>
+                        <span>You'll Receive (estimated):</span>
                         <span id="feeNetAmount">₱0.00</span>
                     </div>
+                    <p style="font-size: 12px; color: #999; margin-top: 10px;">Fees are deducted per transaction. Donors pay you directly — BayanCo never holds your funds.</p>
                 </div>
             </div>
 
@@ -681,6 +718,29 @@
             }
         });
 
+        // Payment method toggle
+        function togglePaymentFields() {
+            const paymongo = document.getElementById('paymongo');
+            const paymongoFields = document.getElementById('paymongoFields');
+            const paymayaFields = document.getElementById('paymayaFields');
+
+            if (paymongo.checked) {
+                paymongoFields.style.display = 'block';
+                paymayaFields.style.display = 'none';
+                document.getElementById('paymongoName').required = true;
+                document.getElementById('paymongoNumber').required = true;
+                document.getElementById('paymayaName').required = false;
+                document.getElementById('paymayaNumber').required = false;
+            } else {
+                paymongoFields.style.display = 'none';
+                paymayaFields.style.display = 'block';
+                document.getElementById('paymongoName').required = false;
+                document.getElementById('paymongoNumber').required = false;
+                document.getElementById('paymayaName').required = true;
+                document.getElementById('paymayaNumber').required = true;
+            }
+        }
+
         // Fee calculator functionality
         const targetAmountInput = document.getElementById('targetAmount');
         const feeTargetAmount = document.getElementById('feeTargetAmount');
@@ -717,6 +777,7 @@
 
             try {
                 const formData = new FormData(campaignForm);
+                const paymentMethod = formData.get('paymentMethod');
                 const data = {
                     campaignTitle: formData.get('campaignTitle'),
                     category: formData.get('category'),
@@ -727,7 +788,9 @@
                     creatorEmail: formData.get('creatorEmail'),
                     creatorPhone: formData.get('creatorPhone'),
                     creatorLocation: formData.get('creatorLocation'),
-                    paymentMethod: formData.get('paymentMethod'),
+                    paymentMethod: paymentMethod,
+                    paymentAccountName: paymentMethod === 'paymongo' ? formData.get('paymongoName') : formData.get('paymayaName'),
+                    paymentAccountNumber: paymentMethod === 'paymongo' ? formData.get('paymongoNumber') : formData.get('paymayaNumber'),
                     rewards: formData.get('rewards') || '',
                     updates: formData.get('updates') === 'on',
                     transparency: formData.get('transparency') === 'on',

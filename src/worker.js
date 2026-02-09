@@ -10,6 +10,11 @@ export default {
       return handleCampaignSubmission(request, env);
     }
 
+    // Handle donation form submission
+    if (url.pathname === '/api/submit-donation' && request.method === 'POST') {
+      return handleDonationSubmission(request, env);
+    }
+
     // For everything else, let the static assets handler take over
     return env.ASSETS.fetch(request);
   }
@@ -117,6 +122,217 @@ async function handleCampaignSubmission(request, env) {
   }
 }
 
+async function handleDonationSubmission(request, env) {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const data = await request.json();
+
+    // Validate required fields
+    const required = ['donorName', 'donorEmail', 'donationAmount', 'paymentMethod'];
+    for (const field of required) {
+      if (!data[field]) {
+        return new Response(JSON.stringify({ success: false, error: `Missing required field: ${field}` }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      }
+    }
+
+    const submittedAt = new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila' });
+    const donationAmount = parseFloat(data.donationAmount);
+    const tipPercent = parseInt(data.platformTip) || 0;
+    const tipAmount = donationAmount * (tipPercent / 100);
+
+    // Build admin notification email
+    const adminEmailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #1A936F 0%, #004E89 100%); color: white; padding: 30px; text-align: center; }
+    .header h1 { margin: 0; font-size: 24px; }
+    .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
+    .badge { display: inline-block; background: #FFB627; color: #2D2D2A; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 10px; }
+    .content { padding: 30px; }
+    .section { margin-bottom: 25px; }
+    .section h2 { color: #004E89; font-size: 18px; margin: 0 0 15px; padding-bottom: 8px; border-bottom: 2px solid #FFB627; }
+    .field { display: flex; margin-bottom: 10px; }
+    .field-label { font-weight: 600; color: #666; min-width: 160px; }
+    .field-value { color: #2D2D2A; }
+    .amount-box { background: #E8F5E9; border: 2px solid #4CAF50; border-radius: 8px; padding: 20px; text-align: center; }
+    .amount-box .amount { font-size: 32px; font-weight: 700; color: #1A936F; }
+    .amount-box .label { font-size: 14px; color: #666; }
+    .footer { background: #2D2D2A; color: #aaa; padding: 20px; text-align: center; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>New Donation Received</h1>
+      <p>Submitted on ${submittedAt}</p>
+      <div class="badge">DONATION NOTIFICATION</div>
+    </div>
+    <div class="content">
+      <div class="amount-box">
+        <div class="label">Donation Amount</div>
+        <div class="amount">PHP ${donationAmount.toLocaleString('en-PH', { minimumFractionDigits: 2 })}</div>
+        ${tipAmount > 0 ? `<div class="label" style="margin-top: 8px;">Platform Tip: PHP ${tipAmount.toLocaleString('en-PH', { minimumFractionDigits: 2 })} (${tipPercent}%)</div>` : ''}
+      </div>
+
+      <div class="section" style="margin-top: 25px;">
+        <h2>Campaign</h2>
+        <div class="field"><span class="field-label">Campaign:</span><span class="field-value">${escapeHtml(data.campaignTitle || 'Not specified')}</span></div>
+        <div class="field"><span class="field-label">Payment Method:</span><span class="field-value">${escapeHtml(data.paymentMethod)}</span></div>
+      </div>
+
+      <div class="section">
+        <h2>Donor Information</h2>
+        <div class="field"><span class="field-label">Name:</span><span class="field-value">${data.anonymous ? '(Anonymous)' : escapeHtml(data.donorName)}</span></div>
+        <div class="field"><span class="field-label">Email:</span><span class="field-value"><a href="mailto:${escapeHtml(data.donorEmail)}">${escapeHtml(data.donorEmail)}</a></span></div>
+        ${data.donorPhone ? `<div class="field"><span class="field-label">Phone:</span><span class="field-value">${escapeHtml(data.donorPhone)}</span></div>` : ''}
+        ${data.donorLocation ? `<div class="field"><span class="field-label">Location:</span><span class="field-value">${escapeHtml(data.donorLocation)}</span></div>` : ''}
+        ${data.donorMessage ? `<div class="field"><span class="field-label">Message:</span><span class="field-value">${escapeHtml(data.donorMessage)}</span></div>` : ''}
+        <div class="field"><span class="field-label">Anonymous:</span><span class="field-value">${data.anonymous ? 'Yes' : 'No'}</span></div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>BayanCo Donation Management System</p>
+      <p>This is an automated notification.</p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    // Build donor confirmation email
+    const donorEmailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #FFF8F0; margin: 0; padding: 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #1A936F 0%, #004E89 100%); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0; font-size: 28px; }
+    .logo { font-size: 32px; font-weight: 900; color: #FFB627; margin-bottom: 15px; }
+    .content { padding: 30px; }
+    .amount-highlight { background: #E8F5E9; border: 2px solid #4CAF50; border-radius: 8px; padding: 20px; text-align: center; margin: 20px 0; }
+    .amount-highlight .amount { font-size: 28px; font-weight: 700; color: #1A936F; }
+    .amount-highlight .label { font-size: 14px; color: #666; }
+    .info-box { background: #FFF3E0; border-left: 4px solid #FF6B35; padding: 15px; border-radius: 0 8px 8px 0; margin: 20px 0; }
+    .info-box p { margin: 0; font-size: 14px; color: #555; line-height: 1.6; }
+    .info-box strong { color: #2D2D2A; }
+    .disclaimer { background: #FFF8E1; border: 1px solid #FFD54F; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 13px; color: #666; line-height: 1.6; }
+    .footer { background: #2D2D2A; color: #aaa; padding: 25px; text-align: center; font-size: 12px; }
+    .footer a { color: #FFB627; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">BayanCo</div>
+      <h1>Salamat, ${escapeHtml(data.donorName)}!</h1>
+      <p style="opacity: 0.9; margin-top: 10px;">Thank you for your generous donation</p>
+    </div>
+    <div class="content">
+      <p style="font-size: 16px; color: #2D2D2A;">Your donation pledge has been recorded. Here are the details:</p>
+
+      <div class="amount-highlight">
+        <div class="label">Your Donation</div>
+        <div class="amount">PHP ${donationAmount.toLocaleString('en-PH', { minimumFractionDigits: 2 })}</div>
+        <div class="label" style="margin-top: 5px;">for "${escapeHtml(data.campaignTitle || 'Campaign')}"</div>
+      </div>
+
+      <div class="info-box">
+        <p><strong>Next Step:</strong> Complete your payment by sending <strong>PHP ${donationAmount.toLocaleString('en-PH')}</strong> to the campaign creator via <strong>${escapeHtml(data.paymentMethod === 'gcash' ? 'GCash' : 'PayMaya')}</strong>. The campaign creator's payment details are provided on the campaign page.</p>
+      </div>
+
+      <div class="disclaimer">
+        <strong>Important Reminder:</strong><br>
+        Your donation goes directly to the campaign creator. BayanCo does not hold, manage, or guarantee any funds. Donations are non-refundable once sent. BayanCo is not responsible for how campaign creators use the donated funds. Donations are not tax-deductible as charitable contributions.
+      </div>
+
+      <p style="font-size: 14px; color: #666; line-height: 1.6; margin-top: 20px;">
+        If you have any questions or concerns about your donation, please contact us at <a href="mailto:support@bayanco.org" style="color: #004E89;">support@bayanco.org</a>.
+      </p>
+
+      <p style="font-size: 14px; color: #2D2D2A; font-weight: 600; margin-top: 20px;">
+        Maraming Salamat,<br>
+        The BayanCo Team
+      </p>
+    </div>
+    <div class="footer">
+      <p style="font-size: 16px; font-weight: 700; color: #FFB627; margin-bottom: 10px;">BayanCo</p>
+      <p>BayanCo - Filipino Crowdfunding Platform</p>
+      <p><a href="https://bayanco.org/legal.html">Terms of Service</a> &bull; <a href="https://bayanco.org/privacy.html">Privacy Policy</a></p>
+      <p style="margin-top: 10px;">You received this email because you made a donation on bayanco.org</p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    // Send emails
+    const RESEND_API_KEY = env.RESEND_API_KEY;
+    let emailsSent = false;
+
+    if (RESEND_API_KEY) {
+      try {
+        // Admin notification
+        await sendEmail(RESEND_API_KEY, {
+          from: 'BayanCo <noreply@bayanco.org>',
+          to: ['iwanderph20@gmail.com', 'hello@bayanco.org'],
+          subject: `New Donation: PHP ${donationAmount.toLocaleString()} for "${data.campaignTitle || 'Campaign'}" from ${data.anonymous ? 'Anonymous' : data.donorName}`,
+          html: adminEmailHtml
+        });
+
+        // Donor confirmation
+        await sendEmail(RESEND_API_KEY, {
+          from: 'BayanCo <noreply@bayanco.org>',
+          to: [data.donorEmail],
+          subject: `Thank you for your donation to "${data.campaignTitle || 'Campaign'}" on BayanCo`,
+          html: donorEmailHtml
+        });
+
+        emailsSent = true;
+      } catch (emailError) {
+        console.error('Donation email sending failed:', emailError.message);
+      }
+    }
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: emailsSent
+        ? 'Donation recorded! Check your email for payment instructions.'
+        : 'Donation recorded successfully!'
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders }
+    });
+
+  } catch (error) {
+    console.error('Error processing donation:', error);
+    return new Response(JSON.stringify({
+      success: false,
+      error: 'Something went wrong. Please try again.'
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders }
+    });
+  }
+}
+
 async function sendEmail(apiKey, emailData) {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -183,6 +399,8 @@ function buildAdminEmail(data, submittedAt, target, platformFee, paymentFee, net
         <div class="field"><span class="field-label">Category:</span><span class="field-value">${escapeHtml(data.category)}</span></div>
         <div class="field"><span class="field-label">Deadline:</span><span class="field-value">${escapeHtml(data.deadline)}</span></div>
         <div class="field"><span class="field-label">Payment Method:</span><span class="field-value">${escapeHtml(data.paymentMethod)}</span></div>
+        ${data.paymentAccountName ? `<div class="field"><span class="field-label">Account Name:</span><span class="field-value">${escapeHtml(data.paymentAccountName)}</span></div>` : ''}
+        ${data.paymentAccountNumber ? `<div class="field"><span class="field-label">Account Number:</span><span class="field-value">${escapeHtml(data.paymentAccountNumber)}</span></div>` : ''}
         <div style="margin-top: 10px;">
           <div class="field-label">Description:</div>
           <p style="color: #2D2D2A; margin-top: 5px; line-height: 1.6;">${escapeHtml(data.campaignDescription)}</p>

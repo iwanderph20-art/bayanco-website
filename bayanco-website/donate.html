@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - BayanCo | Support a Campaign</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --warm-sand: #F4E8D8;
+            --deep-purple: #5B2A86;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--charcoal);
+            background-color: var(--coconut-cream);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--ocean-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .cta-button {
+            background-color: var(--sunset-orange);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #E55A25;
+        }
+
+        .cta-button.nav-cta {
+            display: inline-block;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--charcoal);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Disclaimer Banner */
+        .disclaimer-banner {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            border: 2px solid var(--mango-yellow);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .disclaimer-banner h3 {
+            font-family: var(--font-display);
+            color: var(--ocean-blue);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .disclaimer-banner p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .disclaimer-banner strong {
+            color: var(--charcoal);
+        }
+
+        /* Campaign Info Card */
+        .campaign-info-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .campaign-info-header {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            padding: 2rem;
+        }
+
+        .campaign-info-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .campaign-info-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .campaign-info-body {
+            padding: 2rem;
+        }
+
+        .campaign-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            background: var(--coconut-cream);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .meta-item .label {
+            font-size: 0.85rem;
+            color: #888;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .meta-item .value {
+            font-weight: 700;
+            color: var(--ocean-blue);
+            font-size: 1.2rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #E8E8E8;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sunset-orange), var(--deep-purple));
+            border-radius: 50px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Donation Form */
+        .donation-form {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .donation-form h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--ocean-blue);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Amount Selection */
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .amount-option {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--charcoal);
+        }
+
+        .amount-option:hover {
+            border-color: var(--sunset-orange);
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .amount-option.active {
+            border-color: var(--sunset-orange);
+            background: var(--sunset-orange);
+            color: white;
+        }
+
+        .amount-option small {
+            display: block;
+            font-weight: 400;
+            font-size: 0.75rem;
+            margin-top: 4px;
+            opacity: 0.8;
+        }
+
+        /* Payment Method */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-method {
+            border: 2px solid #ddd;
+            padding: 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .payment-method:hover {
+            border-color: var(--island-teal);
+            background: rgba(26, 147, 111, 0.05);
+        }
+
+        .payment-method.active {
+            border-color: var(--island-teal);
+            background: rgba(26, 147, 111, 0.08);
+        }
+
+        .payment-method input[type="radio"] {
+            margin-right: 8px;
+            accent-color: var(--island-teal);
+        }
+
+        .payment-method strong {
+            color: var(--charcoal);
+        }
+
+        .payment-method small {
+            display: block;
+            color: #888;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+            accent-color: var(--ocean-blue);
+        }
+
+        .checkbox-item label {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .checkbox-item label a {
+            color: var(--ocean-blue);
+            text-decoration: none;
+        }
+
+        .checkbox-item label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Disclaimer Box in Form */
+        .form-disclaimer {
+            background: #FFF8E1;
+            border: 1px solid #FFD54F;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .form-disclaimer strong {
+            color: var(--charcoal);
+        }
+
+        /* Submit Button */
+        .donate-submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+        }
+
+        .donate-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .donate-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--island-teal);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .success-message h2 {
+            font-family: var(--font-display);
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            opacity: 0.95;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Safety Tips */
+        .safety-tips {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .safety-tips h3 {
+            font-family: var(--font-display);
+            color: var(--ocean-blue);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .safety-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .safety-tips li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+            color: #555;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .safety-tips li:last-child {
+            border-bottom: none;
+        }
+
+        .safety-tips li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--island-teal);
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: var(--font-display);
+            margin-bottom: 1rem;
+            color: var(--mango-yellow);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--sunset-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .cta-button.nav-cta {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .amount-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .campaign-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BayanCo</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="campaigns.html">Campaigns</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="press.html">Press</a></li>
+                    <li><a href="create-campaign.html" class="cta-button nav-cta">Start Campaign</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" onclick="this.classList.toggle('active');document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Support a Campaign</h1>
+        <p>Your generosity helps bring Filipino dreams to life through the spirit of bayanihan</p>
+    </section>
+
+    <div class="container">
+        <!-- Important Disclaimer -->
+        <div class="disclaimer-banner">
+            <h3>&#9888; Important: How Donations Work on BayanCo</h3>
+            <p><strong>BayanCo does not hold, manage, or process any funds.</strong> When you donate, your payment goes <strong>directly to the campaign creator</strong> through their chosen payment method (PayMongo or PayMaya via GCash). BayanCo is a platform that connects donors with campaign creators only.</p>
+            <p style="margin-top: 10px;"><strong>Donations are non-refundable</strong> once sent. Please review the campaign details and creator profile carefully before donating. If you suspect fraud, <a href="contact.html" style="color: var(--ocean-blue); font-weight: 600;">report it here</a>.</p>
+        </div>
+
+        <!-- Success Message (hidden by default) -->
+        <div class="success-message" id="successMessage">
+            <h2>Salamat! Thank You for Your Generosity!</h2>
+            <p>Your donation details have been recorded. Please complete your payment using the instructions sent to your email.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">The campaign creator will receive your donation directly through their payment account.</p>
+            <a href="campaigns.html" style="display: inline-block; margin-top: 1.5rem; background: white; color: var(--island-teal); padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600;">Browse More Campaigns</a>
+        </div>
+
+        <!-- Campaign Info Card (populated dynamically or with sample data) -->
+        <div class="campaign-info-card" id="campaignCard">
+            <div class="campaign-info-header">
+                <h2 id="campaignTitle">Select a Campaign</h2>
+                <p id="campaignCreator">Browse campaigns to find one you'd like to support</p>
+            </div>
+            <div class="campaign-info-body">
+                <div class="campaign-meta">
+                    <div class="meta-item">
+                        <span class="label">Funding Goal</span>
+                        <span class="value" id="campaignGoal">--</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label">Raised So Far</span>
+                        <span class="value" id="campaignRaised">--</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label">Donors</span>
+                        <span class="value" id="campaignDonors">--</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label">Days Left</span>
+                        <span class="value" id="campaignDays">--</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="campaignProgress" style="width: 0%;"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressPercent">0% funded</span>
+                    <span id="progressGoal">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donation Form -->
+        <form class="donation-form" id="donationForm">
+            <h2>Make a Donation</h2>
+
+            <!-- Donation Amount -->
+            <div class="form-group">
+                <label>Select Donation Amount (PHP)</label>
+                <div class="amount-options">
+                    <button type="button" class="amount-option" data-amount="100" onclick="selectAmount(this)">
+                        ₱100
+                    </button>
+                    <button type="button" class="amount-option" data-amount="250" onclick="selectAmount(this)">
+                        ₱250
+                    </button>
+                    <button type="button" class="amount-option" data-amount="500" onclick="selectAmount(this)">
+                        ₱500
+                    </button>
+                    <button type="button" class="amount-option" data-amount="1000" onclick="selectAmount(this)">
+                        ₱1,000
+                    </button>
+                    <button type="button" class="amount-option" data-amount="2500" onclick="selectAmount(this)">
+                        ₱2,500
+                    </button>
+                    <button type="button" class="amount-option" data-amount="5000" onclick="selectAmount(this)">
+                        ₱5,000
+                    </button>
+                    <button type="button" class="amount-option" data-amount="10000" onclick="selectAmount(this)">
+                        ₱10,000
+                    </button>
+                    <button type="button" class="amount-option" data-amount="custom" onclick="selectAmount(this)">
+                        Other
+                        <small>Enter amount</small>
+                    </button>
+                </div>
+                <div id="customAmountField" style="display: none; margin-top: 10px;">
+                    <input type="number" id="customAmount" name="customAmount" placeholder="Enter amount in PHP" min="50" step="50">
+                </div>
+                <input type="hidden" id="donationAmount" name="donationAmount" required>
+            </div>
+
+            <!-- Donor Information -->
+            <h3 style="color: var(--ocean-blue); margin-bottom: 1rem; font-size: 1.1rem;">Your Information</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="donorName">Full Name *</label>
+                    <input type="text" id="donorName" name="donorName" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="donorEmail">Email Address *</label>
+                    <input type="email" id="donorEmail" name="donorEmail" placeholder="your@email.com" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="donorPhone">Phone Number (optional)</label>
+                    <input type="tel" id="donorPhone" name="donorPhone" placeholder="+63 9XX XXX XXXX">
+                </div>
+                <div class="form-group">
+                    <label for="donorLocation">Location (optional)</label>
+                    <input type="text" id="donorLocation" name="donorLocation" placeholder="City, Province">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="donorMessage">Message to the Creator (optional)</label>
+                <textarea id="donorMessage" name="donorMessage" placeholder="Send an encouraging message to the campaign creator..." rows="3" style="resize: vertical;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="anonymous" name="anonymous">
+                    <label for="anonymous">Donate anonymously (your name will not be shown publicly)</label>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <h3 style="color: var(--ocean-blue); margin-bottom: 1rem; font-size: 1.1rem;">Payment Method</h3>
+            <div class="payment-methods">
+                <div class="payment-method" onclick="selectPayment(this, 'gcash')">
+                    <input type="radio" id="payGcash" name="donorPaymentMethod" value="gcash" required>
+                    <label for="payGcash"><strong>GCash</strong></label>
+                    <small>Send directly via GCash</small>
+                </div>
+                <div class="payment-method" onclick="selectPayment(this, 'paymaya')">
+                    <input type="radio" id="payPaymaya" name="donorPaymentMethod" value="paymaya">
+                    <label for="payPaymaya"><strong>PayMaya</strong></label>
+                    <small>Send directly via PayMaya</small>
+                </div>
+            </div>
+
+            <!-- Platform Tip (Optional) -->
+            <div class="form-group" style="margin-top: 1rem;">
+                <label for="platformTip">Support BayanCo (Optional Tip)</label>
+                <select id="platformTip" name="platformTip">
+                    <option value="0">No tip</option>
+                    <option value="5">5% - ₱0.00</option>
+                    <option value="10" selected>10% - ₱0.00 (Suggested)</option>
+                    <option value="15">15% - ₱0.00</option>
+                </select>
+                <p style="font-size: 0.8rem; color: #888; margin-top: 6px;">Tips help BayanCo continue serving Filipino communities. This is completely optional and separate from your donation.</p>
+            </div>
+
+            <!-- Disclaimers & Agreements -->
+            <div class="form-disclaimer">
+                <strong>By proceeding, you acknowledge that:</strong><br>
+                • Your payment will be sent <strong>directly to the campaign creator</strong>, not to BayanCo.<br>
+                • BayanCo does not hold, manage, or guarantee any funds.<br>
+                • Donations are <strong>non-refundable</strong> once sent to the creator.<br>
+                • BayanCo is not responsible for how creators use the donated funds.<br>
+                • Donations are <strong>not tax-deductible</strong> as charitable contributions.
+            </div>
+
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label for="agreeTerms">I understand that my donation goes directly to the campaign creator and is <strong>non-refundable</strong>. I have read and agree to the <a href="legal.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>. *</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agreeRisk" name="agreeRisk" required>
+                    <label for="agreeRisk">I acknowledge that BayanCo does not guarantee campaign outcomes and I am donating at my own discretion. *</label>
+                </div>
+            </div>
+
+            <button type="submit" class="donate-submit-btn" id="submitBtn">
+                Proceed to Payment
+            </button>
+
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: #999;">
+                You will be redirected to complete your payment via GCash/PayMaya after submitting.
+            </p>
+        </form>
+
+        <!-- Safety Tips -->
+        <div class="safety-tips">
+            <h3>Donor Safety Tips</h3>
+            <ul>
+                <li>Review the campaign description and creator profile carefully before donating</li>
+                <li>Look for verified campaigns with the verification badge</li>
+                <li>Check campaign updates — active creators who post updates are more trustworthy</li>
+                <li>Be cautious of campaigns with unrealistic goals or vague descriptions</li>
+                <li>Only donate amounts you are comfortable with and can afford</li>
+                <li>Report suspicious campaigns immediately through our <a href="contact.html" style="color: var(--ocean-blue);">Contact page</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Campaigns</h3>
+                <ul>
+                    <li><a href="campaigns.html">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start a Campaign</a></li>
+                    <li><a href="faq.html">Campaign FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Learn</h3>
+                <ul>
+                    <li><a href="about.html">About BayanCo</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="press.html">Press & Media</a></li>
+                    <li><a href="legal.html">Legal Information</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal.html">Terms of Service</a></li>
+                    <li><a href="press.html">Press Kit</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Amount selection
+        function selectAmount(btn) {
+            document.querySelectorAll('.amount-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const amount = btn.getAttribute('data-amount');
+            const customField = document.getElementById('customAmountField');
+            const donationAmountInput = document.getElementById('donationAmount');
+
+            if (amount === 'custom') {
+                customField.style.display = 'block';
+                document.getElementById('customAmount').focus();
+                donationAmountInput.value = '';
+            } else {
+                customField.style.display = 'none';
+                donationAmountInput.value = amount;
+                updateTipAmounts(parseFloat(amount));
+            }
+        }
+
+        // Custom amount handler
+        const customAmountInput = document.getElementById('customAmount');
+        if (customAmountInput) {
+            customAmountInput.addEventListener('input', function() {
+                document.getElementById('donationAmount').value = this.value;
+                updateTipAmounts(parseFloat(this.value) || 0);
+            });
+        }
+
+        // Update tip display amounts
+        function updateTipAmounts(amount) {
+            const tipSelect = document.getElementById('platformTip');
+            const options = tipSelect.options;
+            for (let i = 1; i < options.length; i++) {
+                const pct = parseInt(options[i].value);
+                const tipAmount = (amount * pct / 100).toFixed(0);
+                const label = pct === 10 ? ' (Suggested)' : '';
+                options[i].text = `${pct}% - ₱${Number(tipAmount).toLocaleString()}${label}`;
+            }
+        }
+
+        // Payment method selection
+        function selectPayment(el, method) {
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+            el.classList.add('active');
+            el.querySelector('input[type="radio"]').checked = true;
+        }
+
+        // URL parameter handling for campaign data
+        function loadCampaignFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('campaign');
+            const goal = params.get('goal');
+            const raised = params.get('raised');
+            const donors = params.get('donors');
+            const days = params.get('days');
+            const creator = params.get('creator');
+
+            if (title) {
+                document.getElementById('campaignTitle').textContent = decodeURIComponent(title);
+            }
+            if (creator) {
+                document.getElementById('campaignCreator').textContent = 'by ' + decodeURIComponent(creator);
+            }
+            if (goal) {
+                const goalNum = parseFloat(goal);
+                document.getElementById('campaignGoal').textContent = '₱' + goalNum.toLocaleString();
+                document.getElementById('progressGoal').textContent = 'Goal: ₱' + goalNum.toLocaleString();
+
+                if (raised) {
+                    const raisedNum = parseFloat(raised);
+                    document.getElementById('campaignRaised').textContent = '₱' + raisedNum.toLocaleString();
+                    const pct = Math.min(Math.round((raisedNum / goalNum) * 100), 100);
+                    document.getElementById('campaignProgress').style.width = pct + '%';
+                    document.getElementById('progressPercent').textContent = pct + '% funded';
+                }
+            }
+            if (donors) {
+                document.getElementById('campaignDonors').textContent = parseInt(donors).toLocaleString();
+            }
+            if (days) {
+                document.getElementById('campaignDays').textContent = days;
+            }
+        }
+
+        loadCampaignFromURL();
+
+        // Form submission
+        const donationForm = document.getElementById('donationForm');
+        const successMessage = document.getElementById('successMessage');
+
+        donationForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const donationAmount = document.getElementById('donationAmount').value;
+            if (!donationAmount || parseFloat(donationAmount) < 50) {
+                alert('Please select or enter a donation amount (minimum ₱50).');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData(donationForm);
+                const data = {
+                    campaignTitle: document.getElementById('campaignTitle').textContent,
+                    donationAmount: donationAmount,
+                    donorName: formData.get('donorName'),
+                    donorEmail: formData.get('donorEmail'),
+                    donorPhone: formData.get('donorPhone') || '',
+                    donorLocation: formData.get('donorLocation') || '',
+                    donorMessage: formData.get('donorMessage') || '',
+                    anonymous: formData.get('anonymous') === 'on',
+                    paymentMethod: formData.get('donorPaymentMethod'),
+                    platformTip: formData.get('platformTip'),
+                };
+
+                const response = await fetch('/api/submit-donation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    successMessage.style.display = 'block';
+                    donationForm.style.display = 'none';
+                    window.scrollTo({ top: successMessage.offsetTop - 100, behavior: 'smooth' });
+                } else {
+                    alert('Error: ' + (result.error || 'Something went wrong. Please try again.'));
+                }
+            } catch (error) {
+                console.error('Donation submission error:', error);
+                alert('Network error. Please check your connection and try again.');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
