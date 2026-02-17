@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BayanCo - Together We Rise | Filipino Crowdfunding Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Original Filipino-inspired Color Palette */
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --warm-sand: #F4E8D8;
+            --deep-purple: #5B2A86;
+            
+            /* Typography */
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--coconut-cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Animated Background Pattern */
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--ocean-blue) 35px, var(--ocean-blue) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--sunset-orange) 35px, var(--sunset-orange) 70px);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05);
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--ocean-blue);
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--sunset-orange);
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 8rem 3rem 6rem;
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23fff"/></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--ocean-blue);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2px solid white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: transparent;
+            color: white;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 3rem;
+            background: var(--coconut-cream);
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--ocean-blue);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(45, 45, 42, 0.7);
+            margin-bottom: 4rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0, 78, 137, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--sunset-orange);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0, 78, 137, 0.15);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #004e89 0%, #0077cc 100%);
+            box-shadow: 0 8px 24px rgba(0, 78, 137, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.08) rotate(-3deg);
+            box-shadow: 0 12px 32px rgba(0, 78, 137, 0.35);
+        }
+        .feature-icon svg {
+            width: 42px;
+            height: 42px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        .feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--ocean-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: rgba(45, 45, 42, 0.8);
+            line-height: 1.8;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 6rem 3rem;
+            background: linear-gradient(135deg, var(--warm-sand), var(--coconut-cream));
+        }
+        
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .step h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--ocean-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .step p {
+            color: rgba(45, 45, 42, 0.8);
+        }
+        
+        /* Stats Section */
+        .stats {
+            padding: 5rem 3rem;
+            background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple));
+            color: white;
+        }
+        
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            text-align: center;
+        }
+        
+        .stat h3 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--mango-yellow);
+        }
+        
+        .stat p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 3rem;
+            background: var(--coconut-cream);
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            color: var(--ocean-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.3rem;
+            color: rgba(45, 45, 42, 0.8);
+            margin-bottom: 3rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 4rem 3rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-column h4 {
+            color: var(--mango-yellow);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--mango-yellow);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">BayanCo</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="safety.html">Safety & Trust</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="press.html">Press</a></li>
+        </ul>
+        <a href="create-campaign.html" class="cta-button">Start Campaign</a>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Together We Rise</h1>
+        <p>The Filipino crowdfunding platform built on the spirit of bayanihan—where communities come together to support dreams, overcome challenges, and create lasting impact.</p>
+        <div class="hero-buttons">
+            <a href="create-campaign.html" class="btn-primary">Start a Campaign</a>
+            <a href="#campaigns" class="btn-secondary">Browse Campaigns</a>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-container">
+            <h2 class="section-title">Why Choose BayanCo?</h2>
+            <p class="section-subtitle">Built by Filipinos, for Filipinos—with features that matter to our community</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);">
+                        <!-- Sun rays of Philippine flag -->
+                        <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="21" cy="21" r="7" stroke="white" stroke-width="2" fill="none"/>
+                            <line x1="21" y1="2" x2="21" y2="10" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                            <line x1="21" y1="32" x2="21" y2="40" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                            <line x1="2" y1="21" x2="10" y2="21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                            <line x1="32" y1="21" x2="40" y2="21" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                            <line x1="7.5" y1="7.5" x2="13.2" y2="13.2" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                            <line x1="28.8" y1="28.8" x2="34.5" y2="34.5" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                            <line x1="34.5" y1="7.5" x2="28.8" y2="13.2" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                            <line x1="13.2" y1="28.8" x2="7.5" y2="34.5" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Filipino-First</h3>
+                    <p>Designed specifically for Filipino communities with PayMongo—supporting GCash, credit/debit cards, e-wallets, and over-the-counter payments.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #0077cc 0%, #00a8e8 100%);">
+                        <!-- Receipt / document with checkmark -->
+                        <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="5" width="22" height="28" rx="3" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M8 33 L8 38 L13 35.5 L18 38 L23 35.5 L28 38 L30 38 L30 33" stroke="white" stroke-width="2" fill="none" stroke-linejoin="round"/>
+                            <line x1="13" y1="13" x2="27" y2="13" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                            <line x1="13" y1="18" x2="27" y2="18" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                            <polyline points="13,23 17,27 25,21" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Full Transparency</h3>
+                    <p>Every campaign shows receipts, photos, and regular updates. See exactly where your money goes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+                        <!-- Shield with checkmark -->
+                        <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 4 L35 9 L35 21 C35 29.5 28.5 36.5 21 39 C13.5 36.5 7 29.5 7 21 L7 9 Z" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.15)" stroke-linejoin="round"/>
+                            <polyline points="14,21 19,26 28,16" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Verified Trust</h3>
+                    <p>Three-tier verification system with optional community endorsements from barangay leaders.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);">
+                        <!-- Coin / peso sign -->
+                        <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="21" cy="21" r="16" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.15)"/>
+                            <circle cx="21" cy="21" r="11" stroke="white" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+                            <text x="21" y="27" text-anchor="middle" font-size="14" font-weight="bold" fill="white" font-family="Arial, sans-serif">₱</text>
+                        </svg>
+                    </div>
+                    <h3>Lower Fees</h3>
+                    <p>Only 3-6% platform fees—keeping more money in Filipino communities where it belongs.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);">
+                        <!-- Lightning bolt / fast payment -->
+                        <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="24,4 10,23 20,23 18,38 32,19 22,19" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.2)" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Fast Disbursement</h3>
+                    <p>Quick withdrawal options including GCash, bank transfer, and remittance partners.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
+                        <!-- Heart / community care -->
+                        <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 35 C21 35 6 25 6 14.5 C6 10.4 9.4 7 13.5 7 C16.2 7 18.6 8.4 20 10.5 L21 12 L22 10.5 C23.4 8.4 25.8 7 28.5 7 C32.6 7 36 10.4 36 14.5 C36 25 21 35 21 35 Z" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.2)" stroke-linejoin="round"/>
+                            <path d="M13 15 C13 12.8 14.8 11 17 11" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Disaster Ready</h3>
+                    <p>Rapid response campaigns for typhoons, earthquakes, and calamities affecting our communities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="steps-container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Start your campaign in minutes</p>
+            
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Campaign</h3>
+                    <p>Share your story and set your goal. Choose your verification level.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Get Verified</h3>
+                    <p>Complete ID verification and optional community endorsements.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Share & Raise</h3>
+                    <p>Share your campaign with family, friends, and the community.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Withdraw Funds</h3>
+                    <p>Access your funds via GCash, bank transfer, or remittance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat">
+                <h3>₱50M+</h3>
+                <p>Raised for Filipino Communities</p>
+            </div>
+            <div class="stat">
+                <h3>10,000+</h3>
+                <p>Successful Campaigns</p>
+            </div>
+            <div class="stat">
+                <h3>100,000+</h3>
+                <p>Generous Donors</p>
+            </div>
+            <div class="stat">
+                <h3>3-6%</h3>
+                <p>Platform Fees</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Start?</h2>
+            <p>Join thousands of Filipinos who have found support through the BayanCo community. Whether you need help or want to give back, your bayanihan starts here.</p>
+            <a href="create-campaign.html" class="btn-primary">Create Your Campaign</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>BayanCo</h3>
+                <p>The Filipino crowdfunding platform built on the spirit of bayanihan.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#campaigns">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start Campaign</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="legal.html">Legal Disclaimer</a></li>
+                    <li><a href="press.html">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

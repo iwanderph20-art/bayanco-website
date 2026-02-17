@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Disclaimer | BayanCo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-orange: #FF6B35;
+            --mango-yellow: #FFB627;
+            --ocean-blue: #004E89;
+            --island-teal: #1A936F;
+            --coconut-cream: #FFF8F0;
+            --charcoal: #2D2D2A;
+            --warm-sand: #F4E8D8;
+            --deep-purple: #5B2A86;
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background: var(--coconut-cream); color: var(--charcoal); line-height: 1.6; }
+        
+        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0, 78, 137, 0.05); }
+        .logo { font-family: var(--font-display); font-size: 2rem; color: var(--ocean-blue); text-decoration: none; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--sunset-orange); }
+        .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
+        
+        .page-header { background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); padding: 10rem 3rem 6rem; text-align: center; color: white; }
+        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
+        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+        
+        .content-section { max-width: 1000px; margin: 0 auto; padding: 6rem 3rem; }
+        .content-section h2 { font-family: var(--font-display); font-size: 2.5rem; color: var(--ocean-blue); margin: 3rem 0 1.5rem; border-left: 5px solid var(--sunset-orange); padding-left: 1.5rem; }
+        .content-section h3 { font-family: var(--font-display); font-size: 1.8rem; color: var(--island-teal); margin: 2rem 0 1rem; }
+        .content-section p, .content-section ul li { font-size: 1.1rem; line-height: 1.8; color: rgba(45, 45, 42, 0.8); margin-bottom: 1.5rem; }
+        .content-section ul { list-style: none; margin: 1.5rem 0; padding-left: 2rem; }
+        .content-section ul li { position: relative; padding-left: 1.5rem; }
+        .content-section ul li::before { content: '•'; position: absolute; left: 0; color: var(--sunset-orange); font-weight: bold; font-size: 1.5rem; }
+        
+        .disclaimer-box { background: linear-gradient(135deg, var(--warm-sand), var(--coconut-cream)); padding: 2.5rem; border-radius: 12px; margin: 3rem 0; border-left: 5px solid var(--sunset-orange); }
+        .disclaimer-box h3 { color: var(--ocean-blue); margin-bottom: 1rem; }
+        .disclaimer-box p { color: var(--charcoal); font-weight: 500; margin: 0; }
+        
+        .highlight { background: var(--mango-yellow); padding: 0.3rem 0.6rem; border-radius: 4px; font-weight: 600; }
+        
+        footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-brand h3 { font-family: var(--font-display); font-size: 2rem; color: white; margin-bottom: 1rem; }
+        .footer-column h4 { color: var(--mango-yellow); margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 0.8rem; }
+        .footer-column ul li a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
+        .footer-column ul li a:hover { color: var(--mango-yellow); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 2.5rem; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">BayanCo</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="safety.html">Safety & Trust</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="press.html">Press</a></li>
+        </ul>
+        <a href="create-campaign.html" class="cta-button">Start Campaign</a>
+    </nav>
+    
+    <div class="page-header">
+        <h1>Legal Disclaimer</h1>
+        <p>Important information about using BayanCo crowdfunding platform</p>
+    </div>
+    
+    <div class="content-section">
+        <div class="disclaimer-box">
+            <h3>⚠️ Important Notice</h3>
+            <p>Please read this legal disclaimer carefully before using BayanCo. By accessing and using our platform, you acknowledge that you have read, understood, and agree to be bound by these terms.</p>
+        </div>
+        
+        <h2>1. Platform Role and Responsibilities</h2>
+        <p>BayanCo operates as an <span class="highlight">intermediary platform</span> that connects campaign creators with potential donors. We provide the technology and infrastructure to facilitate crowdfunding campaigns, but we are not:</p>
+        <ul>
+            <li>A party to any agreement between campaign creators and donors</li>
+            <li>Responsible for the accuracy, legality, or quality of campaign content</li>
+            <li>A guarantor of campaign success or fund delivery</li>
+            <li>A financial institution, bank, or investment advisor</li>
+        </ul>
+        
+        <h2>2. Campaign Creator Responsibilities</h2>
+        <p>Campaign creators using BayanCo agree to:</p>
+        <ul>
+            <li>Provide accurate, truthful, and complete information in all campaign materials</li>
+            <li>Use raised funds solely for the stated campaign purpose</li>
+            <li>Provide regular updates with receipts and documentation of fund usage</li>
+            <li>Comply with all applicable Philippine laws and regulations</li>
+            <li>Not engage in fraudulent, misleading, or deceptive practices</li>
+            <li>Maintain proper documentation for tax and legal purposes</li>
+        </ul>
+        
+        <h3>Prohibited Campaign Types</h3>
+        <p>The following types of campaigns are strictly prohibited:</p>
+        <ul>
+            <li>Illegal activities or services</li>
+            <li>Deceptive or fraudulent schemes</li>
+            <li>Hate speech, discrimination, or harassment</li>
+            <li>Adult content or services</li>
+            <li>Investment opportunities or equity-based crowdfunding</li>
+            <li>Loan requests or debt consolidation</li>
+            <li>Pyramid schemes or multi-level marketing</li>
+        </ul>
+        
+        <h2>3. Donor Acknowledgments</h2>
+        <p>By donating through BayanCo, donors acknowledge and agree that:</p>
+        <ul>
+            <li>Donations are voluntary contributions and not purchases or investments</li>
+            <li>Donations are generally non-refundable unless campaign fraud is proven</li>
+            <li>BayanCo does not guarantee campaign completion or fund usage</li>
+            <li>Donors should conduct their own due diligence before contributing</li>
+            <li>Tax deductibility of donations depends on campaign type and donor circumstances</li>
+            <li>Donors assume all risks associated with their contributions</li>
+        </ul>
+        
+        <h2>4. Verification and Trust Systems</h2>
+        <p>While BayanCo offers verification services (Basic, Enhanced, and Verified levels), these verifications:</p>
+        <ul>
+            <li>Confirm identity and documentation provided by campaign creators</li>
+            <li>Do not guarantee campaign legitimacy, success, or proper fund usage</li>
+            <li>Should not be solely relied upon when making donation decisions</li>
+            <li>May be revoked if fraud or misrepresentation is discovered</li>
+        </ul>
+        
+        <h2>5. Payment Processing and Fees</h2>
+        <p>BayanCo charges platform fees as disclosed during campaign creation:</p>
+        <ul>
+            <li>Platform fees: 3-6% tiered based on campaign performance</li>
+            <li>Payment processing fees apply via PayMongo (supporting GCash, GrabPay, credit/debit cards, and over-the-counter payments)</li>
+            <li>All fees are clearly disclosed before campaign publication</li>
+            <li>Fees are non-refundable once campaigns are published and receive donations</li>
+        </ul>
+        
+        <h2>6. Fund Disbursement</h2>
+        <p>Campaign creators understand that:</p>
+        <ul>
+            <li>Funds are typically released at campaign end or upon early withdrawal request</li>
+            <li>BayanCo reserves the right to hold funds if fraud is suspected</li>
+            <li>Disbursement may be delayed for verification or compliance reasons</li>
+            <li>Withdrawn funds are subject to applicable taxes (creator's responsibility)</li>
+            <li>BayanCo may require additional documentation before fund release</li>
+        </ul>
+        
+        <h2>7. Limitation of Liability</h2>
+        <p>To the maximum extent permitted by Philippine law, BayanCo and its officers, directors, employees, and affiliates shall not be liable for:</p>
+        <ul>
+            <li>Any direct, indirect, incidental, special, or consequential damages</li>
+            <li>Campaign failure, fraud, or misuse of funds by campaign creators</li>
+            <li>Disputes between campaign creators and donors</li>
+            <li>Technical failures, platform downtime, or data loss</li>
+            <li>Third-party payment processing errors or delays</li>
+            <li>Actions or omissions of campaign creators or donors</li>
+        </ul>
+        
+        <div class="disclaimer-box">
+            <h3>Maximum Liability Cap</h3>
+            <p>In any event, BayanCo's total liability shall not exceed the platform fees paid by the campaign creator in the relevant transaction.</p>
+        </div>
+        
+        <h2>8. Indemnification</h2>
+        <p>Users agree to indemnify, defend, and hold harmless BayanCo from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from:</p>
+        <ul>
+            <li>Violation of these terms or applicable laws</li>
+            <li>Campaign content, including intellectual property infringement</li>
+            <li>Disputes with other users or third parties</li>
+            <li>Misuse of the platform or fraudulent activities</li>
+        </ul>
+        
+        <h2>9. Tax Obligations</h2>
+        <p>Campaign creators are solely responsible for:</p>
+        <ul>
+            <li>Understanding and complying with all applicable tax laws</li>
+            <li>Reporting received funds to tax authorities as required</li>
+            <li>Paying all applicable taxes on received funds</li>
+            <li>Maintaining proper records for tax purposes</li>
+        </ul>
+        <p><strong>Important:</strong> BayanCo does not provide tax advice. Campaign creators should consult with qualified tax professionals regarding their obligations.</p>
+        
+        <h2>10. Intellectual Property</h2>
+        <p>Campaign creators warrant that:</p>
+        <ul>
+            <li>All campaign content (text, images, videos) is original or properly licensed</li>
+            <li>They have the right to use and display all campaign materials</li>
+            <li>Campaign content does not infringe on third-party intellectual property rights</li>
+        </ul>
+        <p>Campaign creators grant BayanCo a non-exclusive license to display campaign content on the platform and in promotional materials.</p>
+        
+        <h2>11. Data Privacy and Security</h2>
+        <p>BayanCo is committed to protecting user data in accordance with the Philippine Data Privacy Act:</p>
+        <ul>
+            <li>Personal information is collected, stored, and processed securely</li>
+            <li>Data is used only for platform operations and as disclosed in our Privacy Policy</li>
+            <li>Users have rights to access, correct, and delete their personal information</li>
+            <li>We implement industry-standard security measures but cannot guarantee absolute security</li>
+        </ul>
+        
+        <h2>12. Termination and Suspension</h2>
+        <p>BayanCo reserves the right to:</p>
+        <ul>
+            <li>Suspend or terminate user accounts without notice for violations</li>
+            <li>Remove campaigns that violate our terms or policies</li>
+            <li>Withhold funds in cases of suspected fraud or policy violation</li>
+            <li>Cooperate with law enforcement investigations</li>
+        </ul>
+        
+        <h2>13. Dispute Resolution</h2>
+        <p>In case of disputes:</p>
+        <ul>
+            <li>Users should first attempt to resolve disputes directly or through our support team</li>
+            <li>Unresolved disputes may be escalated to mediation or arbitration</li>
+            <li>Disputes shall be governed by Philippine law</li>
+            <li>Venue for legal proceedings shall be Metro Manila, Philippines</li>
+        </ul>
+        
+        <h2>14. Changes to Terms</h2>
+        <p>BayanCo may modify this disclaimer and platform terms at any time:</p>
+        <ul>
+            <li>Users will be notified of material changes via email or platform notification</li>
+            <li>Continued use of the platform after changes constitutes acceptance</li>
+            <li>Users who disagree with changes should discontinue platform use</li>
+        </ul>
+        
+        <h2>15. Regulatory Compliance</h2>
+        <p>BayanCo operates in compliance with Philippine regulations including:</p>
+        <ul>
+            <li>Data Privacy Act of 2012</li>
+            <li>Anti-Money Laundering Act (AMLA)</li>
+            <li>Consumer Act of the Philippines</li>
+            <li>E-Commerce Act</li>
+        </ul>
+        <p>Campaign creators and donors must also comply with all applicable laws and regulations.</p>
+        
+        <div class="disclaimer-box">
+            <h3>🔔 Important Reminder</h3>
+            <p>This disclaimer does not constitute legal advice. Users should consult with qualified legal professionals regarding their specific situations, rights, and obligations when using BayanCo.</p>
+        </div>
+        
+        <h2>16. Contact Information</h2>
+        <p>For questions about this legal disclaimer or BayanCo's terms:</p>
+        <ul>
+            <li>Email: <strong>legal@bayanco.org</strong></li>
+            <li>Support: <strong>support@bayanco.org</strong></li>
+            <li>Press inquiries: <strong>press@bayanco.org</strong></li>
+        </ul>
+        
+        <p style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--warm-sand); text-align: center; color: rgba(45, 45, 42, 0.6);">
+            <strong>Last Updated:</strong> February 2026<br>
+            <strong>Effective Date:</strong> February 1, 2026
+        </p>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>BayanCo</h3>
+                <p>The Filipino crowdfunding platform built on the spirit of bayanihan.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#campaigns">Browse Campaigns</a></li>
+                    <li><a href="create-campaign.html">Start Campaign</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="safety.html">Safety & Trust</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="legal.html">Legal Disclaimer</a></li>
+                    <li><a href="press.html">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BayanCo. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
