@@ -28,7 +28,7 @@
         
         body {
             font-family: var(--font-body);
-            background: var(--warm-cream);
+            background: var(--coconut-cream);
             color: var(--charcoal);
             line-height: 1.6;
         }
@@ -181,7 +181,7 @@
         }
         
         .fee-calculator {
-            background: var(--warm-cream);
+            background: var(--warm-sand);
             padding: 1.5rem;
             border-radius: 12px;
             border-left: 4px solid var(--island-teal);
@@ -475,13 +475,36 @@
                     </label>
                 </div>
 
-                <button type="submit" class="btn-submit">Submit Campaign for Review</button>
-                
+                <button type="submit" class="btn-submit" id="submitBtn">Submit Campaign for Review</button>
+
                 <p class="help-text" style="text-align: center; margin-top: 1rem;">
                     ⏱️ We'll review your campaign within 24 hours and notify you via email.
                 </p>
+
+                <div id="errorMessage" style="display:none; margin-top:1.5rem;" class="alert alert-warning">
+                    Something went wrong. Please check your connection and try again.
+                </div>
             </div>
         </form>
+
+        <!-- Success State -->
+        <div id="successMessage" style="display:none; text-align:center; padding:3rem 2rem;">
+            <div style="font-size:4rem; margin-bottom:1.5rem;">🎉</div>
+            <h2 style="color:var(--ocean-blue); font-size:2rem; margin-bottom:1rem;">Campaign Submitted!</h2>
+            <p style="font-size:1.1rem; color:#555; margin-bottom:2rem;">
+                Thank you! We'll review your campaign within 24 hours and send a confirmation to your email.
+            </p>
+            <div style="background:var(--warm-sand); border-radius:12px; padding:1.5rem; text-align:left; max-width:420px; margin:0 auto;">
+                <strong style="color:var(--ocean-blue);">What happens next:</strong>
+                <ol style="margin-top:0.75rem; margin-left:1.5rem; line-height:2;">
+                    <li>Our team reviews your campaign</li>
+                    <li>You receive an approval email</li>
+                    <li>Your campaign goes live</li>
+                    <li>Start sharing and receiving donations!</li>
+                </ol>
+            </div>
+            <a href="index.html" style="display:inline-block; margin-top:2rem; padding:0.9rem 2.5rem; background:linear-gradient(135deg,var(--ocean-blue),var(--island-teal)); color:white; border-radius:50px; text-decoration:none; font-weight:600;">Back to Home</a>
+        </div>
     </div>
 
     <script>
@@ -548,15 +571,54 @@
             }
         });
 
-        // Form submission
-        document.getElementById('campaignForm').addEventListener('submit', function(e) {
+        // Form submission via Web3Forms
+        document.getElementById('campaignForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            // In a real implementation, this would send data to your backend
-            alert('✅ Campaign Submitted!\n\nThank you for creating your campaign. We\'ll review it within 24 hours and send you an email confirmation.\n\nWhat happens next:\n1. Our team reviews your campaign\n2. You receive approval email\n3. Your campaign goes live\n4. Start sharing and receiving donations!');
-            
-            // Redirect to campaigns page (in production)
-            // window.location.href = 'campaigns.html';
+
+            const btn = document.getElementById('submitBtn');
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.style.display = 'none';
+            btn.textContent = 'Submitting...';
+            btn.disabled = true;
+
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const data = {
+                access_key: '2576fc64-1e8a-406f-ba24-f2a9d885764a',
+                subject: 'New BayanCo Campaign Submission',
+                from_name: document.getElementById('fullName').value,
+                'Full Name': document.getElementById('fullName').value,
+                'Email': document.getElementById('email').value,
+                'Mobile Number': document.getElementById('phone').value,
+                'Campaign Title': document.getElementById('campaignTitle').value,
+                'Category': document.getElementById('category').value,
+                'Goal Amount (₱)': document.getElementById('goalAmount').value,
+                'Story': document.getElementById('story').value,
+                'Payment Method': paymentMethod,
+                'GCash Number': paymentMethod === 'gcash' ? document.getElementById('gcashNumber').value : 'N/A',
+                'Bank Name': paymentMethod === 'bank' ? document.getElementById('bankName').value : 'N/A',
+                'Account Number': paymentMethod === 'bank' ? document.getElementById('accountNumber').value : 'N/A',
+                'Account Name': paymentMethod === 'bank' ? document.getElementById('accountName').value : 'N/A',
+            };
+
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    document.getElementById('campaignForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (err) {
+                errorMsg.style.display = 'block';
+                btn.textContent = 'Submit Campaign for Review';
+                btn.disabled = false;
+            }
         });
     </script>
 
