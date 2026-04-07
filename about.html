@@ -29,9 +29,9 @@
         .nav-links a:hover { color: var(--sunset-orange); }
         .cta-button { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
         
-        .page-header { margin-top: 80px; padding: 6rem 3rem 4rem; background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); color: white; text-align: center; }
-        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; }
-        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+        .page-header { margin-top: 80px; padding: 6rem 3rem 4rem; background: linear-gradient(135deg, var(--warm-sand), var(--coconut-cream)); color: var(--ocean-blue); text-align: center; }
+        .page-header h1 { font-family: var(--font-display); font-size: 4rem; margin-bottom: 1.5rem; color: var(--ocean-blue); }
+        .page-header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto; color: var(--charcoal); }
         
         .mission { padding: 6rem 3rem; background: white; }
         .mission-container { max-width: 1000px; margin: 0 auto; text-align: center; }
@@ -63,11 +63,13 @@
         .story-content p { font-size: 1.15rem; line-height: 1.9; color: rgba(45, 45, 42, 0.8); margin-bottom: 2rem; }
         .story-highlight { background: linear-gradient(135deg, var(--warm-sand), var(--coconut-cream)); padding: 2.5rem; border-radius: 15px; border-left: 5px solid var(--sunset-orange); font-size: 1.3rem; font-style: italic; color: var(--ocean-blue); margin: 3rem 0; text-align: center; }
         
-        .cta { padding: 6rem 3rem; background: linear-gradient(135deg, var(--ocean-blue), var(--deep-purple)); color: white; text-align: center; }
-        .cta h2 { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1.5rem; }
-        .cta p { font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.95; }
-        .btn-large { background: white; color: var(--ocean-blue); padding: 1.2rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; margin: 0 1rem; display: inline-block; transition: transform 0.3s ease; }
+        .cta { padding: 6rem 3rem; background: var(--coconut-cream); color: var(--ocean-blue); text-align: center; }
+        .cta h2 { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1.5rem; color: var(--ocean-blue); }
+        .cta p { font-size: 1.3rem; margin-bottom: 3rem; color: var(--charcoal); }
+        .btn-large { background: linear-gradient(135deg, var(--sunset-orange), var(--deep-purple)); color: white; padding: 1.2rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; margin: 0 1rem; display: inline-block; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3); }
         .btn-large:hover { transform: translateY(-3px); }
+        .btn-large-outline { background: transparent; color: var(--ocean-blue); border: 2px solid var(--ocean-blue); padding: 1.2rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; margin: 0 1rem; display: inline-block; transition: all 0.3s ease; }
+        .btn-large-outline:hover { background: var(--ocean-blue); color: white; transform: translateY(-3px); }
         
         footer { background: var(--charcoal); color: rgba(255, 255, 255, 0.8); padding: 4rem 3rem 2rem; }
         .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
@@ -209,7 +211,7 @@
         <p>Whether you need support or want to help others, you belong here.</p>
         <div>
             <a href="create-campaign.html" class="btn-large">Start a Campaign</a>
-            <a href="index.html#campaigns" class="btn-large">Browse Campaigns</a>
+            <a href="index.html" class="btn-large-outline">Browse Campaigns</a>
         </div>
     </section>
     
