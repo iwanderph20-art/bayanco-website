@@ -85,16 +85,19 @@
         .page-header {
             margin-top: 80px;
             padding: 3rem 2rem;
-            background: linear-gradient(135deg, var(--ocean-blue), var(--island-teal));
-            color: white;
+            background: linear-gradient(135deg, var(--warm-sand), var(--coconut-cream));
+            color: var(--ocean-blue);
             text-align: center;
         }
-        
+
         .page-header h1 {
             font-family: var(--font-display);
             font-size: 3rem;
             margin-bottom: 1rem;
+            color: var(--ocean-blue);
         }
+
+        .page-header p { color: var(--charcoal); }
         
         /* Form Container */
         .form-container {
@@ -260,6 +263,52 @@
             color: #856404;
         }
         
+        /* Upload progress */
+        .upload-progress {
+            display: none;
+            margin-top: 0.75rem;
+        }
+        .upload-progress.visible { display: block; }
+        .progress-bar-wrap {
+            background: #E0E0E0;
+            border-radius: 99px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 0.4rem;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, var(--ocean-blue), var(--island-teal));
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .progress-msg { font-size: 0.82rem; color: #555; }
+
+        .media-preview-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .media-preview-grid img {
+            width: 90px; height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #E0E0E0;
+        }
+        .media-preview-grid .vid-thumb {
+            width: 90px; height: 90px;
+            border-radius: 8px;
+            border: 2px solid var(--island-teal);
+            background: var(--warm-sand);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            font-size: 0.7rem; color: var(--charcoal);
+            text-align: center; padding: 4px;
+            gap: 4px;
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -416,7 +465,25 @@
                         <p>📸 Click to upload photos</p>
                         <span class="help-text">Upload 1-5 photos. Campaigns with photos receive 3x more donations.</span>
                     </div>
-                    <div id="photoPreview" style="margin-top: 1rem;"></div>
+                    <div class="upload-progress" id="photoProgressWrap">
+                        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="photoProgressBar"></div></div>
+                        <span class="progress-msg" id="photoProgressMsg">Compressing…</span>
+                    </div>
+                    <div class="media-preview-grid" id="photoPreview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Campaign Video (Optional)</label>
+                    <div class="file-upload" onclick="document.getElementById('videoFile').click()">
+                        <input type="file" id="videoFile" name="videoFile" accept="video/mp4,video/quicktime,video/x-msvideo,video/webm">
+                        <p>🎥 Click to upload a video</p>
+                        <span class="help-text">MP4, MOV, AVI, or WebM — up to 500 MB. Processed by Mux CDN.</span>
+                    </div>
+                    <div class="upload-progress" id="videoProgress">
+                        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="videoProgressBar"></div></div>
+                        <span class="progress-msg" id="videoProgressMsg">Preparing…</span>
+                    </div>
+                    <div class="media-preview-grid" id="videoPreview"></div>
                 </div>
 
                 <div class="form-group">
@@ -425,6 +492,10 @@
                         <input type="file" id="documents" name="documents" accept=".pdf,.jpg,.jpeg,.png" multiple>
                         <p>📄 Click to upload documents</p>
                         <span class="help-text">Medical bills, receipts, etc. (optional but recommended)</span>
+                    </div>
+                    <div class="upload-progress" id="docProgress">
+                        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="docProgressBar"></div></div>
+                        <span class="progress-msg" id="docProgressMsg">Uploading…</span>
                     </div>
                 </div>
             </div>
@@ -494,10 +565,15 @@
             <p style="font-size:1.1rem; color:#555; margin-bottom:2rem;">
                 Thank you! We'll review your campaign within 24 hours and send a confirmation to your email.
             </p>
+            <div id="campaignIdBox" style="display:none; background:#D1ECF1; border-radius:10px; padding:1rem 1.5rem; max-width:420px; margin:0 auto 1.5rem; text-align:left;">
+                <strong style="color:#0C5460;">Your Campaign ID:</strong>
+                <code id="campaignIdDisplay" style="display:block; margin-top:0.4rem; font-size:0.95rem; word-break:break-all; color:#0C5460;"></code>
+                <span style="font-size:0.8rem; color:#555;">Keep this for your records.</span>
+            </div>
             <div style="background:var(--warm-sand); border-radius:12px; padding:1.5rem; text-align:left; max-width:420px; margin:0 auto;">
                 <strong style="color:var(--ocean-blue);">What happens next:</strong>
                 <ol style="margin-top:0.75rem; margin-left:1.5rem; line-height:2;">
-                    <li>Our team reviews your campaign</li>
+                    <li>Our team reviews your campaign (within 24 hrs)</li>
                     <li>You receive an approval email</li>
                     <li>Your campaign goes live</li>
                     <li>Start sharing and receiving donations!</li>
@@ -507,117 +583,179 @@
         </div>
     </div>
 
+    <!-- BayanCo config: fill in your Supabase project details before deploying -->
     <script>
-        // Payment method toggle
+        window.BAYANCO_CONFIG = {
+            supabaseUrl:    'https://YOUR_PROJECT.supabase.co',
+            supabaseAnonKey: 'YOUR_ANON_KEY',
+            functionsUrl:   'https://YOUR_PROJECT.supabase.co/functions/v1',
+        };
+    </script>
+    <script src="js/media-upload.js"></script>
+    <script src="js/campaign-api.js"></script>
+    <script>
+        // ── Payment method toggle ─────────────────────────────
         document.getElementById('paymentMethod').addEventListener('change', function() {
             const gcashGroup = document.getElementById('gcashGroup');
-            const bankGroup = document.getElementById('bankGroup');
-            
+            const bankGroup  = document.getElementById('bankGroup');
             if (this.value === 'gcash') {
                 gcashGroup.style.display = 'block';
-                bankGroup.style.display = 'none';
-                document.getElementById('gcashNumber').required = true;
-                document.getElementById('bankName').required = false;
+                bankGroup.style.display  = 'none';
+                document.getElementById('gcashNumber').required   = true;
+                document.getElementById('bankName').required      = false;
                 document.getElementById('accountNumber').required = false;
-                document.getElementById('accountName').required = false;
+                document.getElementById('accountName').required   = false;
             } else if (this.value === 'bank') {
                 gcashGroup.style.display = 'none';
-                bankGroup.style.display = 'block';
-                document.getElementById('gcashNumber').required = false;
-                document.getElementById('bankName').required = true;
+                bankGroup.style.display  = 'block';
+                document.getElementById('gcashNumber').required   = false;
+                document.getElementById('bankName').required      = true;
                 document.getElementById('accountNumber').required = true;
-                document.getElementById('accountName').required = true;
+                document.getElementById('accountName').required   = true;
             } else {
                 gcashGroup.style.display = 'none';
-                bankGroup.style.display = 'none';
+                bankGroup.style.display  = 'none';
             }
         });
 
-        // Fee calculator
+        // ── Fee calculator ────────────────────────────────────
         document.getElementById('goalAmount').addEventListener('input', function() {
-            const goal = parseFloat(this.value) || 0;
+            const goal          = parseFloat(this.value) || 0;
             const processingFee = (goal * 0.025) + 10;
-            const platformFee = goal * 0.04;
-            const youReceive = goal - processingFee - platformFee;
-
-            document.getElementById('displayGoal').textContent = '₱' + goal.toLocaleString('en-PH', {minimumFractionDigits: 2});
-            document.getElementById('displayProcessingFee').textContent = '-₱' + processingFee.toLocaleString('en-PH', {minimumFractionDigits: 2});
-            document.getElementById('displayPlatformFee').textContent = '-₱' + platformFee.toLocaleString('en-PH', {minimumFractionDigits: 2});
-            document.getElementById('displayYouReceive').textContent = '₱' + youReceive.toLocaleString('en-PH', {minimumFractionDigits: 2});
+            const platformFee   = goal * 0.04;
+            const youReceive    = goal - processingFee - platformFee;
+            const fmt = (n) => '₱' + n.toLocaleString('en-PH', { minimumFractionDigits: 2 });
+            document.getElementById('displayGoal').textContent         = fmt(goal);
+            document.getElementById('displayProcessingFee').textContent = '-' + fmt(processingFee);
+            document.getElementById('displayPlatformFee').textContent   = '-' + fmt(platformFee);
+            document.getElementById('displayYouReceive').textContent    = fmt(youReceive);
         });
 
-        // Photo preview
+        // ── Photo preview (instant thumbnails before upload) ──
         document.getElementById('photos').addEventListener('change', function() {
             const preview = document.getElementById('photoPreview');
             preview.innerHTML = '';
-            
-            for (let i = 0; i < this.files.length; i++) {
-                const file = this.files[i];
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '100px';
-                    img.style.height = '100px';
-                    img.style.objectFit = 'cover';
-                    img.style.borderRadius = '8px';
-                    img.style.marginRight = '10px';
-                    img.style.marginBottom = '10px';
-                    preview.appendChild(img);
-                };
-                
-                reader.readAsDataURL(file);
+            for (const file of this.files) {
+                const blobUrl = URL.createObjectURL(file);
+                const img = document.createElement('img');
+                img.src = blobUrl;
+                img.onload = () => URL.revokeObjectURL(blobUrl);
+                preview.appendChild(img);
             }
         });
 
-        // Form submission via Web3Forms
+        // ── Video file name preview ───────────────────────────
+        document.getElementById('videoFile').addEventListener('change', function() {
+            const preview = document.getElementById('videoPreview');
+            preview.innerHTML = '';
+            if (this.files[0]) {
+                const div = document.createElement('div');
+                div.className = 'vid-thumb';
+                div.innerHTML = `<span style="font-size:1.6rem">🎬</span><span>${this.files[0].name.slice(0,18)}</span>`;
+                preview.appendChild(div);
+            }
+        });
+
+        // ── Progress helper ───────────────────────────────────
+        function setProgress(wrapId, barId, msgId, { pct, msg, visible }) {
+            const wrap = document.getElementById(wrapId);
+            if (visible !== undefined) wrap.classList.toggle('visible', visible);
+            if (pct  !== undefined) document.getElementById(barId).style.width  = pct + '%';
+            if (msg  !== undefined) document.getElementById(msgId).textContent  = msg;
+        }
+
+        // ── Form submission ───────────────────────────────────
         document.getElementById('campaignForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const btn = document.getElementById('submitBtn');
+            const btn      = document.getElementById('submitBtn');
             const errorMsg = document.getElementById('errorMessage');
             errorMsg.style.display = 'none';
-            btn.textContent = 'Submitting...';
-            btn.disabled = true;
+            btn.textContent = 'Uploading media…';
+            btn.disabled    = true;
 
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            const data = {
-                access_key: '2576fc64-1e8a-406f-ba24-f2a9d885764a',
-                subject: 'New BayanCo Campaign Submission',
-                from_name: document.getElementById('fullName').value,
-                'Full Name': document.getElementById('fullName').value,
-                'Email': document.getElementById('email').value,
-                'Mobile Number': document.getElementById('phone').value,
-                'Campaign Title': document.getElementById('campaignTitle').value,
-                'Category': document.getElementById('category').value,
-                'Goal Amount (₱)': document.getElementById('goalAmount').value,
-                'Story': document.getElementById('story').value,
-                'Payment Method': paymentMethod,
-                'GCash Number': paymentMethod === 'gcash' ? document.getElementById('gcashNumber').value : 'N/A',
-                'Bank Name': paymentMethod === 'bank' ? document.getElementById('bankName').value : 'N/A',
-                'Account Number': paymentMethod === 'bank' ? document.getElementById('accountNumber').value : 'N/A',
-                'Account Name': paymentMethod === 'bank' ? document.getElementById('accountName').value : 'N/A',
-            };
+            // Temporary campaign ID placeholder for media paths
+            // (real ID returned from Edge Function after insert)
+            const tempId = 'tmp-' + Date.now();
 
             try {
-                const res = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                const result = await res.json();
-                if (result.success) {
-                    document.getElementById('campaignForm').style.display = 'none';
-                    document.getElementById('successMessage').style.display = 'block';
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    throw new Error('Submission failed');
+                const uploadedMedia = [];
+
+                // ── Upload photos ─────────────────────────────
+                const photoFiles = document.getElementById('photos').files;
+                for (let i = 0; i < photoFiles.length; i++) {
+                    const result = await window.BayanCoUpload.uploadImage(
+                        photoFiles[i],
+                        tempId,
+                        ({ pct, msg }) => setProgress('photoProgressWrap', 'photoProgressBar', 'photoProgressMsg', { pct, msg, visible: true })
+                    );
+                    uploadedMedia.push(result);
                 }
+
+                // ── Upload video ──────────────────────────────
+                const videoFile = document.getElementById('videoFile').files[0];
+                if (videoFile) {
+                    btn.textContent = 'Uploading video…';
+                    setProgress('videoProgress', 'videoProgressBar', 'videoProgressMsg', { visible: true });
+                    const result = await window.BayanCoUpload.uploadVideo(
+                        videoFile,
+                        tempId,
+                        ({ pct, msg }) => setProgress('videoProgress', 'videoProgressBar', 'videoProgressMsg', { pct, msg })
+                    );
+                    uploadedMedia.push(result);
+                }
+
+                // ── Upload documents ──────────────────────────
+                const docFiles = document.getElementById('documents').files;
+                for (const doc of docFiles) {
+                    setProgress('docProgress', 'docProgressBar', 'docProgressMsg', { visible: true });
+                    const result = await window.BayanCoUpload.uploadDocument(
+                        doc,
+                        tempId,
+                        ({ pct, msg }) => setProgress('docProgress', 'docProgressBar', 'docProgressMsg', { pct, msg })
+                    );
+                    uploadedMedia.push(result);
+                }
+
+                // ── Build campaign payload ────────────────────
+                btn.textContent = 'Submitting campaign…';
+                const paymentMethod = document.getElementById('paymentMethod').value;
+
+                const payload = {
+                    creator_name:  document.getElementById('fullName').value,
+                    creator_email: document.getElementById('email').value,
+                    creator_phone: document.getElementById('phone').value,
+                    title:         document.getElementById('campaignTitle').value,
+                    category:      document.getElementById('category').value,
+                    goal_amount:   parseFloat(document.getElementById('goalAmount').value),
+                    story:         document.getElementById('story').value,
+                    payment_method: paymentMethod,
+                    gcash_number:  paymentMethod === 'gcash' ? document.getElementById('gcashNumber').value : null,
+                    bank_name:     paymentMethod === 'bank'  ? document.getElementById('bankName').value    : null,
+                    account_number: paymentMethod === 'bank' ? document.getElementById('accountNumber').value : null,
+                    account_name:  paymentMethod === 'bank'  ? document.getElementById('accountName').value  : null,
+                    media_urls:    uploadedMedia.filter(m => m.type === 'image' || m.type === 'video'),
+                    document_urls: uploadedMedia.filter(m => m.type === 'document'),
+                };
+
+                const { campaign_id } = await window.BayanCoAPI.submitCampaign(payload);
+
+                // ── Show success ──────────────────────────────
+                document.getElementById('campaignForm').style.display = 'none';
+                const successEl = document.getElementById('successMessage');
+                successEl.style.display = 'block';
+                if (campaign_id) {
+                    document.getElementById('campaignIdDisplay').textContent = campaign_id;
+                    document.getElementById('campaignIdBox').style.display   = 'block';
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
             } catch (err) {
+                console.error('[BayanCo] Submission error:', err);
+                errorMsg.textContent = err.message || 'Something went wrong. Please check your connection and try again.';
                 errorMsg.style.display = 'block';
                 btn.textContent = 'Submit Campaign for Review';
-                btn.disabled = false;
+                btn.disabled    = false;
             }
         });
     </script>

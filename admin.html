@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BayanCo Admin — Campaign Vetting Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#004E89;--navy-dark:#003a66;--orange:#FF6B35;--yellow:#FFB627;
+  --teal:#1A936F;--purple:#5B2A86;--cream:#FFF8F0;--sand:#F4E8D8;
+  --charcoal:#2D2D2A;--gray:#6b7280;--red:#c0392b;--green:#1A936F;
+  --font:'DM Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:#f0f2f5;color:var(--charcoal);min-height:100vh}
+
+/* ── Login ── */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--navy),var(--purple))}
+.login-card{background:#fff;border-radius:20px;padding:48px 40px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}
+.login-card .logo{font-family:'Archivo Black',sans-serif;font-size:2.2rem;color:var(--navy);margin-bottom:4px}
+.login-card p{color:var(--gray);font-size:14px;margin-bottom:32px}
+.login-card input{width:100%;padding:14px 16px;border:2px solid #e5e7eb;border-radius:10px;font-size:15px;font-family:var(--font);outline:none;transition:border-color .2s;margin-bottom:14px}
+.login-card input:focus{border-color:var(--navy)}
+.login-card button{width:100%;padding:15px;background:linear-gradient(135deg,var(--orange),var(--purple));color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.login-card button:hover{opacity:.9}
+.login-error{background:#fee2e2;color:#991b1b;padding:10px 14px;border-radius:8px;font-size:13px;margin-top:12px;display:none}
+
+/* ── Layout ── */
+#appScreen{display:none}
+.sidebar{width:240px;background:#fff;height:100vh;position:fixed;top:0;left:0;border-right:1px solid #e5e7eb;padding:24px 0;display:flex;flex-direction:column}
+.sidebar .logo{font-family:'Archivo Black',sans-serif;font-size:1.5rem;color:var(--navy);padding:0 24px;margin-bottom:8px}
+.sidebar .sub{font-size:12px;color:var(--gray);padding:0 24px;margin-bottom:28px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:12px 24px;cursor:pointer;font-size:14px;font-weight:500;color:var(--charcoal);border-right:3px solid transparent;transition:all .15s}
+.nav-item:hover{background:#f9fafb;color:var(--navy)}
+.nav-item.active{background:#eff6ff;color:var(--navy);border-right-color:var(--navy)}
+.nav-item .dot{width:8px;height:8px;border-radius:50%;margin-left:auto;display:none}
+.nav-item.has-badge .dot{display:block;background:var(--orange)}
+.sidebar-footer{margin-top:auto;padding:16px 24px;border-top:1px solid #e5e7eb}
+.sidebar-footer .admin-email{font-size:12px;color:var(--gray)}
+.logout-btn{font-size:13px;color:var(--red);cursor:pointer;margin-top:4px;border:none;background:none;font-family:var(--font);padding:0}
+
+.main{margin-left:240px;padding:32px;min-height:100vh}
+
+/* ── Stats bar ── */
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:#fff;border-radius:12px;padding:20px;border-left:4px solid var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.stat-card.orange{border-color:var(--orange)}
+.stat-card.green{border-color:var(--green)}
+.stat-card.red{border-color:var(--red)}
+.stat-card.purple{border-color:var(--purple)}
+.stat-num{font-size:2rem;font-weight:700;color:var(--navy)}
+.stat-card.orange .stat-num{color:var(--orange)}
+.stat-card.green .stat-num{color:var(--green)}
+.stat-card.red .stat-num{color:var(--red)}
+.stat-card.purple .stat-num{color:var(--purple)}
+.stat-label{font-size:12px;color:var(--gray);margin-top:2px}
+
+/* ── Filter bar ── */
+.filter-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:8px 18px;border:2px solid #e5e7eb;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--charcoal);font-family:var(--font);transition:all .15s}
+.filter-btn.active,.filter-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.search-box{margin-left:auto;padding:9px 14px;border:2px solid #e5e7eb;border-radius:10px;font-size:13px;font-family:var(--font);outline:none;width:220px}
+.search-box:focus{border-color:var(--navy)}
+
+/* ── Campaign table ── */
+.table-wrap{background:#fff;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead tr{background:#f9fafb;border-bottom:2px solid #e5e7eb}
+th{text-align:left;padding:12px 16px;font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px}
+tbody tr{border-bottom:1px solid #f3f4f6;cursor:pointer;transition:background .1s}
+tbody tr:hover{background:#eff6ff}
+td{padding:14px 16px;font-size:14px;vertical-align:middle}
+.td-title{font-weight:600;color:var(--navy);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.td-sub{font-size:12px;color:var(--gray);margin-top:2px}
+
+/* ── Status badges ── */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.badge-pending{background:#fef3c7;color:#92400e}
+.badge-ai_reviewing{background:#e0e7ff;color:#3730a3}
+.badge-under_review{background:#dbeafe;color:#1e40af}
+.badge-info_requested{background:#ffedd5;color:#9a3412}
+.badge-approved{background:#d1fae5;color:#065f46}
+.badge-rejected{background:#fee2e2;color:#991b1b}
+.badge-suspended{background:#f3f4f6;color:#374151}
+
+/* ── AI score ── */
+.ai-score{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700}
+.ai-bar{width:60px;height:6px;border-radius:3px;background:#e5e7eb;overflow:hidden}
+.ai-bar-fill{height:100%;border-radius:3px;background:var(--green);transition:width .3s}
+.ai-bar-fill.med{background:var(--yellow)}
+.ai-bar-fill.low{background:var(--red)}
+
+/* ── Modal ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:32px;overflow-y:auto}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:860px;box-shadow:0 24px 64px rgba(0,0,0,.2);overflow:hidden;animation:slideIn .2s ease}
+@keyframes slideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-hdr{background:linear-gradient(135deg,var(--navy),var(--purple));padding:24px 28px;color:#fff;display:flex;justify-content:space-between;align-items:flex-start}
+.modal-hdr h2{font-family:'Archivo Black',sans-serif;font-size:1.3rem;margin-bottom:4px}
+.modal-hdr .meta{font-size:13px;opacity:.8}
+.modal-close{background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.modal-body{padding:28px;display:grid;grid-template-columns:1fr 320px;gap:24px}
+.modal-left{}
+.modal-right{border-left:1px solid #e5e7eb;padding-left:24px}
+.section-head{font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin:20px 0 10px}
+.section-head:first-child{margin-top:0}
+.story-box{background:#f9fafb;border-radius:10px;padding:16px;font-size:14px;line-height:1.7;color:var(--charcoal);max-height:160px;overflow-y:auto}
+.info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:14px}
+.info-row:last-child{border:none}
+.info-label{color:var(--gray);font-weight:500}
+.info-val{font-weight:600;text-align:right}
+
+/* ── AI panel ── */
+.ai-panel{background:#f9fafb;border-radius:10px;padding:16px}
+.ai-verdict{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.verdict-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px}
+.verdict-clean{background:#d1fae5}
+.verdict-suspicious{background:#fef3c7}
+.verdict-high_risk{background:#fee2e2}
+.verdict-pending{background:#f3f4f6}
+.ai-summary-text{font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:12px}
+.flag-list{list-style:none}
+.flag-item{display:flex;gap:8px;font-size:12px;padding:6px 0;border-bottom:1px solid #e5e7eb;align-items:flex-start}
+.flag-item:last-child{border:none}
+.flag-dot{width:8px;height:8px;border-radius:50%;margin-top:3px;flex-shrink:0}
+.flag-high{background:var(--red)}
+.flag-medium{background:var(--yellow)}
+.flag-low{background:var(--teal)}
+
+/* ── Verification checklist ── */
+.check-list{list-style:none}
+.check-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3f4f6}
+.check-item:last-child{border:none}
+.check-label{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500}
+.check-icon{font-size:16px}
+.toggle-switch{position:relative;width:40px;height:22px;cursor:pointer}
+.toggle-switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:#cbd5e1;border-radius:11px;transition:.3s}
+.slider::before{content:"";position:absolute;width:16px;height:16px;bottom:3px;left:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle-switch input:checked+.slider{background:var(--green)}
+.toggle-switch input:checked+.slider::before{transform:translateX(18px)}
+
+/* ── Media preview ── */
+.media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.media-thumb{aspect-ratio:1;border-radius:8px;object-fit:cover;background:#e5e7eb;width:100%}
+.video-thumb{background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;border-radius:8px;aspect-ratio:1}
+.doc-thumb{background:#f0f4ff;border:1px solid #c7d2fe;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:24px;border-radius:8px;aspect-ratio:1}
+
+/* ── Action buttons ── */
+.action-bar{padding:20px 28px;background:#f9fafb;border-top:1px solid #e5e7eb;display:flex;gap:10px;flex-wrap:wrap}
+.btn{padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid transparent;font-family:var(--font);transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn-approve{background:var(--green);color:#fff;border-color:var(--green)}
+.btn-approve:hover{background:#157a5a}
+.btn-reject{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-reject:hover{background:#a93226}
+.btn-info{background:var(--yellow);color:var(--charcoal);border-color:var(--yellow)}
+.btn-info:hover{background:#e0a020}
+.btn-outline{background:#fff;color:var(--charcoal);border-color:#e5e7eb}
+.btn-outline:hover{background:#f9fafb}
+
+/* ── Confirm modal ── */
+.confirm-modal{background:#fff;border-radius:14px;padding:32px;width:460px;box-shadow:0 24px 64px rgba(0,0,0,.2)}
+.confirm-modal h3{font-size:1.2rem;margin-bottom:8px;color:var(--charcoal)}
+.confirm-modal p{font-size:14px;color:var(--gray);margin-bottom:20px}
+.confirm-modal select,.confirm-modal textarea,.confirm-modal input{width:100%;padding:10px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:var(--font);margin-bottom:14px;outline:none}
+.confirm-modal textarea{resize:vertical;min-height:80px}
+.confirm-modal select:focus,.confirm-modal textarea:focus{border-color:var(--navy)}
+.confirm-btns{display:flex;gap:10px;justify-content:flex-end}
+
+/* ── Audit log ── */
+.audit-entry{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:13px}
+.audit-entry:last-child{border:none}
+.audit-dot{width:8px;height:8px;border-radius:50%;background:var(--navy);margin-top:4px;flex-shrink:0}
+.audit-time{color:var(--gray);font-size:11px;margin-top:2px}
+.empty-state{text-align:center;padding:60px 20px;color:var(--gray)}
+.empty-icon{font-size:3rem;margin-bottom:12px}
+
+@media(max-width:900px){
+  .modal-body{grid-template-columns:1fr}
+  .modal-right{border-left:none;padding-left:0;border-top:1px solid #e5e7eb;padding-top:20px}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .sidebar{display:none}
+  .main{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ LOGIN ══ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="logo">BayanCo</div>
+    <p>Admin Dashboard · Campaign Vetting</p>
+    <input type="email" id="adminEmail" placeholder="Admin email" autocomplete="email">
+    <input type="password" id="adminToken" placeholder="Admin password / token" autocomplete="current-password">
+    <button onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Invalid credentials. Please try again.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ APP ══ -->
+<div id="appScreen">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="logo">BayanCo</div>
+    <div class="sub">Admin Dashboard</div>
+    <div class="nav-item active" onclick="setTab('all')" id="tab-all">📋 All Campaigns</div>
+    <div class="nav-item has-badge" onclick="setTab('under_review')" id="tab-under_review">🔍 Under Review <span class="dot"></span></div>
+    <div class="nav-item" onclick="setTab('pending')" id="tab-pending">⏳ Pending / AI</div>
+    <div class="nav-item" onclick="setTab('info_requested')" id="tab-info_requested">⚠️ Info Requested</div>
+    <div class="nav-item" onclick="setTab('approved')" id="tab-approved">✅ Approved</div>
+    <div class="nav-item" onclick="setTab('rejected')" id="tab-rejected">❌ Rejected</div>
+    <div class="nav-item" onclick="setTab('suspended')" id="tab-suspended">🚫 Suspended</div>
+    <div class="sidebar-footer">
+      <div class="admin-email" id="adminEmailDisplay"></div>
+      <button class="logout-btn" onclick="doLogout()">Sign out</button>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Stats -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card orange"><div class="stat-num" id="stat-under_review">—</div><div class="stat-label">Under Review</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-pending">—</div><div class="stat-label">Pending / AI</div></div>
+      <div class="stat-card green"><div class="stat-num" id="stat-approved">—</div><div class="stat-label">Approved</div></div>
+      <div class="stat-card red"><div class="stat-num" id="stat-rejected">—</div><div class="stat-label">Rejected</div></div>
+      <div class="stat-card purple"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total Submissions</div></div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterAI('all')" id="ai-all">All</button>
+      <button class="filter-btn" onclick="filterAI('high_risk')" id="ai-high_risk">🔴 High Risk</button>
+      <button class="filter-btn" onclick="filterAI('suspicious')" id="ai-suspicious">🟡 Suspicious</button>
+      <button class="filter-btn" onclick="filterAI('clean')" id="ai-clean">🟢 Clean</button>
+      <input class="search-box" id="searchBox" placeholder="Search by name or title…" oninput="renderTable()">
+    </div>
+
+    <!-- Campaign table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Campaign</th>
+            <th>Creator</th>
+            <th>Goal</th>
+            <th>AI Score</th>
+            <th>Status</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody id="campaignTableBody">
+          <tr><td colspan="6" class="empty-state"><div class="empty-icon">⏳</div><p>Loading campaigns…</p></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- ══════════════════════════════════════ DETAIL MODAL ══ -->
+<div class="overlay" id="detailOverlay" onclick="closeDetailIfBg(event)">
+  <div class="modal" id="detailModal">
+    <div class="modal-hdr">
+      <div>
+        <h2 id="m-title">Campaign Title</h2>
+        <div class="meta" id="m-meta">Loading…</div>
+      </div>
+      <button class="modal-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Left column -->
+      <div class="modal-left">
+        <div class="section-head">Campaign Story</div>
+        <div class="story-box" id="m-story"></div>
+
+        <div class="section-head">Creator & Payment Info</div>
+        <div id="m-info-rows"></div>
+
+        <div class="section-head">Media &amp; Documents</div>
+        <div class="media-grid" id="m-media-grid"><p style="color:var(--gray);font-size:13px">No media uploaded yet.</p></div>
+
+        <div class="section-head" style="margin-top:20px">Audit Log</div>
+        <div id="m-audit-log"></div>
+      </div>
+
+      <!-- Right column -->
+      <div class="modal-right">
+        <div class="section-head">AI Screening (Tier 1)</div>
+        <div class="ai-panel" id="m-ai-panel">Loading…</div>
+
+        <div class="section-head" style="margin-top:20px">Verification Checklist (Tier 2)</div>
+        <ul class="check-list" id="m-check-list"></ul>
+      </div>
+    </div>
+    <div class="action-bar" id="m-action-bar"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ CONFIRM MODAL ══ -->
+<div class="overlay" id="confirmOverlay">
+  <div class="confirm-modal" id="confirmModal">
+    <h3 id="conf-title">Confirm Action</h3>
+    <p id="conf-desc"></p>
+    <div id="conf-fields"></div>
+    <div class="confirm-btns">
+      <button class="btn btn-outline" onclick="closeConfirm()">Cancel</button>
+      <button class="btn" id="conf-submit-btn" onclick="submitConfirm()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ Config — FILL THESE IN ══════════════════════════════════
+window.BAYANCO_CONFIG = {
+  supabaseUrl:     "https://YOUR_PROJECT.supabase.co",
+  supabaseAnonKey: "YOUR_ANON_KEY",
+  functionsUrl:    "https://YOUR_PROJECT.supabase.co/functions/v1",
+  adminSecret:     "", // set after login from sessionStorage
+};
+
+// ══ State ════════════════════════════════════════════════════
+let campaigns = [];
+let currentTab = "all";
+let currentAiFilter = "all";
+let currentCampaign = null;
+let confirmAction = null;
+let verificationState = {};
+
+// ══ Auth ═════════════════════════════════════════════════════
+function doLogin() {
+  const email = document.getElementById("adminEmail").value.trim();
+  const token = document.getElementById("adminToken").value.trim();
+  if (!email || !token) {
+    document.getElementById("loginError").style.display = "block";
+    return;
+  }
+  // Store token in session (server validates on each request)
+  sessionStorage.setItem("bayanco_admin_email", email);
+  sessionStorage.setItem("bayanco_admin_token", token);
+  window.BAYANCO_CONFIG.adminSecret = token;
+  document.getElementById("adminEmailDisplay").textContent = email;
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appScreen").style.display = "block";
+  loadCampaigns();
+}
+
+function doLogout() {
+  sessionStorage.clear();
+  location.reload();
+}
+
+// Auto-restore session
+(function restoreSession() {
+  const t = sessionStorage.getItem("bayanco_admin_token");
+  const e = sessionStorage.getItem("bayanco_admin_email");
+  if (t && e) {
+    document.getElementById("adminEmail").value = e;
+    document.getElementById("adminToken").value = t;
+    doLogin();
+  }
+})();
+
+// ══ Data loading ══════════════════════════════════════════════
+async function loadCampaigns() {
+  try {
+    const { supabaseUrl, supabaseAnonKey } = window.BAYANCO_CONFIG;
+    const res = await fetch(
+      `${supabaseUrl}/rest/v1/campaigns?order=created_at.desc&limit=200`,
+      { headers: { Authorization: `Bearer ${supabaseAnonKey}`, apikey: supabaseAnonKey } }
+    );
+    campaigns = await res.json();
+    updateStats();
+    renderTable();
+  } catch (e) {
+    console.error("Load failed:", e);
+    document.getElementById("campaignTableBody").innerHTML =
+      `<tr><td colspan="6" style="text-align:center;color:var(--red);padding:40px">⚠️ Failed to load campaigns. Check Supabase credentials.</td></tr>`;
+  }
+}
+
+// ══ Stats ═════════════════════════════════════════════════════
+function updateStats() {
+  const counts = {};
+  campaigns.forEach(c => { counts[c.status] = (counts[c.status] || 0) + 1; });
+  ["pending","under_review","approved","rejected"].forEach(s => {
+    const el = document.getElementById(`stat-${s}`);
+    if (el) el.textContent = counts[s] ?? 0;
+  });
+  document.getElementById("stat-total").textContent = campaigns.length;
+  // Badge on sidebar
+  const ur = (counts["under_review"] || 0) + (counts["info_requested"] || 0);
+  document.getElementById("tab-under_review").classList.toggle("has-badge", ur > 0);
+}
+
+// ══ Filtering ════════════════════════════════════════════════
+function setTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+  document.getElementById(`tab-${tab}`)?.classList.add("active");
+  renderTable();
+}
+
+function filterAI(f) {
+  currentAiFilter = f;
+  document.querySelectorAll("[id^='ai-']").forEach(el => el.classList.remove("active"));
+  document.getElementById(`ai-${f}`).classList.add("active");
+  renderTable();
+}
+
+function renderTable() {
+  const search = document.getElementById("searchBox").value.toLowerCase();
+  let list = campaigns.filter(c => {
+    if (currentTab !== "all" && c.status !== currentTab) return false;
+    if (currentAiFilter !== "all" && c.ai_verdict !== currentAiFilter) return false;
+    if (search && !c.title.toLowerCase().includes(search) && !c.creator_name.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  const tbody = document.getElementById("campaignTableBody");
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">🔍</div><p>No campaigns match this filter.</p></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map(c => `
+    <tr onclick="openDetail('${c.id}')">
+      <td>
+        <div class="td-title">${esc(c.title)}</div>
+        <div class="td-sub">${esc(c.category)} · ₱${fmtNum(c.goal_amount)}</div>
+      </td>
+      <td>
+        <div style="font-weight:600">${esc(c.creator_name)}</div>
+        <div class="td-sub">${esc(c.creator_email)}</div>
+      </td>
+      <td style="font-weight:700">₱${fmtNum(c.goal_amount)}</td>
+      <td>${aiScoreHtml(c)}</td>
+      <td>${statusBadge(c.status)}</td>
+      <td style="color:var(--gray);font-size:13px">${fmtDate(c.created_at)}</td>
+    </tr>`).join("");
+}
+
+// ══ Detail modal ═════════════════════════════════════════════
+async function openDetail(id) {
+  currentCampaign = campaigns.find(c => c.id === id);
+  if (!currentCampaign) return;
+  const c = currentCampaign;
+  verificationState = {
+    identity_verified:  c.identity_verified,
+    bank_verified:      c.bank_verified,
+    social_verified:    c.social_verified,
+    documents_verified: c.documents_verified,
+  };
+
+  document.getElementById("m-title").textContent = c.title;
+  document.getElementById("m-meta").textContent =
+    `${c.category} · ₱${fmtNum(c.goal_amount)} · ${fmtDate(c.created_at)}`;
+  document.getElementById("m-story").textContent = c.story;
+
+  // Info rows
+  const payDet = c.payment_details || {};
+  const payStr = c.payment_method === "gcash"
+    ? `GCash — ${payDet.gcash_number || "—"}`
+    : `Bank — ${payDet.bank_name || "—"} / ${payDet.account_number || "—"}`;
+  document.getElementById("m-info-rows").innerHTML = [
+    ["Creator", c.creator_name],
+    ["Email", c.creator_email],
+    ["Phone", c.creator_phone],
+    ["Payment", payStr],
+    ["Submitted", fmtDate(c.created_at)],
+    ["Reviewed by", c.reviewer_email || "—"],
+  ].map(([l, v]) => `
+    <div class="info-row">
+      <span class="info-label">${l}</span>
+      <span class="info-val">${esc(v)}</span>
+    </div>`).join("");
+
+  // AI panel
+  renderAiPanel(c);
+
+  // Verification checklist
+  renderChecklist(c);
+
+  // Media (async)
+  loadMedia(c.id);
+
+  // Audit log (async)
+  loadAuditLog(c.id);
+
+  // Action bar
+  renderActionBar(c);
+
+  document.getElementById("detailOverlay").classList.add("open");
+}
+
+function renderAiPanel(c) {
+  const verdict = c.ai_verdict || "pending";
+  const score   = c.ai_score ?? null;
+  const icons   = { clean: "✅", suspicious: "🟡", high_risk: "🔴", pending: "⏳" };
+  const labels  = { clean: "Clean", suspicious: "Suspicious", high_risk: "High Risk", pending: "Pending" };
+
+  const flags = (c.ai_flags || []);
+  const flagsHtml = flags.length
+    ? `<ul class="flag-list">${flags.map(f => `
+        <li class="flag-item">
+          <span class="flag-dot flag-${f.severity}"></span>
+          <div>
+            <strong style="font-size:11px;text-transform:uppercase;color:var(--gray)">${f.type}</strong><br>
+            <span>${esc(f.description)}</span>
+          </div>
+        </li>`).join("")}</ul>`
+    : `<p style="font-size:13px;color:var(--gray)">No flags detected.</p>`;
+
+  const scoreHtml = score !== null ? `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <div class="ai-bar" style="width:100%">
+        <div class="ai-bar-fill ${score < 35 ? 'low' : score < 65 ? 'med' : ''}" style="width:${score}%"></div>
+      </div>
+      <strong style="font-size:13px;min-width:36px">${score}/100</strong>
+    </div>` : "";
+
+  document.getElementById("m-ai-panel").innerHTML = `
+    <div class="ai-verdict">
+      <div class="verdict-icon verdict-${verdict}">${icons[verdict]}</div>
+      <div>
+        <strong>${labels[verdict]}</strong>
+        ${score !== null ? `<div style="font-size:12px;color:var(--gray)">Trust score: ${score}/100</div>` : ""}
+      </div>
+    </div>
+    ${scoreHtml}
+    ${c.ai_summary ? `<p class="ai-summary-text">${esc(c.ai_summary)}</p>` : ""}
+    <div class="section-head" style="margin-top:12px">Flags (${flags.length})</div>
+    ${flagsHtml}`;
+}
+
+function renderChecklist(c) {
+  const items = [
+    { key: "identity_verified",  icon: "🪪", label: "Identity Verified" },
+    { key: "bank_verified",      icon: "🏦", label: "Bank/Payment Verified" },
+    { key: "social_verified",    icon: "📱", label: "Social Media Verified" },
+    { key: "documents_verified", icon: "📄", label: "Documents Verified" },
+  ];
+  document.getElementById("m-check-list").innerHTML = items.map(item => `
+    <li class="check-item">
+      <label class="check-label">
+        <span class="check-icon">${item.icon}</span>${item.label}
+      </label>
+      <label class="toggle-switch">
+        <input type="checkbox" id="chk-${item.key}" ${c[item.key] ? "checked" : ""}
+          onchange="toggleVerification('${item.key}', this.checked)">
+        <span class="slider"></span>
+      </label>
+    </li>`).join("");
+}
+
+async function toggleVerification(key, val) {
+  verificationState[key] = val;
+  try {
+    await callAdminReview({
+      campaign_id:  currentCampaign.id,
+      action:       "update_verification",
+      reviewer_email: sessionStorage.getItem("bayanco_admin_email"),
+      verification: { [key]: val },
+    });
+    // Update local state
+    currentCampaign[key] = val;
+  } catch (e) {
+    alert("Failed to save: " + e.message);
+    // Revert
+    document.getElementById(`chk-${key}`).checked = !val;
+  }
+}
+
+async function loadMedia(campaignId) {
+  const grid = document.getElementById("m-media-grid");
+  try {
+    const { supabaseUrl, supabaseAnonKey } = window.BAYANCO_CONFIG;
+    const res = await fetch(
+      `${supabaseUrl}/rest/v1/campaign_media?campaign_id=eq.${campaignId}&order=created_at.asc`,
+      { headers: { Authorization: `Bearer ${supabaseAnonKey}`, apikey: supabaseAnonKey } }
+    );
+    const media = await res.json();
+    if (!media.length) { grid.innerHTML = `<p style="color:var(--gray);font-size:13px">No media uploaded yet.</p>`; return; }
+    grid.innerHTML = media.map(m => {
+      if (m.media_type === "image") {
+        return `<img class="media-thumb" src="${m.thumbnail_url || m.public_url}" alt="${m.file_name}" loading="lazy" onerror="this.style.background='#e5e7eb'">`;
+      }
+      if (m.media_type === "video") {
+        const thumb = m.thumbnail_url || "";
+        return thumb
+          ? `<img class="media-thumb" src="${thumb}" alt="Video" loading="lazy">`
+          : `<div class="video-thumb">▶</div>`;
+      }
+      return `<div class="doc-thumb">📄</div>`;
+    }).join("");
+  } catch { grid.innerHTML = `<p style="font-size:13px;color:var(--gray)">Could not load media.</p>`; }
+}
+
+async function loadAuditLog(campaignId) {
+  const container = document.getElementById("m-audit-log");
+  try {
+    const { supabaseUrl, supabaseAnonKey } = window.BAYANCO_CONFIG;
+    const res = await fetch(
+      `${supabaseUrl}/rest/v1/campaign_audit_log?campaign_id=eq.${campaignId}&order=created_at.asc`,
+      { headers: { Authorization: `Bearer ${supabaseAnonKey}`, apikey: supabaseAnonKey } }
+    );
+    const log = await res.json();
+    if (!log.length) { container.innerHTML = `<p style="font-size:13px;color:var(--gray)">No log entries yet.</p>`; return; }
+    container.innerHTML = log.map(e => `
+      <div class="audit-entry">
+        <div class="audit-dot"></div>
+        <div>
+          <strong>${esc(e.action)}</strong> by ${esc(e.actor_email || e.actor_type)}
+          ${e.old_status && e.new_status && e.old_status !== e.new_status
+            ? ` · <span style="color:var(--gray)">${e.old_status} → ${e.new_status}</span>` : ""}
+          ${e.notes ? `<div style="color:var(--gray);font-size:12px">${esc(e.notes)}</div>` : ""}
+          <div class="audit-time">${fmtDate(e.created_at)}</div>
+        </div>
+      </div>`).join("");
+  } catch { container.innerHTML = ""; }
+}
+
+function renderActionBar(c) {
+  const bar = document.getElementById("m-action-bar");
+  const inactive = ["rejected","suspended"].includes(c.status);
+  if (inactive) { bar.innerHTML = `<span style="color:var(--gray);font-size:14px">Campaign is ${c.status}. No further actions available.</span>`; return; }
+
+  const approveBtn    = `<button class="btn btn-approve" onclick="triggerAction('approve')">✅ Approve</button>`;
+  const rejectBtn     = `<button class="btn btn-reject" onclick="triggerAction('reject')">❌ Reject</button>`;
+  const infoBtn       = `<button class="btn btn-info" onclick="triggerAction('request_info')">⚠️ Request Info</button>`;
+  const suspendBtn    = `<button class="btn btn-outline" onclick="triggerAction('suspend')">🚫 Suspend</button>`;
+  const refreshBtn    = `<button class="btn btn-outline" onclick="openDetail('${c.id}')">🔄 Refresh</button>`;
+
+  bar.innerHTML = approveBtn + rejectBtn + infoBtn + suspendBtn + refreshBtn;
+}
+
+function closeDetail() {
+  document.getElementById("detailOverlay").classList.remove("open");
+  currentCampaign = null;
+}
+function closeDetailIfBg(e) {
+  if (e.target === document.getElementById("detailOverlay")) closeDetail();
+}
+
+// ══ Confirm / action modals ═══════════════════════════════════
+const actionConfig = {
+  approve: {
+    title:  "Approve Campaign",
+    desc:   "This campaign will go live and the creator will be notified by email.",
+    color:  "var(--green)",
+    label:  "✅ Approve",
+    fields: () => `<textarea id="cf-notes" placeholder="Optional notes for the creator…"></textarea>`,
+  },
+  reject: {
+    title:  "Reject Campaign",
+    desc:   "The creator will receive an email explaining the rejection reason.",
+    color:  "var(--red)",
+    label:  "❌ Reject",
+    fields: () => `
+      <select id="cf-reason">
+        <option value="">— Select reason —</option>
+        <option value="SCAM_KEYWORDS">Scam keywords detected</option>
+        <option value="UNREALISTIC_GOAL">Unrealistic goal amount</option>
+        <option value="VAGUE_DESCRIPTION">Story too vague / unverifiable</option>
+        <option value="DUPLICATE_CAMPAIGN">Duplicate campaign</option>
+        <option value="POLICY_VIOLATION">Policy violation</option>
+        <option value="INSUFFICIENT_DOCS">Insufficient documents</option>
+        <option value="IDENTITY_UNVERIFIED">Identity could not be verified</option>
+        <option value="BANK_UNVERIFIED">Bank/payment account unverified</option>
+        <option value="AI_HIGH_RISK">AI flagged as high risk</option>
+        <option value="OTHER">Other</option>
+      </select>
+      <textarea id="cf-notes" placeholder="Additional notes for the creator…"></textarea>`,
+  },
+  suspend: {
+    title:  "Suspend Campaign",
+    desc:   "The campaign will be hidden from the public. You can re-approve later.",
+    color:  "var(--charcoal)",
+    label:  "🚫 Suspend",
+    fields: () => `<textarea id="cf-notes" placeholder="Reason for suspension…"></textarea>`,
+  },
+  request_info: {
+    title:  "Request More Information",
+    desc:   "The creator will be emailed with your request and the campaign status changes to 'Info Requested'.",
+    color:  "var(--yellow)",
+    label:  "⚠️ Send Request",
+    fields: () => `<textarea id="cf-notes" placeholder="What information do you need? (required)" required></textarea>`,
+  },
+};
+
+function triggerAction(action) {
+  const cfg = actionConfig[action];
+  document.getElementById("conf-title").textContent = cfg.title;
+  document.getElementById("conf-desc").textContent  = cfg.desc;
+  document.getElementById("conf-fields").innerHTML  = cfg.fields();
+  const btn = document.getElementById("conf-submit-btn");
+  btn.textContent = cfg.label;
+  btn.style.background = cfg.color;
+  btn.style.color      = action === "request_info" ? "var(--charcoal)" : "#fff";
+  btn.style.borderColor = cfg.color;
+  confirmAction = action;
+  document.getElementById("confirmOverlay").classList.add("open");
+}
+
+function closeConfirm() {
+  document.getElementById("confirmOverlay").classList.remove("open");
+  confirmAction = null;
+}
+
+async function submitConfirm() {
+  if (!confirmAction || !currentCampaign) return;
+  const notes      = document.getElementById("cf-notes")?.value.trim() || "";
+  const reasonCode = document.getElementById("cf-reason")?.value || "OTHER";
+
+  if (confirmAction === "reject" && !document.getElementById("cf-reason")?.value) {
+    alert("Please select a rejection reason.");
+    return;
+  }
+  if (confirmAction === "request_info" && !notes) {
+    alert("Please describe what information is needed.");
+    return;
+  }
+
+  const btn = document.getElementById("conf-submit-btn");
+  btn.textContent = "Saving…";
+  btn.disabled    = true;
+
+  try {
+    await callAdminReview({
+      campaign_id:    currentCampaign.id,
+      action:         confirmAction,
+      reviewer_email: sessionStorage.getItem("bayanco_admin_email"),
+      notes,
+      reason_code:    reasonCode,
+    });
+
+    // Refresh local data
+    const newStatus = { approve:"approved", reject:"rejected", suspend:"suspended", request_info:"info_requested" }[confirmAction];
+    if (newStatus) currentCampaign.status = newStatus;
+
+    closeConfirm();
+    // Re-render action bar
+    renderActionBar(currentCampaign);
+    // Reload table
+    await loadCampaigns();
+    // Refresh audit log
+    loadAuditLog(currentCampaign.id);
+
+  } catch (e) {
+    alert("Error: " + e.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function callAdminReview(payload) {
+  const token = sessionStorage.getItem("bayanco_admin_token");
+  const res = await fetch(`${window.BAYANCO_CONFIG.functionsUrl}/admin-review`, {
+    method:  "POST",
+    headers: {
+      "Content-Type":  "application/json",
+      "x-admin-token": token,
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Request failed");
+  return data;
+}
+
+// ══ Helpers ═══════════════════════════════════════════════════
+function statusBadge(status) {
+  const labels = {
+    pending:"⏳ Pending", ai_reviewing:"🤖 AI Review", under_review:"🔍 Under Review",
+    info_requested:"⚠️ Info Needed", approved:"✅ Approved",
+    rejected:"❌ Rejected", suspended:"🚫 Suspended",
+  };
+  return `<span class="badge badge-${status}">${labels[status] || status}</span>`;
+}
+
+function aiScoreHtml(c) {
+  if (c.ai_score === null || c.ai_score === undefined) {
+    return `<span style="color:var(--gray);font-size:13px">${c.ai_verdict === "pending" ? "⏳" : "—"}</span>`;
+  }
+  const cls = c.ai_score < 35 ? "low" : c.ai_score < 65 ? "med" : "";
+  const icon = c.ai_score >= 65 ? "🟢" : c.ai_score >= 35 ? "🟡" : "🔴";
+  return `<div class="ai-score">
+    <span>${icon}</span>
+    <div>
+      <div class="ai-bar"><div class="ai-bar-fill ${cls}" style="width:${c.ai_score}%"></div></div>
+      <div style="font-size:11px;color:var(--gray);text-align:center">${c.ai_score}</div>
+    </div>
+  </div>`;
+}
+
+function fmtNum(n)  { return parseFloat(n).toLocaleString("en-PH", { minimumFractionDigits: 0 }); }
+function fmtDate(d) { if (!d) return "—"; return new Date(d).toLocaleDateString("en-PH", { month:"short", day:"numeric", year:"numeric", hour:"2-digit", minute:"2-digit" }); }
+function esc(s)     { const d = document.createElement("div"); d.textContent = String(s ?? "—"); return d.innerHTML; }
+</script>
+</body>
+</html>
